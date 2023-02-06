@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "168217810649",
+    "project_id": "myapp--backend",
+    "storage_bucket": "myapp--backend.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:168217810649:android:e4047536525d77d83950c8",
+        "android_client_info": {
+          "package_name": "com.example.flutter_application_2023"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "168217810649-e4d37k07mk05q5rqvc2h3upqd281he4k.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCpMjmlxR_5cRgf4uhOzvYKaVyESMVI9-g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "168217810649-e4d37k07mk05q5rqvc2h3upqd281he4k.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "168217810649-duqqqun5tnss4vj5u72agdgga428lbbp.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.whatsappUi"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
