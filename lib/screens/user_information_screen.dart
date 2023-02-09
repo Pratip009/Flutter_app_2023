@@ -8,6 +8,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import '../model/user_model.dart';
 import '../provider/auth_provider.dart';
+import '../utils/dimensions.dart';
 import '../utils/utils.dart';
 import '../widgets/custom_button.dart';
 
@@ -69,9 +70,9 @@ class _UserInfromationScreenState extends State<UserInfromationScreen> {
     return Scaffold(
       body: SafeArea(
         child: isLoading == true
-            ? const Center(
+            ? Center(
                 child: CircularProgressIndicator(
-                  color: Colors.purple,
+                  color: kyellow,
                 ),
               )
             : SingleChildScrollView(
@@ -86,11 +87,11 @@ class _UserInfromationScreenState extends State<UserInfromationScreen> {
                             ? Stack(
                                 children: [
                                   Container(
-                                    height: 120,
-                                    width: 120,
+                                    height: Dimensions.height120,
+                                    width: Dimensions.width120,
                                     decoration: BoxDecoration(
                                       border: Border.all(
-                                        width: 4,
+                                        width: Dimensions.width5,
                                         color: kblue,
                                       ),
                                       boxShadow: [
@@ -114,8 +115,8 @@ class _UserInfromationScreenState extends State<UserInfromationScreen> {
                                     right: 0,
                                     bottom: 0,
                                     child: Container(
-                                      height: 40,
-                                      width: 40,
+                                      height: Dimensions.height20*2,
+                                      width: Dimensions.width10*4,
                                       decoration: BoxDecoration(
                                         shape: BoxShape.circle,
                                         border: Border.all(

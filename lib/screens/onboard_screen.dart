@@ -62,6 +62,8 @@ class _OnBoardScreenState extends State<OnBoardScreen> {
 
   @override
   Widget build(BuildContext context) {
+    print('height' + MediaQuery.of(context).size.height.toString());
+    print('width' + MediaQuery.of(context).size.width.toString());
     // print("The height is " + MediaQuery.of(context).size.height.toString());
     // print("The width is " + MediaQuery.of(context).size.width.toString());
     return Scaffold(
