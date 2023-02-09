@@ -147,7 +147,90 @@ class AuthProvider extends ChangeNotifier {
     }
   }
 
+//adhaar
+  void saveUseradhaarDataToFirebase({
+    required BuildContext context,
+    required UserModel userModel,
+    required File adhaarImage,
+    required Function onSuccess,
+  }) async {
+    _isLoading = true;
+    notifyListeners();
+    try {
+      // uploading image to firebase storage.
+      await storeAdhaarFileToStorage("adhaarImage/$_uid", adhaarImage)
+          .then((value) {
+        userModel.adhaarImage = value;
+      });
+      _userModel = userModel;
+
+      // uploading to database
+      await _firebaseFirestore
+          .collection("users")
+          .doc(_uid)
+          .set(userModel.toMap())
+          .then((value) {
+        onSuccess();
+        _isLoading = false;
+        notifyListeners();
+      });
+    } on FirebaseAuthException catch (e) {
+      showSnackBar(context, e.message.toString());
+      _isLoading = false;
+      notifyListeners();
+    }
+  }
+
+//pan
+  void saveUserpanDataToFirebase({
+    required BuildContext context,
+    required UserModel userModel,
+    required File panImage,
+    required Function onSuccess,
+  }) async {
+    _isLoading = true;
+    notifyListeners();
+    try {
+      // uploading image to firebase storage.
+      await storePanFileToStorage("panImage/$_uid", panImage).then((value) {
+        userModel.panImage = value;
+      });
+      _userModel = userModel;
+
+      // uploading to database
+      await _firebaseFirestore
+          .collection("users")
+          .doc(_uid)
+          .set(userModel.toMap())
+          .then((value) {
+        onSuccess();
+        _isLoading = false;
+        notifyListeners();
+      });
+    } on FirebaseAuthException catch (e) {
+      showSnackBar(context, e.message.toString());
+      _isLoading = false;
+      notifyListeners();
+    }
+  }
+
   Future<String> storeFileToStorage(String ref, File file) async {
+    UploadTask uploadTask = _firebaseStorage.ref().child(ref).putFile(file);
+    TaskSnapshot snapshot = await uploadTask;
+    String downloadUrl = await snapshot.ref.getDownloadURL();
+    return downloadUrl;
+  }
+
+//adhaar
+  Future<String> storeAdhaarFileToStorage(String ref, File file) async {
+    UploadTask uploadTask = _firebaseStorage.ref().child(ref).putFile(file);
+    TaskSnapshot snapshot = await uploadTask;
+    String downloadUrl = await snapshot.ref.getDownloadURL();
+    return downloadUrl;
+  }
+
+//pan
+  Future<String> storePanFileToStorage(String ref, File file) async {
     UploadTask uploadTask = _firebaseStorage.ref().child(ref).putFile(file);
     TaskSnapshot snapshot = await uploadTask;
     String downloadUrl = await snapshot.ref.getDownloadURL();
@@ -161,17 +244,18 @@ class AuthProvider extends ChangeNotifier {
         .get()
         .then((DocumentSnapshot snapshot) {
       _userModel = UserModel(
-        name: snapshot['name'],
-        email: snapshot['email'],
-        age: snapshot['age'],
-        adhaar: snapshot['adhaar'],
-        pan: snapshot['pan'],
-        createdAt: snapshot['createdAt'],
-        bio: snapshot['bio'],
-        uid: snapshot['uid'],
-        profilePic: snapshot['profilepic'],
-        phoneNumber: snapshot['phoneumber'],
-      );
+          name: snapshot['name'],
+          email: snapshot['email'],
+          age: snapshot['age'],
+          adhaar: snapshot['adhaar'],
+          pan: snapshot['pan'],
+          createdAt: snapshot['createdAt'],
+          address: snapshot['address'],
+          uid: snapshot['uid'],
+          profilePic: snapshot['profilepic'],
+          phoneNumber: snapshot['phoneumber'],
+          adhaarImage: snapshot['adhaarImage'],
+          panImage: snapshot['panImage']);
       _uid = userModel.uid;
     });
   }

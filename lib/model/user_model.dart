@@ -4,11 +4,13 @@ class UserModel {
   String age;
   String adhaar;
   String pan;
-  String bio;
+  String address;
   String profilePic;
   String createdAt;
   String phoneNumber;
   String uid;
+  String adhaarImage;
+  String panImage;
 
   UserModel({
     required this.name,
@@ -16,11 +18,13 @@ class UserModel {
     required this.age,
     required this.adhaar,
     required this.pan,
-    required this.bio,
+    required this.address,
     required this.profilePic,
     required this.createdAt,
     required this.phoneNumber,
     required this.uid,
+    required this.adhaarImage,
+    required this.panImage,
   });
 
   // from map
@@ -31,11 +35,13 @@ class UserModel {
       age: map['age'] ?? '',
       adhaar: map['adhaar'] ?? '',
       pan: map['pan'] ?? '',
-      bio: map['bio'] ?? '',
+      address: map['address'] ?? '',
       uid: map['uid'] ?? '',
       phoneNumber: map['phoneNumber'] ?? '',
       createdAt: map['createdAt'] ?? '',
       profilePic: map['profilePic'] ?? '',
+      adhaarImage: map['adhaarImage'] ?? '',
+      panImage: map['panImage'] ?? '',
     );
   }
 
@@ -48,10 +54,12 @@ class UserModel {
       "adhaar": adhaar,
       "pan": pan,
       "uid": uid,
-      "bio": bio,
+      "address": address,
       "profilePic": profilePic,
       "phoneNumber": phoneNumber,
       "createdAt": createdAt,
+      "adhaarImage": adhaarImage,
+      "panImage": panImage,
     };
   }
 }

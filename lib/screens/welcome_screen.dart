@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_2023/screens/navpages/main_screen.dart';
 import 'package:flutter_application_2023/screens/register_screen.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-
 import '../provider/auth_provider.dart';
 import '../widgets/custom_button.dart';
-import 'home_screen.dart';
 
 class WelcomeScreen extends StatefulWidget {
   const WelcomeScreen({super.key});
@@ -61,7 +60,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                               () => Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => const HomeScreen(),
+                                  builder: (context) => const MainScreen(),
                                 ),
                               ),
                             );

@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_application_2023/screens/onboard_screen.dart';
-import 'package:flutter_application_2023/screens/welcome_screen.dart';
+import 'package:flutter_application_2023/utils/dimensions.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -41,23 +41,23 @@ class _SplashScreenState extends State<SplashScreen> {
             children: [
               Icon(
                 Icons.android_outlined,
-                size: 100,
+                size: Dimensions.height100,
                 color: Colors.white,
               ),
               SizedBox(
-                height: 20,
+                height: Dimensions.height20,
               ),
               Icon(
                 Icons.apple_outlined,
-                size: 100,
+                size: Dimensions.height100,
                 color: Colors.white,
               ),
               SizedBox(
-                height: 20,
+                height: Dimensions.height20,
               ),
               Icon(
                 Icons.integration_instructions_outlined,
-                size: 100,
+                size: Dimensions.height100,
                 color: Colors.white,
               ),
             ],

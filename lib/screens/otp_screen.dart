@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:flutter_application_2023/screens/navpages/main_home_page.dart';
 import 'package:flutter_application_2023/screens/user_information_screen.dart';
 import 'package:flutter_application_2023/widgets/constant.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -10,7 +11,6 @@ import 'package:provider/provider.dart';
 import '../provider/auth_provider.dart';
 import '../utils/utils.dart';
 import '../widgets/custom_button.dart';
-import 'home_screen.dart';
 
 class OtpScreen extends StatefulWidget {
   final String verificationId;
@@ -166,7 +166,8 @@ class _OtpScreenState extends State<OtpScreen> {
                                 (value) => Navigator.pushAndRemoveUntil(
                                     context,
                                     MaterialPageRoute(
-                                      builder: (context) => const HomeScreen(),
+                                      builder: (context) =>
+                                          const MainHomePage(),
                                     ),
                                     (route) => false),
                               ),

@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_application_2023/screens/welcome_screen.dart';
+import 'package:flutter_application_2023/utils/dimensions.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../widgets/onboard_model.dart';
@@ -61,6 +62,8 @@ class _OnBoardScreenState extends State<OnBoardScreen> {
 
   @override
   Widget build(BuildContext context) {
+    // print("The height is " + MediaQuery.of(context).size.height.toString());
+    // print("The width is " + MediaQuery.of(context).size.width.toString());
     return Scaffold(
       backgroundColor: currentIndex % 2 == 0 ? kwhite : kwhite,
       appBar: AppBar(
@@ -88,7 +91,7 @@ class _OnBoardScreenState extends State<OnBoardScreen> {
                   ),
                 ),
                 SizedBox(
-                  width: 5,
+                  width: Dimensions.width5,
                 ),
                 Icon(
                   Icons.arrow_forward,
@@ -116,7 +119,9 @@ class _OnBoardScreenState extends State<OnBoardScreen> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Image.asset(screens[index].img),
+                  Image.asset(
+                    screens[index].img,
+                  ),
                   Container(
                     height: 10.0,
                     child: ListView.builder(
@@ -178,8 +183,10 @@ class _OnBoardScreenState extends State<OnBoardScreen> {
                       );
                     },
                     child: Container(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 30.0, vertical: 10),
+                      padding: EdgeInsets.symmetric(
+                        horizontal: Dimensions.width15 * 2,
+                        vertical: Dimensions.height10,
+                      ),
                       decoration: BoxDecoration(
                           color: kyellow,
                           borderRadius: BorderRadius.circular(15.0)),
@@ -195,8 +202,8 @@ class _OnBoardScreenState extends State<OnBoardScreen> {
                               letterSpacing: 5,
                             ),
                           ),
-                          const SizedBox(
-                            width: 15.0,
+                          SizedBox(
+                            width: Dimensions.width15,
                           ),
                           Icon(
                             Icons.arrow_forward_sharp,

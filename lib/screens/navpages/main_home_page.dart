@@ -2,16 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_2023/screens/welcome_screen.dart';
 import 'package:provider/provider.dart';
 
-import '../provider/auth_provider.dart';
+import '../../provider/auth_provider.dart';
 
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+class MainHomePage extends StatefulWidget {
+  const MainHomePage({super.key});
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  State<MainHomePage> createState() => _MainHomePageState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _MainHomePageState extends State<MainHomePage> {
   @override
   Widget build(BuildContext context) {
     final ap = Provider.of<AuthProvider>(context, listen: false);
@@ -50,7 +50,7 @@ class _HomeScreenState extends State<HomeScreen> {
           Text(ap.userModel.name),
           Text(ap.userModel.phoneNumber),
           Text(ap.userModel.email),
-          Text(ap.userModel.bio),
+          Text(ap.userModel.address),
         ],
       )),
     );
