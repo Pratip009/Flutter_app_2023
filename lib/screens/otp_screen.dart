@@ -14,6 +14,7 @@ import '../widgets/custom_button.dart';
 
 class OtpScreen extends StatefulWidget {
   final String verificationId;
+
   const OtpScreen({super.key, required this.verificationId});
 
   @override

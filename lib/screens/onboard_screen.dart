@@ -23,14 +23,14 @@ class _OnBoardScreenState extends State<OnBoardScreen> {
       img: 'assets/images/market.jpg',
       text: "Go To Market",
       desc: "Fresh and green foods\n fast free delevery",
-      bg: Colors.white,
+      bg: Colors.blue,
       button: const Color(0xFFFBBC05),
     ),
     OnboardModel(
       img: 'assets/images/pay.jpg',
       text: "Pay",
       desc: "Quick money transfer \n free withdrawl",
-      bg: Colors.white,
+      bg: Colors.red,
       button: const Color(0xFFFBBC05),
     ),
     OnboardModel(
@@ -62,14 +62,16 @@ class _OnBoardScreenState extends State<OnBoardScreen> {
 
   @override
   Widget build(BuildContext context) {
-    print('height' + MediaQuery.of(context).size.height.toString());
-    print('width' + MediaQuery.of(context).size.width.toString());
-    // print("The height is " + MediaQuery.of(context).size.height.toString());
-    // print("The width is " + MediaQuery.of(context).size.width.toString());
     return Scaffold(
-      backgroundColor: currentIndex % 2 == 0 ? kwhite : kwhite,
+      backgroundColor: currentIndex == 0
+          ? kwhite
+          : currentIndex == 1
+              ? kwhite
+              : currentIndex == 2
+                  ? kwhite
+                  : null,
       appBar: AppBar(
-        backgroundColor: kwhite,
+        backgroundColor: Colors.transparent,
         elevation: 0.0,
         actions: [
           TextButton(
@@ -105,7 +107,7 @@ class _OnBoardScreenState extends State<OnBoardScreen> {
         ],
       ),
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20.0),
+        padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 50),
         child: PageView.builder(
             itemCount: screens.length,
             controller: _pageController,

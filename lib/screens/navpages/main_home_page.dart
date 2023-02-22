@@ -52,7 +52,7 @@ class _MainHomePageState extends State<MainHomePage> {
           Text(ap.userModel.email),
           Text(ap.userModel.address),
         ],
-      )),
+      ),),
     );
   }
 }

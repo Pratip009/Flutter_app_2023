@@ -27,6 +27,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
     displayNameNoCountryCode: "IN",
     e164Key: "",
   );
+  bool isLoading = false;
 
   @override
   Widget build(BuildContext context) {
@@ -78,6 +79,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 const SizedBox(height: 20),
                 TextFormField(
                   cursorColor: Colors.black,
+                  keyboardType: TextInputType.number,
                   controller: phoneController,
                   style: const TextStyle(
                     fontSize: 18,
@@ -168,8 +170,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
   }
 
   void sendPhoneNumber() {
+    setState(() {
+      isLoading = true;
+    });
     final ap = Provider.of<AuthProvider>(context, listen: false);
     String phoneNumber = phoneController.text.trim();
     ap.signInWithPhone(context, "+${selectedCountry.phoneCode}$phoneNumber");
+    setState(() {
+      isLoading = false;
+    });
   }
 }

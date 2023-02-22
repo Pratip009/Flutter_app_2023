@@ -124,7 +124,7 @@ class AuthProvider extends ChangeNotifier {
       // uploading image to firebase storage.
       await storeFileToStorage("profilePic/$_uid", profilePic).then((value) {
         userModel.profilePic = value;
-        userModel.createdAt = DateTime.now().millisecondsSinceEpoch.toString();
+        userModel.createdAt = DateTime.now().day.toString();
         userModel.phoneNumber = _firebaseAuth.currentUser!.phoneNumber!;
         userModel.uid = _firebaseAuth.currentUser!.phoneNumber!;
       });
@@ -244,18 +244,19 @@ class AuthProvider extends ChangeNotifier {
         .get()
         .then((DocumentSnapshot snapshot) {
       _userModel = UserModel(
-          name: snapshot['name'],
-          email: snapshot['email'],
-          age: snapshot['age'],
-          adhaar: snapshot['adhaar'],
-          pan: snapshot['pan'],
-          createdAt: snapshot['createdAt'],
-          address: snapshot['address'],
-          uid: snapshot['uid'],
-          profilePic: snapshot['profilepic'],
-          phoneNumber: snapshot['phoneumber'],
-          adhaarImage: snapshot['adhaarImage'],
-          panImage: snapshot['panImage']);
+        name: snapshot['name'],
+        email: snapshot['email'],
+        age: snapshot['age'],
+        adhaar: snapshot['adhaar'],
+        pan: snapshot['pan'],
+        createdAt: snapshot['createdAt'],
+        address: snapshot['address'],
+        uid: snapshot['uid'],
+        profilePic: snapshot['profilePic'],
+        phoneNumber: snapshot['phoneNumber'],
+        adhaarImage: snapshot['adhaarImage'],
+        panImage: snapshot['panImage'],
+      );
       _uid = userModel.uid;
     });
   }
