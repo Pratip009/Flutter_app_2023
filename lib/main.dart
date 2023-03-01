@@ -4,9 +4,9 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_application_2023/provider/auth_provider.dart';
-import 'package:flutter_application_2023/screens/navpages/main_home_page.dart';
 import 'package:flutter_application_2023/screens/splash_screen.dart';
 import 'package:flutter_application_2023/screens/user_information_screen.dart';
+import 'package:flutter_application_2023/screens/wellcome_screen.dart';
 import 'package:flutter_application_2023/widgets/constant.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:provider/provider.dart';
@@ -40,22 +40,22 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => AuthProvider()),
       ],
       child: GetMaterialApp(
-        debugShowCheckedModeBanner: false,
-        home: FutureBuilder(
-          future: _initialization,
-          builder: (context, snapshot) {
-            if (snapshot.hasError) {
-              print("error");
-            }
-            if (snapshot.connectionState == ConnectionState.done) {
-              return SplashScreen();
-            }
-            return CircularProgressIndicator(
-              color: kyellow,
-            );
-          },
-        ),
-      ),
+          debugShowCheckedModeBanner: false, home: UserInfromationScreen()
+          // FutureBuilder(
+          //   future: _initialization,
+          //   builder: (context, snapshot) {
+          //     if (snapshot.hasError) {
+          //       print("error");
+          //     }
+          //     if (snapshot.connectionState == ConnectionState.done) {
+          //       return SplashScreen();
+          //     }
+          //     return CircularProgressIndicator(
+          //       color: kyellow,
+          //     );
+          //   },
+          // ),
+          ),
     );
   }
 }

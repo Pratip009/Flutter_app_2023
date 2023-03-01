@@ -5,6 +5,9 @@ class UserModel {
   String adhaar;
   String pan;
   String address;
+  String district;
+  String city;
+  String pin;
   String profilePic;
   String createdAt;
   String phoneNumber;
@@ -19,6 +22,9 @@ class UserModel {
     required this.adhaar,
     required this.pan,
     required this.address,
+    required this.district,
+    required this.city,
+    required this.pin,
     required this.profilePic,
     required this.createdAt,
     required this.phoneNumber,
@@ -36,6 +42,9 @@ class UserModel {
       adhaar: map['adhaar'] ?? '',
       pan: map['pan'] ?? '',
       address: map['address'] ?? '',
+      district: map['district']?? '',
+      city: map['city']?? '',
+      pin: map['pin']?? '',
       uid: map['uid'] ?? '',
       phoneNumber: map['phoneNumber'] ?? '',
       createdAt: map['createdAt'] ?? '',
@@ -55,6 +64,9 @@ class UserModel {
       "pan": pan,
       "uid": uid,
       "address": address,
+      "district":district,
+      "city":city,
+      "pin":pin,
       "profilePic": profilePic,
       "phoneNumber": phoneNumber,
       "createdAt": createdAt,

@@ -37,22 +37,38 @@ class _MainHomePageState extends State<MainHomePage> {
         ],
       ),
       body: Center(
-          child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          CircleAvatar(
-            backgroundColor: Colors.purple,
-            backgroundImage: NetworkImage(ap.userModel.profilePic),
-            radius: 50,
-          ),
-          const SizedBox(height: 20),
-          Text(ap.userModel.name),
-          Text(ap.userModel.phoneNumber),
-          Text(ap.userModel.email),
-          Text(ap.userModel.address),
-        ],
-      ),),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            CircleAvatar(
+              backgroundColor: Colors.purple,
+              backgroundImage: NetworkImage(ap.userModel.profilePic),
+              radius: 50,
+            ),
+            const SizedBox(height: 20),
+            Text(ap.userModel.uid),
+            Text(ap.userModel.name),
+            Text(ap.userModel.phoneNumber),
+            Text(ap.userModel.email),
+            Text(ap.userModel.pan),
+            Text(ap.userModel.adhaar),
+            Text(ap.userModel.city),
+            Text(ap.userModel.age),
+            Text(ap.userModel.pin),
+            Image(
+              image: NetworkImage(ap.userModel.adhaarImage),
+              height: 100,
+              width: 200,
+            ),
+            Image(
+              image: NetworkImage(ap.userModel.panImage),
+              height: 100,
+              width: 200,
+            )
+          ],
+        ),
+      ),
     );
   }
 }
