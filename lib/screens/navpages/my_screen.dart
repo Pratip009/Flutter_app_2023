@@ -1,7 +1,7 @@
 // ignore_for_file: avoid_unnecessary_containers, prefer_const_constructors
 
 import 'package:flutter/material.dart';
-import 'package:flutter_application_2023/screens/navpages/profile_navigations/face_detector_page.dart';
+import 'package:flutter_application_2023/screens/navpages/profile_navigations/face_detection/face_detector_page.dart';
 
 class MyScreen extends StatefulWidget {
   const MyScreen({super.key});
