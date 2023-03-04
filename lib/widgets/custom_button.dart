@@ -13,8 +13,8 @@ class CustomButton extends StatelessWidget {
     return ElevatedButton(
       onPressed: onPressed,
       style: ButtonStyle(
-        foregroundColor: MaterialStateProperty.all<Color>(kblack),
-        backgroundColor: MaterialStateProperty.all<Color>(kyellow),
+        foregroundColor: MaterialStateProperty.all<Color>(kwhite),
+        backgroundColor: MaterialStateProperty.all<Color>(kblack),
         shape: MaterialStateProperty.all<RoundedRectangleBorder>(
           RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(5.0),
@@ -25,7 +25,7 @@ class CustomButton extends StatelessWidget {
         text,
         style: GoogleFonts.lato(
           fontSize: 16,
-          fontWeight: FontWeight.bold,
+          fontWeight: FontWeight.w900,
           letterSpacing: 4,
         ),
       ),

@@ -20,21 +20,21 @@ class _OnBoardScreenState extends State<OnBoardScreen> {
   late PageController _pageController;
   List<OnboardModel> screens = <OnboardModel>[
     OnboardModel(
-      img: 'assets/images/market.jpg',
+      img: 'assets/images/shop.png',
       text: "Go To Market",
       desc: "Fresh and green foods\n fast free delevery",
       bg: Colors.blue,
       button: const Color(0xFFFBBC05),
     ),
     OnboardModel(
-      img: 'assets/images/pay.jpg',
+      img: 'assets/images/online-payment.png',
       text: "Pay",
       desc: "Quick money transfer \n free withdrawl",
       bg: Colors.red,
       button: const Color(0xFFFBBC05),
     ),
     OnboardModel(
-      img: 'assets/images/shopping.jpg',
+      img: 'assets/images/woman.png',
       text: "Shopping",
       desc: "Earn upto 7% when you trade via \n Ftripay wallet",
       bg: Colors.white,
@@ -64,11 +64,11 @@ class _OnBoardScreenState extends State<OnBoardScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: currentIndex == 0
-          ? kwhite
+          ? konboard1
           : currentIndex == 1
-              ? kwhite
+              ? konboard2
               : currentIndex == 2
-                  ? kwhite
+                  ? konboard3
                   : null,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -89,7 +89,7 @@ class _OnBoardScreenState extends State<OnBoardScreen> {
                 Text(
                   "Skip",
                   style: GoogleFonts.lato(
-                    color: kblue,
+                    color: kblack,
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
                   ),
@@ -99,7 +99,7 @@ class _OnBoardScreenState extends State<OnBoardScreen> {
                 ),
                 Icon(
                   Icons.arrow_forward,
-                  color: kblue,
+                  color: kblack,
                 ),
               ],
             ),
@@ -142,9 +142,8 @@ class _OnBoardScreenState extends State<OnBoardScreen> {
                                 width: currentIndex == index ? 25 : 8,
                                 height: 8,
                                 decoration: BoxDecoration(
-                                  color: currentIndex == index
-                                      ? kbrown
-                                      : kbrown300,
+                                  color:
+                                      currentIndex == index ? kblack : kwhite,
                                   borderRadius: BorderRadius.circular(10.0),
                                 ),
                               ),
@@ -155,20 +154,20 @@ class _OnBoardScreenState extends State<OnBoardScreen> {
                   Text(
                     screens[index].text,
                     textAlign: TextAlign.center,
-                    style: GoogleFonts.alegreya(
+                    style: GoogleFonts.taviraj(
                       fontSize: 27.0,
                       fontWeight: FontWeight.bold,
                       color: kblack,
-                      letterSpacing: 4,
+                      letterSpacing: 3,
                     ),
                   ),
                   Text(
                     screens[index].desc,
                     textAlign: TextAlign.center,
-                    style: GoogleFonts.abyssinicaSil(
+                    style: GoogleFonts.roboto(
                       fontSize: 17.0,
-                      color: Colors.black54,
-                      fontWeight: FontWeight.bold,
+                      color: Colors.black,
+                      fontWeight: FontWeight.w500,
                     ),
                   ),
                   InkWell(
@@ -193,7 +192,8 @@ class _OnBoardScreenState extends State<OnBoardScreen> {
                       ),
                       decoration: BoxDecoration(
                           color: kyellow,
-                          borderRadius: BorderRadius.circular(15.0)),
+                          borderRadius: BorderRadius.circular(15.0),
+                          border: Border.all(color: kblack)),
                       child: Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
@@ -203,7 +203,7 @@ class _OnBoardScreenState extends State<OnBoardScreen> {
                               fontSize: 16.0,
                               fontWeight: FontWeight.bold,
                               color: kblack,
-                              letterSpacing: 5,
+                              letterSpacing: 3,
                             ),
                           ),
                           SizedBox(

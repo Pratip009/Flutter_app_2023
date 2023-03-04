@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors, sized_box_for_whitespace
+// ignore_for_file: prefer_const_constructors, sized_box_for_whitespace, prefer_const_literals_to_create_immutables
 
 import 'dart:io';
 import 'package:flutter/material.dart';
@@ -78,7 +78,7 @@ class _UserInfromationScreenState extends State<UserInfromationScreen> {
     final isLoading =
         Provider.of<AuthProvider>(context, listen: true).isLoading;
     return Scaffold(
-      backgroundColor: kblack,
+      backgroundColor: Colors.transparent,
       body: SafeArea(
         child: isLoading == true
             ? Center(
@@ -90,664 +90,688 @@ class _UserInfromationScreenState extends State<UserInfromationScreen> {
                 key: _formKey,
                 child: SingleChildScrollView(
                   child: Center(
-                    child: Column(
-                      children: [
-                        InkWell(
-                          onTap: () => selectImage(),
-                          child: image == null
-                              ? Stack(
-                                  children: [
-                                    Container(
-                                      height: Dimensions.height120,
-                                      width: Dimensions.width120,
-                                      decoration: BoxDecoration(
-                                        border: Border.all(
-                                          width: 2,
-                                          color: kyellow,
-                                        ),
-                                        boxShadow: [
-                                          BoxShadow(
-                                            spreadRadius: 2,
-                                            blurRadius: 10,
-                                            color:
-                                                Colors.white.withOpacity(0.1),
-                                            offset: Offset(0, 10),
-                                          )
-                                        ],
-                                        shape: BoxShape.circle,
-                                        image: DecorationImage(
-                                          fit: BoxFit.contain,
-                                          image: AssetImage(
-                                              "assets/images/profile.png"),
-                                        ),
-                                      ),
-                                    ),
-                                    Positioned(
-                                      right: 0,
-                                      bottom: 60,
-                                      child: Container(
-                                        height: Dimensions.height20 * 2,
-                                        width: Dimensions.width10 * 4,
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Color(0xFF7C98B3),
+                      ),
+                      child: Column(
+                        children: [
+                          InkWell(
+                            onTap: () => selectImage(),
+                            child: image == null
+                                ? Stack(
+                                    children: [
+                                      Container(
+                                        height: Dimensions.height120,
+                                        width: Dimensions.width120,
                                         decoration: BoxDecoration(
-                                          shape: BoxShape.circle,
                                           border: Border.all(
                                             width: 2,
                                             color: kyellow,
                                           ),
-                                          color: kblack,
-                                        ),
-                                        child: Icon(
-                                          Icons.camera_alt_outlined,
-                                          color: kyellow,
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                )
-                              : Stack(
-                                  children: [
-                                    Container(
-                                      height: Dimensions.height120,
-                                      width: Dimensions.width120,
-                                      decoration: BoxDecoration(
-                                        border: Border.all(
-                                          width: 4,
-                                          color: Colors.white,
-                                        ),
-                                        boxShadow: [
-                                          BoxShadow(
-                                            spreadRadius: 2,
-                                            blurRadius: 10,
-                                            color:
-                                                Colors.black87.withOpacity(0.1),
-                                            offset: Offset(0, 10),
-                                          )
-                                        ],
-                                        shape: BoxShape.circle,
-                                      ),
-                                      child: CircleAvatar(
-                                        backgroundImage: FileImage(image!),
-                                        radius: 50,
-                                      ),
-                                    ),
-                                    Positioned(
-                                      right: 0,
-                                      bottom: 60,
-                                      child: Container(
-                                        height: Dimensions.height20 * 2,
-                                        width: Dimensions.width10 * 4,
-                                        decoration: BoxDecoration(
+                                          boxShadow: [
+                                            BoxShadow(
+                                              spreadRadius: 2,
+                                              blurRadius: 10,
+                                              color:
+                                                  Colors.white.withOpacity(0.1),
+                                              offset: Offset(0, 10),
+                                            )
+                                          ],
                                           shape: BoxShape.circle,
+                                          image: DecorationImage(
+                                            fit: BoxFit.contain,
+                                            image: AssetImage(
+                                                "assets/images/profile.png"),
+                                          ),
+                                        ),
+                                      ),
+                                      Positioned(
+                                        right: 0,
+                                        bottom: 60,
+                                        child: Container(
+                                          height: Dimensions.height20 * 2,
+                                          width: Dimensions.width10 * 4,
+                                          decoration: BoxDecoration(
+                                            shape: BoxShape.circle,
+                                            border: Border.all(
+                                              width: 2,
+                                              color: kyellow,
+                                            ),
+                                            color: kblack,
+                                          ),
+                                          child: Icon(
+                                            Icons.camera_alt_outlined,
+                                            color: kyellow,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  )
+                                : Stack(
+                                    children: [
+                                      Container(
+                                        height: Dimensions.height120,
+                                        width: Dimensions.width120,
+                                        decoration: BoxDecoration(
                                           border: Border.all(
                                             width: 4,
                                             color: Colors.white,
                                           ),
-                                          color: kyellow,
+                                          boxShadow: [
+                                            BoxShadow(
+                                              spreadRadius: 2,
+                                              blurRadius: 10,
+                                              color: Colors.black87
+                                                  .withOpacity(0.1),
+                                              offset: Offset(0, 10),
+                                            )
+                                          ],
+                                          shape: BoxShape.circle,
                                         ),
-                                        child: Icon(
-                                          Icons.edit,
-                                          color: Colors.white,
+                                        child: CircleAvatar(
+                                          backgroundImage: FileImage(image!),
+                                          radius: 50,
                                         ),
                                       ),
-                                    ),
-                                  ],
+                                      Positioned(
+                                        right: 0,
+                                        bottom: 60,
+                                        child: Container(
+                                          height: Dimensions.height20 * 2,
+                                          width: Dimensions.width10 * 4,
+                                          decoration: BoxDecoration(
+                                            shape: BoxShape.circle,
+                                            border: Border.all(
+                                              width: 4,
+                                              color: Colors.white,
+                                            ),
+                                            color: kyellow,
+                                          ),
+                                          child: Icon(
+                                            Icons.edit,
+                                            color: Colors.white,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                          ),
+                          Text(
+                            'Please fill out the following form',
+                            style: GoogleFonts.lora(
+                                fontSize: 20,
+                                color: kblack,
+                                fontWeight: FontWeight.bold,
+                                letterSpacing: 1),
+                          ),
+                          SizedBox(
+                            height: Dimensions.height20,
+                          ),
+                          Container(
+                            width: MediaQuery.of(context).size.width,
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 5, horizontal: 15),
+                            margin: const EdgeInsets.only(top: 15),
+                            child: Column(
+                              children: [
+                                // name field
+                                textField(
+                                  labelText: 'Username',
+                                  ontap: () {},
+                                  hintlText: "Enter your Full Name",
+                                  icon: Icons.account_circle,
+                                  inputType: TextInputType.name,
+                                  maxLines: 1,
+                                  controller: nameController,
+                                  validator: (value) {
+                                    if (value == null || value.isEmpty) {
+                                      return 'User Name Required';
+                                    }
+                                    return null;
+                                  },
                                 ),
-                        ),
-                        Text(
-                          'Please fill out the following form',
-                          style: GoogleFonts.aBeeZee(
-                              fontSize: 20,
-                              color: kyellow,
-                              fontWeight: FontWeight.bold,
-                              letterSpacing: 1),
-                        ),
-                        SizedBox(
-                          height: Dimensions.height20,
-                        ),
-                        Container(
-                          width: MediaQuery.of(context).size.width,
-                          padding: const EdgeInsets.symmetric(
-                              vertical: 5, horizontal: 15),
-                          margin: const EdgeInsets.only(top: 15),
-                          child: Column(
-                            children: [
-                              // name field
-                              textField(
-                                labelText: 'Username',
-                                ontap: () {},
-                                hintlText: "Enter your Full Name",
-                                icon: Icons.account_circle,
-                                inputType: TextInputType.name,
-                                maxLines: 1,
-                                controller: nameController,
-                                validator: (value) {
-                                  if (value == null || value.isEmpty) {
-                                    return 'User Name Required';
-                                  }
-                                  return null;
-                                },
-                              ),
 
-                              // email
-                              textField(
-                                labelText: 'Email',
-                                ontap: () {},
-                                hintlText: "Enter your Email",
-                                icon: Icons.email,
-                                inputType: TextInputType.emailAddress,
-                                maxLines: 1,
-                                controller: emailController,
-                                validator: (value) {
-                                  if (value == null || value.isEmpty) {
-                                    return 'Email id Required';
-                                  }
-                                  return null;
-                                },
-                              ),
-                              //age
-                              textField(
-                                labelText: 'Date Of Birth',
-                                hintlText: "Select Date Of Birth from calender",
-                                icon: Icons.calendar_month_outlined,
-                                inputType: TextInputType.number,
-                                maxLines: 1,
-                                controller: ageController,
-                                validator: (value) {
-                                  if (value == null || value.isEmpty) {
-                                    return 'Date of Birth required';
-                                  }
-                                  return null;
-                                },
-                                ontap: () async {
-                                  DateTime? pickeddate = await showDatePicker(
-                                      context: context,
-                                      initialDate: DateTime.now(),
-                                      firstDate: DateTime(1950),
-                                      lastDate: DateTime(2100));
-                                  if (pickeddate != null) {
-                                    ageController.text =
-                                        DateFormat('yyyy-MM-dd')
-                                            .format(pickeddate);
-                                  }
-                                },
-                              ),
+                                // email
+                                textField(
+                                  labelText: 'Email',
+                                  ontap: () {},
+                                  hintlText: "Enter your Email",
+                                  icon: Icons.email,
+                                  inputType: TextInputType.emailAddress,
+                                  maxLines: 1,
+                                  controller: emailController,
+                                  validator: (value) {
+                                    if (value == null || value.isEmpty) {
+                                      return 'Email id Required';
+                                    }
+                                    return null;
+                                  },
+                                ),
+                                //age
+                                textField(
+                                  labelText: 'Date Of Birth',
+                                  hintlText:
+                                      "Select Date Of Birth from calender",
+                                  icon: Icons.calendar_month_outlined,
+                                  inputType: TextInputType.number,
+                                  maxLines: 1,
+                                  controller: ageController,
+                                  validator: (value) {
+                                    if (value == null || value.isEmpty) {
+                                      return 'Date of Birth required';
+                                    }
+                                    return null;
+                                  },
+                                  ontap: () async {
+                                    DateTime? pickeddate = await showDatePicker(
+                                        context: context,
+                                        initialDate: DateTime.now(),
+                                        firstDate: DateTime(1950),
+                                        lastDate: DateTime(2100));
+                                    if (pickeddate != null) {
+                                      ageController.text =
+                                          DateFormat('yyyy-MM-dd')
+                                              .format(pickeddate);
+                                    }
+                                  },
+                                ),
 
-                              // adhhar
-                              textField(
-                                labelText: 'Adhaar Number',
-                                ontap: () {},
-                                hintlText: "Enter your Adhaar Number",
-                                icon: Icons.document_scanner_sharp,
-                                inputType: TextInputType.number,
-                                maxLines: 1,
-                                controller: adhaarController,
-                                validator: (value) {
-                                  if (value?.length != 12) {
-                                    return 'Adhaar Number must be of 12 digit';
-                                  }
-                                  return null;
-                                },
-                              ),
-                              //adhaar image dropbox
-                              InkWell(
-                                onTap: () => selectadhaarImage(),
-                                child: adhaarImage == null
-                                    ? Stack(
-                                        children: [
-                                          Container(
-                                            height: 175,
-                                            width: double.infinity,
-                                            margin: EdgeInsets.only(bottom: 20),
-                                            decoration: BoxDecoration(
-                                              color: Colors.black38,
-                                              borderRadius:
-                                                  BorderRadius.circular(8),
-                                              border: Border.all(
-                                                  color: Colors.white),
-                                            ),
-                                            child: Column(
-                                              children: [
-                                                Icon(
-                                                  Icons.cloud_upload_rounded,
-                                                  size: 60,
-                                                  color: kwhite,
-                                                ),
-                                                Text(
-                                                  "Drop Your Adhaar Image Here",
-                                                  style: GoogleFonts.lato(
-                                                    fontSize: 17,
-                                                    fontWeight: FontWeight.bold,
-                                                    color: kyellow,
-                                                  ),
-                                                ),
-                                                SizedBox(
-                                                  height: 10,
-                                                ),
-                                                Container(
-                                                  height: 35,
-                                                  width: 150,
-                                                  decoration: BoxDecoration(
+                                // adhhar
+                                textField(
+                                  labelText: 'Adhaar Number',
+                                  ontap: () {},
+                                  hintlText: "Enter your Adhaar Number",
+                                  icon: Icons.document_scanner_sharp,
+                                  inputType: TextInputType.number,
+                                  maxLines: 1,
+                                  controller: adhaarController,
+                                  validator: (value) {
+                                    if (value?.length != 12) {
+                                      return 'Adhaar Number must be of 12 digit';
+                                    }
+                                    return null;
+                                  },
+                                ),
+                                //adhaar image dropbox
+                                InkWell(
+                                  onTap: () => selectadhaarImage(),
+                                  child: adhaarImage == null
+                                      ? Stack(
+                                          children: [
+                                            Container(
+                                              height: 175,
+                                              width: double.infinity,
+                                              margin:
+                                                  EdgeInsets.only(bottom: 20),
+                                              decoration: BoxDecoration(
+                                                color: Colors.black38,
+                                                borderRadius:
+                                                    BorderRadius.circular(8),
+                                                border: Border.all(
+                                                    color: Colors.white),
+                                              ),
+                                              child: Column(
+                                                children: [
+                                                  Icon(
+                                                    Icons.cloud_upload_rounded,
+                                                    size: 60,
                                                     color: kwhite,
                                                   ),
-                                                  padding: EdgeInsets.all(8),
-                                                  child: Row(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .center,
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .center,
-                                                    // ignore: prefer_const_literals_to_create_immutables
-                                                    children: [
-                                                      Icon(
-                                                        Icons.search,
-                                                        color: kblack,
-                                                      ),
-                                                      SizedBox(
-                                                        width: 5,
-                                                      ),
-                                                      Text(
-                                                        "Choose File",
-                                                        style: GoogleFonts.lato(
-                                                          fontSize: 15,
-                                                          fontWeight:
-                                                              FontWeight.bold,
-                                                          color: kblack,
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ),
-                                                SizedBox(
-                                                  height: 10,
-                                                ),
-                                                Text(
-                                                  "Max file size: 5MB",
-                                                  style: GoogleFonts.lato(
-                                                    fontSize: 12,
-                                                    fontWeight: FontWeight.bold,
-                                                    color: kwhite,
-                                                  ),
-                                                )
-                                              ],
-                                            ),
-                                          ),
-                                        ],
-                                      )
-                                    : Stack(
-                                        children: [
-                                          Container(
-                                            height: 280,
-                                            width: double.infinity,
-                                            margin: EdgeInsets.only(bottom: 20),
-                                            decoration: BoxDecoration(
-                                              color: Colors.black38,
-                                              borderRadius:
-                                                  BorderRadius.circular(8),
-                                              border: Border.all(
-                                                  color: Colors.white),
-                                            ),
-                                            child: Column(
-                                              children: [
-                                                Icon(
-                                                  Icons.cloud_upload_rounded,
-                                                  size: 60,
-                                                  color: kwhite,
-                                                ),
-                                                Text(
-                                                  "Drop Your Adhaar Image Here",
-                                                  style: GoogleFonts.lato(
-                                                    fontSize: 17,
-                                                    fontWeight: FontWeight.bold,
-                                                    color: kyellow,
-                                                  ),
-                                                ),
-                                                SizedBox(
-                                                  height: 10,
-                                                ),
-                                                Container(
-                                                  height: 35,
-                                                  width: 150,
-                                                  decoration: BoxDecoration(
-                                                    color: kwhite,
-                                                  ),
-                                                  padding: EdgeInsets.all(8),
-                                                  child: Row(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .center,
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .center,
-                                                    // ignore: prefer_const_literals_to_create_immutables
-                                                    children: [
-                                                      Icon(
-                                                        Icons.search,
-                                                        color: kblack,
-                                                      ),
-                                                      SizedBox(
-                                                        width: 5,
-                                                      ),
-                                                      Text(
-                                                        "Choose File",
-                                                        style: GoogleFonts.lato(
-                                                          fontSize: 15,
-                                                          fontWeight:
-                                                              FontWeight.bold,
-                                                          color: kblack,
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ),
-                                                SizedBox(
-                                                  height: 10,
-                                                ),
-                                                Text(
-                                                  "Max file size: 5MB",
-                                                  style: GoogleFonts.lato(
-                                                    fontSize: 12,
-                                                    fontWeight: FontWeight.bold,
-                                                    color: kwhite,
-                                                  ),
-                                                ),
-                                                SizedBox(
-                                                  height: Dimensions.height20,
-                                                ),
-                                                Container(
-                                                    decoration: BoxDecoration(
-                                                        border: Border.all(
-                                                            color: kyellow)),
-                                                    height:
-                                                        Dimensions.height20 * 4,
-                                                    width: 150,
-                                                    child: Image(
-                                                      image: FileImage(
-                                                          adhaarImage!),
-                                                      fit: BoxFit.cover,
-                                                    )),
-                                              ],
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                              ),
-                              //pan
-                              textField(
-                                labelText: 'PAN Number',
-                                ontap: () {},
-                                hintlText: "Enter your PAN number",
-                                icon: Icons.add_card,
-                                inputType: TextInputType.number,
-                                maxLines: 1,
-                                controller: panController,
-                                validator: (value) {
-                                  if (value?.length != 10) {
-                                    return 'PAN Number must be of 10 digit';
-                                  }
-                                  return null;
-                                },
-                              ),
-                              //pan image
-                              InkWell(
-                                onTap: () => selectpanImage(),
-                                child: panImage == null
-                                    ? Stack(
-                                        children: [
-                                          Container(
-                                            height: 175,
-                                            width: double.infinity,
-                                            margin: EdgeInsets.only(bottom: 20),
-                                            decoration: BoxDecoration(
-                                              color: Colors.black38,
-                                              borderRadius:
-                                                  BorderRadius.circular(8),
-                                              border: Border.all(
-                                                  color: Colors.white),
-                                            ),
-                                            child: Column(
-                                              children: [
-                                                Icon(
-                                                  Icons.cloud_upload_rounded,
-                                                  size: 60,
-                                                  color: kwhite,
-                                                ),
-                                                Text(
-                                                  "Drop Your PAN Image Here",
-                                                  style: GoogleFonts.lato(
-                                                    fontSize: 17,
-                                                    fontWeight: FontWeight.bold,
-                                                    color: kyellow,
-                                                  ),
-                                                ),
-                                                SizedBox(
-                                                  height: 10,
-                                                ),
-                                                Container(
-                                                  height: 35,
-                                                  width: 150,
-                                                  decoration: BoxDecoration(
-                                                    color: kwhite,
-                                                  ),
-                                                  padding: EdgeInsets.all(8),
-                                                  child: Row(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .center,
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .center,
-                                                    // ignore: prefer_const_literals_to_create_immutables
-                                                    children: [
-                                                      Icon(
-                                                        Icons.search,
-                                                        color: kblack,
-                                                      ),
-                                                      SizedBox(
-                                                        width: 5,
-                                                      ),
-                                                      Text(
-                                                        "Choose File",
-                                                        style: GoogleFonts.lato(
-                                                          fontSize: 15,
-                                                          fontWeight:
-                                                              FontWeight.bold,
-                                                          color: kblack,
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ),
-                                                SizedBox(
-                                                  height: 10,
-                                                ),
-                                                Text(
-                                                  "Max file size: 5MB",
-                                                  style: GoogleFonts.lato(
-                                                    fontSize: 12,
-                                                    fontWeight: FontWeight.bold,
-                                                    color: kwhite,
-                                                  ),
-                                                )
-                                              ],
-                                            ),
-                                          ),
-                                        ],
-                                      )
-                                    : Stack(
-                                        children: [
-                                          Container(
-                                            height: 280,
-                                            width: double.infinity,
-                                            margin: EdgeInsets.only(bottom: 20),
-                                            decoration: BoxDecoration(
-                                              color: Colors.black38,
-                                              borderRadius:
-                                                  BorderRadius.circular(8),
-                                              border: Border.all(
-                                                  color: Colors.white),
-                                            ),
-                                            child: Column(
-                                              children: [
-                                                Icon(
-                                                  Icons.cloud_upload_rounded,
-                                                  size: 60,
-                                                  color: kwhite,
-                                                ),
-                                                Text(
-                                                  "Drop Your PAN Image Here",
-                                                  style: GoogleFonts.lato(
-                                                    fontSize: 17,
-                                                    fontWeight: FontWeight.bold,
-                                                    color: kyellow,
-                                                  ),
-                                                ),
-                                                SizedBox(
-                                                  height: 10,
-                                                ),
-                                                Container(
-                                                  height: 35,
-                                                  width: 150,
-                                                  decoration: BoxDecoration(
-                                                    color: kwhite,
-                                                  ),
-                                                  padding: EdgeInsets.all(8),
-                                                  child: Row(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .center,
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .center,
-                                                    // ignore: prefer_const_literals_to_create_immutables
-                                                    children: [
-                                                      Icon(
-                                                        Icons.search,
-                                                        color: kblack,
-                                                      ),
-                                                      SizedBox(
-                                                        width: 5,
-                                                      ),
-                                                      Text(
-                                                        "Choose File",
-                                                        style: GoogleFonts.lato(
-                                                          fontSize: 15,
-                                                          fontWeight:
-                                                              FontWeight.bold,
-                                                          color: kblack,
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ),
-                                                SizedBox(
-                                                  height: 10,
-                                                ),
-                                                Text(
-                                                  "Max file size: 5MB",
-                                                  style: GoogleFonts.lato(
-                                                    fontSize: 12,
-                                                    fontWeight: FontWeight.bold,
-                                                    color: kwhite,
-                                                  ),
-                                                ),
-                                                SizedBox(
-                                                  height: Dimensions.height20,
-                                                ),
-                                                Container(
-                                                    decoration: BoxDecoration(
-                                                      border: Border.all(
-                                                          color: kyellow),
+                                                  Text(
+                                                    "Drop Your Adhaar Image Here",
+                                                    style: GoogleFonts.lato(
+                                                      fontSize: 17,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      color: kyellow,
                                                     ),
-                                                    height:
-                                                        Dimensions.height20 * 4,
+                                                  ),
+                                                  SizedBox(
+                                                    height: 10,
+                                                  ),
+                                                  Container(
+                                                    height: 35,
                                                     width: 150,
-                                                    child: Image(
-                                                      image:
-                                                          FileImage(panImage!),
-                                                      fit: BoxFit.cover,
-                                                    )),
-                                              ],
+                                                    decoration: BoxDecoration(
+                                                      color: kwhite,
+                                                    ),
+                                                    padding: EdgeInsets.all(8),
+                                                    child: Row(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .center,
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .center,
+                                                      // ignore: prefer_const_literals_to_create_immutables
+                                                      children: [
+                                                        Icon(
+                                                          Icons.search,
+                                                          color: kblack,
+                                                        ),
+                                                        SizedBox(
+                                                          width: 5,
+                                                        ),
+                                                        Text(
+                                                          "Choose File",
+                                                          style:
+                                                              GoogleFonts.lato(
+                                                            fontSize: 15,
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                            color: kblack,
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                  SizedBox(
+                                                    height: 10,
+                                                  ),
+                                                  Text(
+                                                    "Max file size: 5MB",
+                                                    style: GoogleFonts.lato(
+                                                      fontSize: 12,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      color: kwhite,
+                                                    ),
+                                                  )
+                                                ],
+                                              ),
                                             ),
-                                          ),
-                                        ],
-                                      ),
-                              ),
-                              //bio
-                              textField(
-                                labelText: 'Address',
-                                ontap: () {},
-                                hintlText: "Enter your full Address",
-                                icon: Icons.edit,
-                                inputType: TextInputType.name,
-                                maxLines: 1,
-                                controller: addressController,
-                                validator: (value) {
-                                  if (value == null || value.isEmpty) {
-                                    return 'User Name Required';
-                                  }
-                                  return null;
-                                },
-                              ),
-                              textField(
-                                labelText: 'District',
-                                ontap: () {},
-                                hintlText: "Enter your District name",
-                                icon: Icons.place_outlined,
-                                inputType: TextInputType.name,
-                                maxLines: 1,
-                                controller: districtController,
-                                validator: (value) {
-                                  if (value == null || value.isEmpty) {
-                                    return 'User Name Required';
-                                  }
-                                  return null;
-                                },
-                              ),
-                              textField(
-                                labelText: 'City',
-                                ontap: () {},
-                                hintlText: "Enter your City name",
-                                icon: Icons.location_city_outlined,
-                                inputType: TextInputType.name,
-                                maxLines: 1,
-                                controller: cityController,
-                                validator: (value) {
-                                  if (value == null || value.isEmpty) {
-                                    return 'User Name Required';
-                                  }
-                                  return null;
-                                },
-                              ),
-                              textField(
-                                labelText: 'PIN Number',
-                                ontap: () {},
-                                hintlText: "Enter your PIN number",
-                                icon: Icons.numbers,
-                                inputType: TextInputType.number,
-                                maxLines: 1,
-                                controller: pinController,
-                                validator: (value) {
-                                  if (value?.length != 6) {
-                                    return 'PIN must be of 6 digit';
-                                  }
-                                  return null;
-                                },
-                              ),
-                            ],
+                                          ],
+                                        )
+                                      : Stack(
+                                          children: [
+                                            Container(
+                                              height: 280,
+                                              width: double.infinity,
+                                              margin:
+                                                  EdgeInsets.only(bottom: 20),
+                                              decoration: BoxDecoration(
+                                                color: Colors.black38,
+                                                borderRadius:
+                                                    BorderRadius.circular(8),
+                                                border: Border.all(
+                                                    color: Colors.white),
+                                              ),
+                                              child: Column(
+                                                children: [
+                                                  Icon(
+                                                    Icons.cloud_upload_rounded,
+                                                    size: 60,
+                                                    color: kwhite,
+                                                  ),
+                                                  Text(
+                                                    "Drop Your Adhaar Image Here",
+                                                    style: GoogleFonts.lato(
+                                                      fontSize: 17,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      color: kyellow,
+                                                    ),
+                                                  ),
+                                                  SizedBox(
+                                                    height: 10,
+                                                  ),
+                                                  Container(
+                                                    height: 35,
+                                                    width: 150,
+                                                    decoration: BoxDecoration(
+                                                      color: kwhite,
+                                                    ),
+                                                    padding: EdgeInsets.all(8),
+                                                    child: Row(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .center,
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .center,
+                                                      // ignore: prefer_const_literals_to_create_immutables
+                                                      children: [
+                                                        Icon(
+                                                          Icons.search,
+                                                          color: kblack,
+                                                        ),
+                                                        SizedBox(
+                                                          width: 5,
+                                                        ),
+                                                        Text(
+                                                          "Choose File",
+                                                          style:
+                                                              GoogleFonts.lato(
+                                                            fontSize: 15,
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                            color: kblack,
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                  SizedBox(
+                                                    height: 10,
+                                                  ),
+                                                  Text(
+                                                    "Max file size: 5MB",
+                                                    style: GoogleFonts.lato(
+                                                      fontSize: 12,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      color: kwhite,
+                                                    ),
+                                                  ),
+                                                  SizedBox(
+                                                    height: Dimensions.height20,
+                                                  ),
+                                                  Container(
+                                                      decoration: BoxDecoration(
+                                                          border: Border.all(
+                                                              color: kyellow)),
+                                                      height:
+                                                          Dimensions.height20 *
+                                                              4,
+                                                      width: 150,
+                                                      child: Image(
+                                                        image: FileImage(
+                                                            adhaarImage!),
+                                                        fit: BoxFit.cover,
+                                                      )),
+                                                ],
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                ),
+                                //pan
+                                textField(
+                                  labelText: 'PAN Number',
+                                  ontap: () {},
+                                  hintlText: "Enter your PAN number",
+                                  icon: Icons.add_card,
+                                  inputType: TextInputType.number,
+                                  maxLines: 1,
+                                  controller: panController,
+                                  validator: (value) {
+                                    if (value?.length != 10) {
+                                      return 'PAN Number must be of 10 digit';
+                                    }
+                                    return null;
+                                  },
+                                ),
+                                //pan image
+                                InkWell(
+                                  onTap: () => selectpanImage(),
+                                  child: panImage == null
+                                      ? Stack(
+                                          children: [
+                                            Container(
+                                              height: 175,
+                                              width: double.infinity,
+                                              margin:
+                                                  EdgeInsets.only(bottom: 20),
+                                              decoration: BoxDecoration(
+                                                color: Colors.black38,
+                                                borderRadius:
+                                                    BorderRadius.circular(8),
+                                                border: Border.all(
+                                                    color: Colors.white),
+                                              ),
+                                              child: Column(
+                                                children: [
+                                                  Icon(
+                                                    Icons.cloud_upload_rounded,
+                                                    size: 60,
+                                                    color: kwhite,
+                                                  ),
+                                                  Text(
+                                                    "Drop Your PAN Image Here",
+                                                    style: GoogleFonts.lato(
+                                                      fontSize: 17,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      color: kyellow,
+                                                    ),
+                                                  ),
+                                                  SizedBox(
+                                                    height: 10,
+                                                  ),
+                                                  Container(
+                                                    height: 35,
+                                                    width: 150,
+                                                    decoration: BoxDecoration(
+                                                      color: kwhite,
+                                                    ),
+                                                    padding: EdgeInsets.all(8),
+                                                    child: Row(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .center,
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .center,
+                                                      // ignore: prefer_const_literals_to_create_immutables
+                                                      children: [
+                                                        Icon(
+                                                          Icons.search,
+                                                          color: kblack,
+                                                        ),
+                                                        SizedBox(
+                                                          width: 5,
+                                                        ),
+                                                        Text(
+                                                          "Choose File",
+                                                          style:
+                                                              GoogleFonts.lato(
+                                                            fontSize: 15,
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                            color: kblack,
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                  SizedBox(
+                                                    height: 10,
+                                                  ),
+                                                  Text(
+                                                    "Max file size: 5MB",
+                                                    style: GoogleFonts.lato(
+                                                      fontSize: 12,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      color: kwhite,
+                                                    ),
+                                                  )
+                                                ],
+                                              ),
+                                            ),
+                                          ],
+                                        )
+                                      : Stack(
+                                          children: [
+                                            Container(
+                                              height: 280,
+                                              width: double.infinity,
+                                              margin:
+                                                  EdgeInsets.only(bottom: 20),
+                                              decoration: BoxDecoration(
+                                                color: Colors.black38,
+                                                borderRadius:
+                                                    BorderRadius.circular(8),
+                                                border: Border.all(
+                                                    color: Colors.white),
+                                              ),
+                                              child: Column(
+                                                children: [
+                                                  Icon(
+                                                    Icons.cloud_upload_rounded,
+                                                    size: 60,
+                                                    color: kwhite,
+                                                  ),
+                                                  Text(
+                                                    "Drop Your PAN Image Here",
+                                                    style: GoogleFonts.lato(
+                                                      fontSize: 17,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      color: kyellow,
+                                                    ),
+                                                  ),
+                                                  SizedBox(
+                                                    height: 10,
+                                                  ),
+                                                  Container(
+                                                    height: 35,
+                                                    width: 150,
+                                                    decoration: BoxDecoration(
+                                                      color: kwhite,
+                                                    ),
+                                                    padding: EdgeInsets.all(8),
+                                                    child: Row(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .center,
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .center,
+                                                      // ignore: prefer_const_literals_to_create_immutables
+                                                      children: [
+                                                        Icon(
+                                                          Icons.search,
+                                                          color: kblack,
+                                                        ),
+                                                        SizedBox(
+                                                          width: 5,
+                                                        ),
+                                                        Text(
+                                                          "Choose File",
+                                                          style:
+                                                              GoogleFonts.lato(
+                                                            fontSize: 15,
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                            color: kblack,
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                  SizedBox(
+                                                    height: 10,
+                                                  ),
+                                                  Text(
+                                                    "Max file size: 5MB",
+                                                    style: GoogleFonts.lato(
+                                                      fontSize: 12,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      color: kwhite,
+                                                    ),
+                                                  ),
+                                                  SizedBox(
+                                                    height: Dimensions.height20,
+                                                  ),
+                                                  Container(
+                                                      decoration: BoxDecoration(
+                                                        border: Border.all(
+                                                            color: kyellow),
+                                                      ),
+                                                      height:
+                                                          Dimensions.height20 *
+                                                              4,
+                                                      width: 150,
+                                                      child: Image(
+                                                        image: FileImage(
+                                                            panImage!),
+                                                        fit: BoxFit.cover,
+                                                      )),
+                                                ],
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                ),
+                                //bio
+                                textField(
+                                  labelText: 'Address',
+                                  ontap: () {},
+                                  hintlText: "Enter your full Address",
+                                  icon: Icons.edit,
+                                  inputType: TextInputType.name,
+                                  maxLines: 1,
+                                  controller: addressController,
+                                  validator: (value) {
+                                    if (value == null || value.isEmpty) {
+                                      return 'User Name Required';
+                                    }
+                                    return null;
+                                  },
+                                ),
+                                textField(
+                                  labelText: 'District',
+                                  ontap: () {},
+                                  hintlText: "Enter your District name",
+                                  icon: Icons.place_outlined,
+                                  inputType: TextInputType.name,
+                                  maxLines: 1,
+                                  controller: districtController,
+                                  validator: (value) {
+                                    if (value == null || value.isEmpty) {
+                                      return 'User Name Required';
+                                    }
+                                    return null;
+                                  },
+                                ),
+                                textField(
+                                  labelText: 'City',
+                                  ontap: () {},
+                                  hintlText: "Enter your City name",
+                                  icon: Icons.location_city_outlined,
+                                  inputType: TextInputType.name,
+                                  maxLines: 1,
+                                  controller: cityController,
+                                  validator: (value) {
+                                    if (value == null || value.isEmpty) {
+                                      return 'User Name Required';
+                                    }
+                                    return null;
+                                  },
+                                ),
+                                textField(
+                                  labelText: 'PIN Number',
+                                  ontap: () {},
+                                  hintlText: "Enter your PIN number",
+                                  icon: Icons.numbers,
+                                  inputType: TextInputType.number,
+                                  maxLines: 1,
+                                  controller: pinController,
+                                  validator: (value) {
+                                    if (value?.length != 6) {
+                                      return 'PIN must be of 6 digit';
+                                    }
+                                    return null;
+                                  },
+                                ),
+                              ],
+                            ),
                           ),
-                        ),
-                        const SizedBox(height: 20),
-                        Container(
-                          margin: EdgeInsets.fromLTRB(0, 0, 0, 50),
-                          height: 50,
-                          width: MediaQuery.of(context).size.width * 0.90,
-                          child: CustomButton(
-                            text: "SUBMIT",
-                            onPressed: () => storeData(),
-                          ),
-                        )
-                      ],
+                          const SizedBox(height: 20),
+                          Container(
+                            margin: EdgeInsets.fromLTRB(0, 0, 0, 50),
+                            height: 50,
+                            width: MediaQuery.of(context).size.width * 0.90,
+                            child: CustomButton(
+                              text: "SUBMIT",
+                              onPressed: () => storeData(),
+                            ),
+                          )
+                        ],
+                      ),
                     ),
                   ),
                 ),

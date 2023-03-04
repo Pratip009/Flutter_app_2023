@@ -2,11 +2,13 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_application_2023/screens/navpages/main_home_page.dart';
+import 'package:flutter_application_2023/screens/register_screen.dart';
 import 'package:flutter_application_2023/screens/user_information_screen.dart';
 import 'package:flutter_application_2023/widgets/constant.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pinput/pinput.dart';
 import 'package:provider/provider.dart';
+import 'package:simple_gradient_text/simple_gradient_text.dart';
 
 import '../provider/auth_provider.dart';
 import '../utils/utils.dart';
@@ -29,6 +31,7 @@ class _OtpScreenState extends State<OtpScreen> {
     final isLoading =
         Provider.of<AuthProvider>(context, listen: true).isLoading;
     return Scaffold(
+      backgroundColor: Colors.transparent,
       body: SafeArea(
         child: isLoading == true
             ? Center(
@@ -37,7 +40,17 @@ class _OtpScreenState extends State<OtpScreen> {
                 ),
               )
             : Center(
-                child: Padding(
+                child: Container(
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                        // ignore: prefer_const_literals_to_create_immutables
+                        colors: [
+                          Color(0xFF9DF1DF),
+                          Color(0xFFF8F4D1),
+                          Color(0xFFCDFCF6)
+                        ],
+                        begin: Alignment.topCenter),
+                  ),
                   padding:
                       const EdgeInsets.symmetric(vertical: 25, horizontal: 30),
                   child: Column(
@@ -53,32 +66,34 @@ class _OtpScreenState extends State<OtpScreen> {
                         ),
                       ),
                       Container(
-                        width: 200,
-                        height: 200,
                         padding: const EdgeInsets.all(20.0),
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
-                          color: Colors.amber.shade400,
                         ),
                         child: Image.asset(
-                          "assets/images/mob.png",
+                          "assets/images/otp.gif",
                         ),
                       ),
-                      const SizedBox(height: 20),
-                      Text(
-                        "Verification",
+                      GradientText(
+                        "VERIFICATION",
                         style: GoogleFonts.montserrat(
                           fontSize: 22,
                           fontWeight: FontWeight.bold,
                           letterSpacing: 2,
                         ),
+                        // ignore: prefer_const_literals_to_create_immutables
+                        colors: [
+                          Colors.blue,
+                          Colors.red,
+                          Colors.teal,
+                        ],
                       ),
                       const SizedBox(height: 10),
                       Text(
                         "Enter the OTP send to your phone number",
-                        style: GoogleFonts.lato(
+                        style: GoogleFonts.lora(
                           fontSize: 14,
-                          color: Colors.black45,
+                          color: Colors.black87,
                           fontWeight: FontWeight.bold,
                         ),
                         textAlign: TextAlign.center,
@@ -93,7 +108,7 @@ class _OtpScreenState extends State<OtpScreen> {
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10),
                             border: Border.all(
-                              color: Colors.amber.shade400,
+                              color: kblack,
                             ),
                           ),
                           textStyle: const TextStyle(
@@ -112,7 +127,7 @@ class _OtpScreenState extends State<OtpScreen> {
                         width: MediaQuery.of(context).size.width,
                         height: 50,
                         child: CustomButton(
-                          text: "Verify",
+                          text: "VERIFY",
                           onPressed: () {
                             if (otpCode != null) {
                               verifyOtp(context, otpCode!);
@@ -132,12 +147,20 @@ class _OtpScreenState extends State<OtpScreen> {
                         ),
                       ),
                       const SizedBox(height: 15),
-                      Text(
-                        "Resend New Code",
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                          color: kblack,
+                      InkWell(
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => RegisterScreen()));
+                        },
+                        child: Text(
+                          "Resend New Code",
+                          style: GoogleFonts.lora(
+                            fontSize: 14,
+                            color: kblue,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ),
                     ],

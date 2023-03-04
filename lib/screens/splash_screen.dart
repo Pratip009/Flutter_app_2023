@@ -32,34 +32,18 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.blue.shade900,
+      backgroundColor: Colors.blue.shade400,
       body: Container(
         child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             // ignore: prefer_const_literals_to_create_immutables
             children: [
-              Icon(
-                Icons.android_outlined,
-                size: Dimensions.height100,
-                color: Colors.white,
-              ),
-              SizedBox(
-                height: Dimensions.height20,
-              ),
-              Icon(
-                Icons.apple_outlined,
-                size: Dimensions.height100,
-                color: Colors.white,
-              ),
-              SizedBox(
-                height: Dimensions.height20,
-              ),
-              Icon(
-                Icons.integration_instructions_outlined,
-                size: Dimensions.height100,
-                color: Colors.white,
-              ),
+              Image.asset(
+                'assets/images/logo.png',
+                height: 192,
+                width: 192,
+              )
             ],
           ),
         ),

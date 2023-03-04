@@ -27,7 +27,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Image.asset(
-                  "assets/images/business.png",
+                  "assets/images/busines.png",
                   height: 300,
                 ),
                 const SizedBox(height: 20),

@@ -1,18 +1,20 @@
 // ignore_for_file: avoid_print, prefer_const_constructors
 
+import 'package:camera/camera.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_application_2023/provider/auth_provider.dart';
+import 'package:flutter_application_2023/screens/navpages/my_screen.dart';
 import 'package:flutter_application_2023/screens/splash_screen.dart';
-import 'package:flutter_application_2023/screens/user_information_screen.dart';
-import 'package:flutter_application_2023/screens/wellcome_screen.dart';
 import 'package:flutter_application_2023/widgets/constant.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:provider/provider.dart';
 
+List<CameraDescription> cameras = [];
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  cameras = await availableCameras();
   await Firebase.initializeApp(
     name: 'flutter_application_2023',
     options: const FirebaseOptions(
@@ -40,22 +42,23 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => AuthProvider()),
       ],
       child: GetMaterialApp(
-          debugShowCheckedModeBanner: false, home: UserInfromationScreen()
-          // FutureBuilder(
-          //   future: _initialization,
-          //   builder: (context, snapshot) {
-          //     if (snapshot.hasError) {
-          //       print("error");
-          //     }
-          //     if (snapshot.connectionState == ConnectionState.done) {
-          //       return SplashScreen();
-          //     }
-          //     return CircularProgressIndicator(
-          //       color: kyellow,
-          //     );
-          //   },
-          // ),
-          ),
+        debugShowCheckedModeBanner: false,
+        home: MyScreen(),
+        // FutureBuilder(
+        //   future: _initialization,
+        //   builder: (context, snapshot) {
+        //     if (snapshot.hasError) {
+        //       print("error");
+        //     }
+        //     if (snapshot.connectionState == ConnectionState.done) {
+        //       return SplashScreen();
+        //     }
+        //     return CircularProgressIndicator(
+        //       color: kyellow,
+        //     );
+        //   },
+        // ),
+      ),
     );
   }
 }
