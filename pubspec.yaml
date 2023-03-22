@@ -49,9 +49,13 @@ dependencies:
   get: ^4.6.5
   intl: ^0.18.0
   simple_gradient_text: ^1.2.4
-  google_mlkit_face_detection: ^0.5.0
   camera: ^0.10.3+2
   path_provider: ^2.0.13
+  carousel_slider: ^4.2.1
+  razorpay_flutter: ^1.2.1
+  http: ^0.13.5
+  toast: ^0.2.9
+  flutter_riverpod: ^2.3.2
 
   
 

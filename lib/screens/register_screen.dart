@@ -81,9 +81,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           letterSpacing: 2,
                         ),
                         colors: [
-                          Colors.blue,
-                          Colors.red,
-                          Colors.teal,
+                          Color(0xFFF94A29),
+                          Color(0xFFFFB72B),
+                          Color(0xFFF94A29),
                         ],
                       ),
                       const SizedBox(height: 10),

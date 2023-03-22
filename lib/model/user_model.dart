@@ -14,6 +14,7 @@ class UserModel {
   String uid;
   String adhaarImage;
   String panImage;
+ 
 
   UserModel({
     required this.name,
@@ -31,6 +32,7 @@ class UserModel {
     required this.uid,
     required this.adhaarImage,
     required this.panImage,
+   
   });
 
   // from map
@@ -51,6 +53,7 @@ class UserModel {
       profilePic: map['profilePic'] ?? '',
       adhaarImage: map['adhaarImage'] ?? '',
       panImage: map['panImage'] ?? '',
+  
     );
   }
 
@@ -72,6 +75,7 @@ class UserModel {
       "createdAt": createdAt,
       "adhaarImage": adhaarImage,
       "panImage": panImage,
+ 
     };
   }
 }

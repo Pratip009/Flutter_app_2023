@@ -5,7 +5,16 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_application_2023/provider/auth_provider.dart';
-import 'package:flutter_application_2023/screens/navpages/my_screen.dart';
+import 'package:flutter_application_2023/provider/face_provider.dart';
+import 'package:flutter_application_2023/router.dart';
+import 'package:flutter_application_2023/screens/chat_app/colors.dart';
+import 'package:flutter_application_2023/screens/chat_app/features/auth/chat_login_screen.dart';
+import 'package:flutter_application_2023/screens/chat_app/features/landing/screens/landing_screen.dart';
+import 'package:flutter_application_2023/screens/chat_app/screens/mobile_layout_screen.dart';
+import 'package:flutter_application_2023/screens/chat_app/screens/web_layout_screen.dart';
+import 'package:flutter_application_2023/screens/chat_app/utils/responsive_layout.dart';
+import 'package:flutter_application_2023/screens/splash_screen.dart';
+import 'package:flutter_application_2023/widgets/constant.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:provider/provider.dart';
 
@@ -38,10 +47,17 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => AuthProvider()),
+        ChangeNotifierProvider(create: (_) => FaceProvider()),
       ],
       child: GetMaterialApp(
+        theme: ThemeData.dark().copyWith(
+            scaffoldBackgroundColor: appBarColor,
+            appBarTheme: const AppBarTheme(
+              color: appBarColor,
+            )),
         debugShowCheckedModeBanner: false,
-        home: MyScreen(),
+        onGenerateRoute: (settings) => generateRoute(settings),
+        home: LandingScreen(),
         // FutureBuilder(
         //   future: _initialization,
         //   builder: (context, snapshot) {

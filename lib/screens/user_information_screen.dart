@@ -2,7 +2,8 @@
 
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:flutter_application_2023/screens/navpages/main_home_page.dart';
+import 'package:flutter_application_2023/screens/navpages/wallet/main_home_page.dart';
+import 'package:flutter_application_2023/screens/navpages/main_screen.dart';
 import 'package:flutter_application_2023/widgets/constant.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -890,7 +891,7 @@ class _UserInfromationScreenState extends State<UserInfromationScreen> {
                       (value) => Navigator.pushAndRemoveUntil(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => const MainHomePage(),
+                            builder: (context) => const MainScreen(),
                           ),
                           (route) => false),
                     ),
@@ -912,7 +913,7 @@ class _UserInfromationScreenState extends State<UserInfromationScreen> {
                       (value) => Navigator.pushAndRemoveUntil(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => const MainHomePage(),
+                            builder: (context) => const MainScreen(),
                           ),
                           (route) => false),
                     ),
@@ -933,7 +934,7 @@ class _UserInfromationScreenState extends State<UserInfromationScreen> {
                 (value) => ap.setSignIn().then((value) =>
                     Navigator.pushAndRemoveUntil(
                         context,
-                        MaterialPageRoute(builder: (context) => MainHomePage()),
+                        MaterialPageRoute(builder: (context) => MainScreen()),
                         (route) => false)),
               );
         },

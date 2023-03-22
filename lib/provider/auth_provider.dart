@@ -214,6 +214,9 @@ class AuthProvider extends ChangeNotifier {
     }
   }
 
+
+
+
   Future<String> storeFileToStorage(String ref, File file) async {
     UploadTask uploadTask = _firebaseStorage.ref().child(ref).putFile(file);
     TaskSnapshot snapshot = await uploadTask;
@@ -236,6 +239,8 @@ class AuthProvider extends ChangeNotifier {
     String downloadUrl = await snapshot.ref.getDownloadURL();
     return downloadUrl;
   }
+  //face image
+
 
   Future getDataFromFirestore() async {
     await _firebaseFirestore
@@ -259,6 +264,7 @@ class AuthProvider extends ChangeNotifier {
         phoneNumber: snapshot['phoneNumber'],
         adhaarImage: snapshot['adhaarImage'],
         panImage: snapshot['panImage'],
+     
       );
       _uid = userModel.uid;
     });
