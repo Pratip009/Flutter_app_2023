@@ -1,10 +1,11 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:flutter/material.dart';
-import 'package:flutter_application_2023/screens/navpages/wallet/main_home_page.dart';
+import 'package:flutter_application_2023/screens/navpages/socialmedia/main_home_page.dart';
+
 import 'package:flutter_application_2023/screens/navpages/my_screen.dart';
 import 'package:flutter_application_2023/screens/navpages/search_screen.dart';
-import 'package:flutter_application_2023/screens/navpages/settings_screen.dart';
+import 'package:flutter_application_2023/screens/navpages/chat/screens/settings_screen.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 
 import '../../widgets/constant.dart';
@@ -19,7 +20,7 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen> {
   List pages = [
     MainHomePage(),
-    ChatScreen(),
+    HomeScreen(),
     SearchScreen(),
     MyScreen(),
   ];

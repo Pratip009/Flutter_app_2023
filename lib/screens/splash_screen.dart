@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_application_2023/screens/onboard_screen.dart';
-import 'package:flutter_application_2023/utils/dimensions.dart';
+
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});

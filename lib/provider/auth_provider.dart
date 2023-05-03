@@ -214,9 +214,6 @@ class AuthProvider extends ChangeNotifier {
     }
   }
 
-
-
-
   Future<String> storeFileToStorage(String ref, File file) async {
     UploadTask uploadTask = _firebaseStorage.ref().child(ref).putFile(file);
     TaskSnapshot snapshot = await uploadTask;
@@ -241,7 +238,6 @@ class AuthProvider extends ChangeNotifier {
   }
   //face image
 
-
   Future getDataFromFirestore() async {
     await _firebaseFirestore
         .collection("users")
@@ -249,7 +245,8 @@ class AuthProvider extends ChangeNotifier {
         .get()
         .then((DocumentSnapshot snapshot) {
       _userModel = UserModel(
-        name: snapshot['name'],
+        firstname: snapshot['firstname'],
+        lastname: snapshot['lastname'],
         email: snapshot['email'],
         age: snapshot['age'],
         adhaar: snapshot['adhaar'],
@@ -264,7 +261,6 @@ class AuthProvider extends ChangeNotifier {
         phoneNumber: snapshot['phoneNumber'],
         adhaarImage: snapshot['adhaarImage'],
         panImage: snapshot['panImage'],
-     
       );
       _uid = userModel.uid;
     });

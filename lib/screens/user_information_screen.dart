@@ -2,12 +2,12 @@
 
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:flutter_application_2023/screens/navpages/wallet/main_home_page.dart';
+
 import 'package:flutter_application_2023/screens/navpages/main_screen.dart';
 import 'package:flutter_application_2023/widgets/constant.dart';
-import 'package:get/get.dart';
+
 import 'package:google_fonts/google_fonts.dart';
-import 'package:pinput/pinput.dart';
+
 import 'package:provider/provider.dart';
 import '../model/user_model.dart';
 import '../provider/auth_provider.dart';
@@ -32,7 +32,10 @@ class _UserInfromationScreenState extends State<UserInfromationScreen> {
   //pan
   File? panImage;
 
-  final nameController = TextEditingController();
+  // ignore: non_constant_identifier_names
+  final FirstnameController = TextEditingController();
+  // ignore: non_constant_identifier_names
+  final LastnameController = TextEditingController();
   final emailController = TextEditingController();
   final ageController = TextEditingController();
   final adhaarController = TextEditingController();
@@ -45,7 +48,8 @@ class _UserInfromationScreenState extends State<UserInfromationScreen> {
   @override
   void dispose() {
     super.dispose();
-    nameController.dispose();
+    FirstnameController.dispose();
+    LastnameController.dispose();
     emailController.dispose();
     ageController.dispose();
     adhaarController.dispose();
@@ -93,7 +97,7 @@ class _UserInfromationScreenState extends State<UserInfromationScreen> {
                   child: Center(
                     child: Container(
                       decoration: BoxDecoration(
-                        color: Color(0xFF7C98B3),
+                        color: kblacklight2,
                       ),
                       child: Column(
                         children: [
@@ -108,7 +112,7 @@ class _UserInfromationScreenState extends State<UserInfromationScreen> {
                                         decoration: BoxDecoration(
                                           border: Border.all(
                                             width: 2,
-                                            color: kyellow,
+                                            color: kblacklight,
                                           ),
                                           boxShadow: [
                                             BoxShadow(
@@ -137,13 +141,13 @@ class _UserInfromationScreenState extends State<UserInfromationScreen> {
                                             shape: BoxShape.circle,
                                             border: Border.all(
                                               width: 2,
-                                              color: kyellow,
+                                              color: kblacklight,
                                             ),
-                                            color: kblack,
+                                            color: kblacklight2,
                                           ),
                                           child: Icon(
                                             Icons.camera_alt_outlined,
-                                            color: kyellow,
+                                            color: kblacklight,
                                           ),
                                         ),
                                       ),
@@ -199,12 +203,23 @@ class _UserInfromationScreenState extends State<UserInfromationScreen> {
                                   ),
                           ),
                           Text(
-                            'Please fill out the following form',
-                            style: GoogleFonts.lora(
+                            'Registration',
+                            style: TextStyle(
                                 fontSize: 20,
-                                color: kblack,
+                                color: knewwhite,
                                 fontWeight: FontWeight.bold,
                                 letterSpacing: 1),
+                          ),
+                          SizedBox(
+                            height: Dimensions.height10,
+                          ),
+                          Text(
+                            'Please fill out the following form',
+                            style: TextStyle(
+                              fontSize: 16,
+                              color: knewwhite,
+                              fontWeight: FontWeight.normal,
+                            ),
                           ),
                           SizedBox(
                             height: Dimensions.height20,
@@ -216,15 +231,31 @@ class _UserInfromationScreenState extends State<UserInfromationScreen> {
                             margin: const EdgeInsets.only(top: 15),
                             child: Column(
                               children: [
-                                // name field
+                                // first name field
                                 textField(
-                                  labelText: 'Username',
+                                  labelText: 'First Name',
                                   ontap: () {},
-                                  hintlText: "Enter your Full Name",
+                                  hintlText: "Enter your First Name",
                                   icon: Icons.account_circle,
                                   inputType: TextInputType.name,
                                   maxLines: 1,
-                                  controller: nameController,
+                                  controller: FirstnameController,
+                                  validator: (value) {
+                                    if (value == null || value.isEmpty) {
+                                      return 'User Name Required';
+                                    }
+                                    return null;
+                                  },
+                                ),
+                                // last name field
+                                textField(
+                                  labelText: 'Last Name',
+                                  ontap: () {},
+                                  hintlText: "Enter your Last Name",
+                                  icon: Icons.account_circle,
+                                  inputType: TextInputType.name,
+                                  maxLines: 1,
+                                  controller: LastnameController,
                                   validator: (value) {
                                     if (value == null || value.isEmpty) {
                                       return 'User Name Required';
@@ -306,11 +337,9 @@ class _UserInfromationScreenState extends State<UserInfromationScreen> {
                                               margin:
                                                   EdgeInsets.only(bottom: 20),
                                               decoration: BoxDecoration(
-                                                color: Colors.black38,
+                                                color: Color(0xFF191919),
                                                 borderRadius:
                                                     BorderRadius.circular(8),
-                                                border: Border.all(
-                                                    color: Colors.white),
                                               ),
                                               child: Column(
                                                 children: [
@@ -325,7 +354,7 @@ class _UserInfromationScreenState extends State<UserInfromationScreen> {
                                                       fontSize: 17,
                                                       fontWeight:
                                                           FontWeight.bold,
-                                                      color: kyellow,
+                                                      color: kblacklight,
                                                     ),
                                                   ),
                                                   SizedBox(
@@ -345,7 +374,6 @@ class _UserInfromationScreenState extends State<UserInfromationScreen> {
                                                       crossAxisAlignment:
                                                           CrossAxisAlignment
                                                               .center,
-                                                      // ignore: prefer_const_literals_to_create_immutables
                                                       children: [
                                                         Icon(
                                                           Icons.search,
@@ -392,11 +420,9 @@ class _UserInfromationScreenState extends State<UserInfromationScreen> {
                                               margin:
                                                   EdgeInsets.only(bottom: 20),
                                               decoration: BoxDecoration(
-                                                color: Colors.black38,
+                                                color: Color(0xFF191919),
                                                 borderRadius:
                                                     BorderRadius.circular(8),
-                                                border: Border.all(
-                                                    color: Colors.white),
                                               ),
                                               child: Column(
                                                 children: [
@@ -411,7 +437,7 @@ class _UserInfromationScreenState extends State<UserInfromationScreen> {
                                                       fontSize: 17,
                                                       fontWeight:
                                                           FontWeight.bold,
-                                                      color: kyellow,
+                                                      color: kblacklight,
                                                     ),
                                                   ),
                                                   SizedBox(
@@ -431,7 +457,6 @@ class _UserInfromationScreenState extends State<UserInfromationScreen> {
                                                       crossAxisAlignment:
                                                           CrossAxisAlignment
                                                               .center,
-                                                      // ignore: prefer_const_literals_to_create_immutables
                                                       children: [
                                                         Icon(
                                                           Icons.search,
@@ -493,7 +518,7 @@ class _UserInfromationScreenState extends State<UserInfromationScreen> {
                                   ontap: () {},
                                   hintlText: "Enter your PAN number",
                                   icon: Icons.add_card,
-                                  inputType: TextInputType.number,
+                                  inputType: TextInputType.text,
                                   maxLines: 1,
                                   controller: panController,
                                   validator: (value) {
@@ -515,11 +540,9 @@ class _UserInfromationScreenState extends State<UserInfromationScreen> {
                                               margin:
                                                   EdgeInsets.only(bottom: 20),
                                               decoration: BoxDecoration(
-                                                color: Colors.black38,
+                                                color: Color(0xFF191919),
                                                 borderRadius:
                                                     BorderRadius.circular(8),
-                                                border: Border.all(
-                                                    color: Colors.white),
                                               ),
                                               child: Column(
                                                 children: [
@@ -534,7 +557,7 @@ class _UserInfromationScreenState extends State<UserInfromationScreen> {
                                                       fontSize: 17,
                                                       fontWeight:
                                                           FontWeight.bold,
-                                                      color: kyellow,
+                                                      color: kblacklight,
                                                     ),
                                                   ),
                                                   SizedBox(
@@ -554,7 +577,6 @@ class _UserInfromationScreenState extends State<UserInfromationScreen> {
                                                       crossAxisAlignment:
                                                           CrossAxisAlignment
                                                               .center,
-                                                      // ignore: prefer_const_literals_to_create_immutables
                                                       children: [
                                                         Icon(
                                                           Icons.search,
@@ -601,11 +623,9 @@ class _UserInfromationScreenState extends State<UserInfromationScreen> {
                                               margin:
                                                   EdgeInsets.only(bottom: 20),
                                               decoration: BoxDecoration(
-                                                color: Colors.black38,
+                                                color: Color(0xFF191919),
                                                 borderRadius:
                                                     BorderRadius.circular(8),
-                                                border: Border.all(
-                                                    color: Colors.white),
                                               ),
                                               child: Column(
                                                 children: [
@@ -620,7 +640,7 @@ class _UserInfromationScreenState extends State<UserInfromationScreen> {
                                                       fontSize: 17,
                                                       fontWeight:
                                                           FontWeight.bold,
-                                                      color: kyellow,
+                                                      color: kblacklight,
                                                     ),
                                                   ),
                                                   SizedBox(
@@ -640,7 +660,6 @@ class _UserInfromationScreenState extends State<UserInfromationScreen> {
                                                       crossAxisAlignment:
                                                           CrossAxisAlignment
                                                               .center,
-                                                      // ignore: prefer_const_literals_to_create_immutables
                                                       children: [
                                                         Icon(
                                                           Icons.search,
@@ -801,29 +820,28 @@ class _UserInfromationScreenState extends State<UserInfromationScreen> {
         keyboardType: inputType,
         maxLines: maxLines,
         style: GoogleFonts.roboto(
-          color: kyellow,
-          fontWeight: FontWeight.bold,
-          letterSpacing: 1,
+          color: klight,
+          fontWeight: FontWeight.normal,
         ),
         decoration: InputDecoration(
           prefixIcon: Container(
             margin: const EdgeInsets.all(8.0),
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(50),
-                color: kwhite,
+                color: kblacklight2,
                 border: Border.all(
-                  color: kblack,
+                  color: kblacklight,
                 )),
             child: Icon(
               icon,
               size: 20,
-              color: kblack,
+              color: kblacklight,
             ),
           ),
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(8),
             borderSide: BorderSide(
-              color: kwhite,
+              color: kblack,
             ),
           ),
           focusedBorder: OutlineInputBorder(
@@ -835,7 +853,7 @@ class _UserInfromationScreenState extends State<UserInfromationScreen> {
           labelText: labelText,
           labelStyle: GoogleFonts.roboto(
             fontSize: 15,
-            fontWeight: FontWeight.w600,
+            fontWeight: FontWeight.normal,
             color: Colors.white,
           ),
           hintText: hintlText,
@@ -847,7 +865,7 @@ class _UserInfromationScreenState extends State<UserInfromationScreen> {
           ),
           alignLabelWithHint: true,
           border: InputBorder.none,
-          fillColor: Colors.black38,
+          fillColor: Color(0xFF191919),
           filled: true,
         ),
       ),
@@ -858,7 +876,8 @@ class _UserInfromationScreenState extends State<UserInfromationScreen> {
   void storeData() async {
     final ap = Provider.of<AuthProvider>(context, listen: false);
     UserModel userModel = UserModel(
-      name: nameController.text.trim(),
+      firstname: FirstnameController.text.trim(),
+      lastname: LastnameController.text.trim(),
       email: emailController.text.trim(),
       age: ageController.text.trim(),
       adhaar: adhaarController.text.trim(),
