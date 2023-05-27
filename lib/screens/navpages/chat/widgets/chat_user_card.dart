@@ -29,7 +29,7 @@ class _ChatUserCardState extends State<ChatUserCard> {
     return Card(
       margin: EdgeInsets.symmetric(
           horizontal: Dimensions.screenWidth * .04, vertical: 4),
-      color: kviolet,
+      color: kblacklight,
       elevation: 0.5,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
       child: InkWell(
@@ -72,7 +72,8 @@ class _ChatUserCardState extends State<ChatUserCard> {
                 //user name
                 title: Text(
                   widget.user.name,
-                  style: TextStyle(color: kwhite, fontWeight: FontWeight.w500),
+                  style: TextStyle(
+                      color: kblacklight2, fontWeight: FontWeight.w500),
                 ),
 
                 //last message
@@ -82,7 +83,7 @@ class _ChatUserCardState extends State<ChatUserCard> {
                             ? 'image'
                             : _message!.msg
                         : widget.user.about,
-                    style: TextStyle(color: kgrey),
+                    style: TextStyle(color: kblacklight2),
                     maxLines: 1),
 
                 //last message time
@@ -104,7 +105,7 @@ class _ChatUserCardState extends State<ChatUserCard> {
                         Text(
                             MyDateUtil.getLastMessageTime(
                                 context: context, time: _message!.sent),
-                            style: const TextStyle(color: Colors.amberAccent),
+                            style: TextStyle(color: kblacklight2),
                           ),
               );
             },

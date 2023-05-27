@@ -70,7 +70,7 @@ class _HomeScreenState extends State<HomeScreen> {
           }
         },
         child: Scaffold(
-          backgroundColor: kwhite,
+          backgroundColor: kblacklight2,
           //app bar
           appBar: AppBar(
             backgroundColor: klight,
@@ -142,7 +142,7 @@ class _HomeScreenState extends State<HomeScreen> {
           floatingActionButton: Padding(
             padding: const EdgeInsets.only(bottom: 10),
             child: FloatingActionButton(
-                backgroundColor: kyellow,
+                backgroundColor: kblacklight,
                 onPressed: () {
                   _addChatUserDialog();
                 },
@@ -202,7 +202,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 });
                           } else {
                             return const Center(
-                              child: Text('No Connections Found!',
+                              child: Text('Add users to start chat!',
                                   style: TextStyle(fontSize: 20)),
                             );
                           }

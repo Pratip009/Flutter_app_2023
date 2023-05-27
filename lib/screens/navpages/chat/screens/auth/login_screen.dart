@@ -1,13 +1,12 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:developer';
 import 'dart:io';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_2023/screens/navpages/chat/screens/settings_screen.dart';
 import 'package:flutter_application_2023/utils/dimensions.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-
-import '../../../../../main.dart';
 import '../../api/apis.dart';
 import '../../helper/dialogs.dart';
 

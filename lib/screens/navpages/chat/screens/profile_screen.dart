@@ -11,7 +11,6 @@ import 'package:flutter_application_2023/widgets/constant.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:image_picker/image_picker.dart';
 
-import '../../../../main.dart';
 import '../../../../utils/dimensions.dart';
 import '../api/apis.dart';
 import '../helper/dialogs.dart';
@@ -39,7 +38,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       // for hiding keyboard
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
-          backgroundColor: klight,
+          backgroundColor: kblacklight2,
           //app bar
           appBar: AppBar(
             leading: IconButton(
@@ -59,7 +58,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             backgroundColor: klight,
           ),
 
-          //floating button to log out
+          // floating button to log out
           floatingActionButton: Padding(
             padding: const EdgeInsets.only(bottom: 10),
             child: FloatingActionButton.extended(
@@ -89,8 +88,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     });
                   });
                 },
-                icon: const Icon(Icons.logout),
-                label: const Text('Logout')),
+                icon: Icon(
+                  Icons.logout,
+                  color: knewwhite,
+                ),
+                label: Text(
+                  'Logout',
+                  style: TextStyle(color: knewwhite),
+                )),
           ),
 
           //body
@@ -149,8 +154,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               _showBottomSheet();
                             },
                             shape: const CircleBorder(),
-                            color: Colors.white,
-                            child: const Icon(Icons.edit, color: Colors.blue),
+                            color: kblacklight,
+                            child: Icon(Icons.edit, color: knewwhite),
                           ),
                         )
                       ],
@@ -161,26 +166,32 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
                     // user email label
                     Text(widget.user.email,
-                        style: const TextStyle(
-                            color: Colors.black54, fontSize: 16)),
+                        style: TextStyle(color: knewwhite, fontSize: 16)),
 
                     // for adding some space
                     SizedBox(height: Dimensions.screenHeight * .05),
 
                     // name input field
                     TextFormField(
+                      style: TextStyle(color: knewwhite),
                       initialValue: widget.user.name,
                       onSaved: (val) => APIs.me.name = val ?? '',
                       validator: (val) => val != null && val.isNotEmpty
                           ? null
                           : 'Required Field',
                       decoration: InputDecoration(
-                          prefixIcon:
-                              const Icon(Icons.person, color: Colors.blue),
+                          enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                                width: 1, color: knewwhite), //<-- SEE HERE
+                          ),
+                          prefixIcon: Icon(Icons.person, color: kblacklight),
                           border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(12)),
                           hintText: 'eg. Happy Singh',
-                          label: const Text('Name')),
+                          label: Text(
+                            'Name',
+                            style: TextStyle(color: knewwhite),
+                          )),
                     ),
 
                     // for adding some space
@@ -188,18 +199,26 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
                     // about input field
                     TextFormField(
+                      style: TextStyle(color: knewwhite),
                       initialValue: widget.user.about,
                       onSaved: (val) => APIs.me.about = val ?? '',
                       validator: (val) => val != null && val.isNotEmpty
                           ? null
                           : 'Required Field',
                       decoration: InputDecoration(
-                          prefixIcon: const Icon(Icons.info_outline,
-                              color: Colors.blue),
+                          enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                                width: 1, color: knewwhite), //<-- SEE HERE
+                          ),
+                          prefixIcon:
+                              Icon(Icons.info_outline, color: kblacklight),
                           border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(12)),
                           hintText: 'eg. Feeling Happy',
-                          label: const Text('About')),
+                          label: Text(
+                            'About',
+                            style: TextStyle(color: knewwhite),
+                          )),
                     ),
 
                     // for adding some space
@@ -208,6 +227,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     // update profile button
                     ElevatedButton.icon(
                       style: ElevatedButton.styleFrom(
+                          backgroundColor: kblacklight,
                           shape: const StadiumBorder(),
                           minimumSize: Size(Dimensions.screenWidth * .5,
                               Dimensions.screenHeight * .06)),

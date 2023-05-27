@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'dart:convert';
 import 'dart:io';
 
@@ -247,7 +249,7 @@ class AuthProvider extends ChangeNotifier {
       _userModel = UserModel(
         firstname: snapshot['firstname'],
         lastname: snapshot['lastname'],
-        email: snapshot['email'],
+        // email: snapshot['email'],
         age: snapshot['age'],
         adhaar: snapshot['adhaar'],
         pan: snapshot['pan'],

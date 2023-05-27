@@ -36,7 +36,7 @@ class _UserInfromationScreenState extends State<UserInfromationScreen> {
   final FirstnameController = TextEditingController();
   // ignore: non_constant_identifier_names
   final LastnameController = TextEditingController();
-  final emailController = TextEditingController();
+  // final emailController = TextEditingController();
   final ageController = TextEditingController();
   final adhaarController = TextEditingController();
   final panController = TextEditingController();
@@ -50,7 +50,7 @@ class _UserInfromationScreenState extends State<UserInfromationScreen> {
     super.dispose();
     FirstnameController.dispose();
     LastnameController.dispose();
-    emailController.dispose();
+    // emailController.dispose();
     ageController.dispose();
     adhaarController.dispose();
     panController.dispose();
@@ -265,21 +265,21 @@ class _UserInfromationScreenState extends State<UserInfromationScreen> {
                                 ),
 
                                 // email
-                                textField(
-                                  labelText: 'Email',
-                                  ontap: () {},
-                                  hintlText: "Enter your Email",
-                                  icon: Icons.email,
-                                  inputType: TextInputType.emailAddress,
-                                  maxLines: 1,
-                                  controller: emailController,
-                                  validator: (value) {
-                                    if (value == null || value.isEmpty) {
-                                      return 'Email id Required';
-                                    }
-                                    return null;
-                                  },
-                                ),
+                                // textField(
+                                //   labelText: 'Email',
+                                //   ontap: () {},
+                                //   hintlText: "Enter your Email",
+                                //   icon: Icons.email,
+                                //   inputType: TextInputType.emailAddress,
+                                //   maxLines: 1,
+                                //   controller: emailController,
+                                //   validator: (value) {
+                                //     if (value == null || value.isEmpty) {
+                                //       return 'Email id Required';
+                                //     }
+                                //     return null;
+                                //   },
+                                // ),
                                 //age
                                 textField(
                                   labelText: 'Date Of Birth',
@@ -878,7 +878,7 @@ class _UserInfromationScreenState extends State<UserInfromationScreen> {
     UserModel userModel = UserModel(
       firstname: FirstnameController.text.trim(),
       lastname: LastnameController.text.trim(),
-      email: emailController.text.trim(),
+      // email: emailController.text.trim(),
       age: ageController.text.trim(),
       adhaar: adhaarController.text.trim(),
       pan: panController.text.trim(),

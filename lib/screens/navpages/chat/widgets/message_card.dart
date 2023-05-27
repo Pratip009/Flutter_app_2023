@@ -7,7 +7,6 @@ import 'package:flutter_application_2023/screens/navpages/chat/helper/my_date_ut
 import 'package:flutter_application_2023/widgets/constant.dart';
 import 'package:gallery_saver/gallery_saver.dart';
 
-import '../../../../main.dart';
 import '../../../../utils/dimensions.dart';
 import '../api/apis.dart';
 import '../helper/dialogs.dart';
@@ -92,7 +91,7 @@ class _MessageCardState extends State<MessageCard> {
           child: Text(
             MyDateUtil.getFormattedTime(
                 context: context, time: widget.message.sent),
-            style: const TextStyle(fontSize: 13, color: Colors.black54),
+            style: TextStyle(fontSize: 13, color: knewwhite),
           ),
         ),
       ],
@@ -121,7 +120,7 @@ class _MessageCardState extends State<MessageCard> {
             Text(
               MyDateUtil.getFormattedTime(
                   context: context, time: widget.message.sent),
-              style: const TextStyle(fontSize: 13, color: Colors.black54),
+              style: TextStyle(fontSize: 13, color: knewwhite),
             ),
           ],
         ),
@@ -235,7 +234,7 @@ class _MessageCardState extends State<MessageCard> {
               //separator or divider
               if (isMe)
                 Divider(
-                  color: Colors.black54,
+                  color: knewwhite,
                   endIndent: Dimensions.screenWidth * .04,
                   indent: Dimensions.screenWidth * .04,
                 ),
@@ -267,7 +266,7 @@ class _MessageCardState extends State<MessageCard> {
 
               //separator or divider
               Divider(
-                color: Colors.black54,
+                color: knewwhite,
                 endIndent: Dimensions.screenWidth * .04,
                 indent: Dimensions.screenWidth * .04,
               ),
@@ -377,10 +376,8 @@ class _OptionItem extends StatelessWidget {
             icon,
             Flexible(
                 child: Text('    $name',
-                    style: const TextStyle(
-                        fontSize: 15,
-                        color: Colors.black54,
-                        letterSpacing: 0.5)))
+                    style: TextStyle(
+                        fontSize: 15, color: knewwhite, letterSpacing: 0.5)))
           ]),
         ));
   }

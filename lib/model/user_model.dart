@@ -1,7 +1,7 @@
 class UserModel {
   String firstname;
   String lastname;
-  String email;
+  // String email;
   String age;
   String adhaar;
   String pan;
@@ -19,7 +19,7 @@ class UserModel {
   UserModel({
     required this.firstname,
     required this.lastname,
-    required this.email,
+    // required this.email,
     required this.age,
     required this.adhaar,
     required this.pan,
@@ -40,7 +40,7 @@ class UserModel {
     return UserModel(
       firstname: map['firstname'] ?? '',
       lastname: map['lastname'] ?? '',
-      email: map['email'] ?? '',
+      // email: map['email'] ?? '',
       age: map['age'] ?? '',
       adhaar: map['adhaar'] ?? '',
       pan: map['pan'] ?? '',
@@ -62,7 +62,7 @@ class UserModel {
     return {
       "firstname": firstname,
       "lastname": lastname,
-      "email": email,
+      // "email": email,
       "age": age,
       "adhaar": adhaar,
       "pan": pan,

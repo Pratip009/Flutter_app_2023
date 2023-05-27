@@ -59,7 +59,7 @@ class _ChatScreenState extends State<ChatScreen> {
               flexibleSpace: _appBar(),
             ),
 
-            backgroundColor: klight,
+            backgroundColor: kblacklight2,
 
             //body
             body: Column(
@@ -234,8 +234,8 @@ class _ChatScreenState extends State<ChatScreen> {
                         FocusScope.of(context).unfocus();
                         setState(() => _showEmoji = !_showEmoji);
                       },
-                      icon:
-                          Icon(Icons.emoji_emotions, color: kyellow, size: 25)),
+                      icon: Icon(Icons.emoji_emotions,
+                          color: kblacklight, size: 25)),
 
                   Expanded(
                       child: TextField(
@@ -269,7 +269,7 @@ class _ChatScreenState extends State<ChatScreen> {
                           setState(() => _isUploading = false);
                         }
                       },
-                      icon: Icon(Icons.image, color: kyellow, size: 26)),
+                      icon: Icon(Icons.image, color: kblacklight, size: 26)),
 
                   //take image from camera button
                   IconButton(
@@ -289,7 +289,7 @@ class _ChatScreenState extends State<ChatScreen> {
                         }
                       },
                       icon: Icon(Icons.camera_alt_rounded,
-                          color: kyellow, size: 26)),
+                          color: kblacklight, size: 26)),
 
                   //adding some space
                   SizedBox(width: Dimensions.screenWidth * .02),
@@ -318,7 +318,7 @@ class _ChatScreenState extends State<ChatScreen> {
             padding:
                 const EdgeInsets.only(top: 10, bottom: 10, right: 5, left: 10),
             shape: const CircleBorder(),
-            color: kgreen,
+            color: kblacklight,
             child: const Icon(Icons.send, color: Colors.white, size: 28),
           )
         ],

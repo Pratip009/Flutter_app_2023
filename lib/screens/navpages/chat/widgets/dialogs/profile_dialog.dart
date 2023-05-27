@@ -3,7 +3,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 
-import '../../../../../main.dart';
 import '../../../../../utils/dimensions.dart';
 import '../../models/chat_user.dart';
 import '../../screens/view_profile_screen.dart';

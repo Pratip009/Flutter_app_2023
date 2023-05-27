@@ -1,4 +1,4 @@
-// ignore_for_file: unused_local_variable, prefer_const_constructors
+// ignore_for_file: unused_local_variable, prefer_const_constructors, avoid_unnecessary_containers
 
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
@@ -20,7 +20,7 @@ final List<String> imgList = [
 ];
 
 class MyScreen extends StatefulWidget {
-  MyScreen({super.key});
+  const MyScreen({super.key});
 
   @override
   State<MyScreen> createState() => _MainHomePageState();
