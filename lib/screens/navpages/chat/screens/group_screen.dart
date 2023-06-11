@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_application_2023/screens/navpages/chat/screens/auth/login_screen.dart';
 import 'package:flutter_application_2023/screens/navpages/chat/screens/groupie_screen.dart';
 import 'package:flutter_application_2023/screens/navpages/chat/screens/settings_screen.dart';
 
@@ -46,7 +47,7 @@ class _HomePageState extends State<GroupScreen> {
                           minWidth: Dimensions.width10 * 4,
                           onPressed: () {
                             setState(() {
-                              currenScreen = const HomeScreen();
+                              currenScreen = const LoginScreen();
                               currentTab = 0;
                             });
                           },

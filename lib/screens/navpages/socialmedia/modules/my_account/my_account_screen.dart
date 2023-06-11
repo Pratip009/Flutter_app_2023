@@ -2,6 +2,7 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_application_2023/provider/auth_provider.dart';
 import 'package:flutter_application_2023/screens/navpages/socialmedia/layout/layout_controller.dart';
 import 'package:flutter_application_2023/screens/navpages/socialmedia/model/post_model.dart';
 import 'package:flutter_application_2023/screens/navpages/socialmedia/model/user_model.dart';
@@ -18,7 +19,9 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutterfire_ui/firestore.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:like_button/like_button.dart';
+import 'package:provider/provider.dart';
 
 import '../../../../wallet-functions-payment-stuffs/transfer_money.dart';
 
@@ -48,6 +51,7 @@ class MyAccountScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final ap = Provider.of<AuthProvider>(context, listen: false);
     return GetBuilder<SocialLayoutController>(
         init: Get.find<SocialLayoutController>(),
         builder: (socialLayoutController) {
@@ -127,6 +131,14 @@ class MyAccountScreen extends StatelessWidget {
                                 .textTheme
                                 .bodyLarge
                                 ?.copyWith(fontSize: 22),
+                          ),
+                          Text(
+                            "ID:  ${ap.userModel.unique.toUpperCase()}",
+                            style: GoogleFonts.lato(
+                              fontSize: 15,
+                              fontWeight: FontWeight.w500,
+                              color: kblack,
+                            ),
                           ),
                           // NOTE bio
                           Text(

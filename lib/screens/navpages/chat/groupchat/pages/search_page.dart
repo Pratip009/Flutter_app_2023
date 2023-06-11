@@ -182,6 +182,7 @@ class _SearchPageState extends State<SearchPage> {
               nextScreen(
                   context,
                   ChatPage(
+                     
                       groupId: groupId,
                       groupName: groupName,
                       userName: userName));

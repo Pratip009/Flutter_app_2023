@@ -108,6 +108,14 @@ class _MainHomePageState extends State<MyScreen> {
                                         color: kblacklight,
                                       ),
                                     ),
+                                    Text(
+                                      "ID:  ${ap.userModel.unique}",
+                                      style: GoogleFonts.lato(
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.w500,
+                                        color: kblacklight,
+                                      ),
+                                    ),
                                   ],
                                 ),
                               ],

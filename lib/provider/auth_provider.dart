@@ -249,7 +249,7 @@ class AuthProvider extends ChangeNotifier {
       _userModel = UserModel(
         firstname: snapshot['firstname'],
         lastname: snapshot['lastname'],
-        // email: snapshot['email'],
+        email: snapshot['email'],
         age: snapshot['age'],
         adhaar: snapshot['adhaar'],
         pan: snapshot['pan'],
@@ -263,6 +263,7 @@ class AuthProvider extends ChangeNotifier {
         phoneNumber: snapshot['phoneNumber'],
         adhaarImage: snapshot['adhaarImage'],
         panImage: snapshot['panImage'],
+        unique: snapshot['unique'],
       );
       _uid = userModel.uid;
     });

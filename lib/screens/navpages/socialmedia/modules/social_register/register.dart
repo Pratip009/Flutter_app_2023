@@ -1,4 +1,7 @@
+// ignore_for_file: avoid_print
+
 import 'package:flutter/material.dart';
+import 'package:flutter_application_2023/provider/auth_provider.dart';
 import 'package:flutter_application_2023/screens/navpages/socialmedia/layout/layout.dart';
 import 'package:flutter_application_2023/screens/navpages/socialmedia/modules/social_register/register_controller.dart';
 import 'package:flutter_application_2023/screens/navpages/socialmedia/shared/components/componets.dart';
@@ -6,15 +9,48 @@ import 'package:flutter_application_2023/screens/navpages/socialmedia/shared/con
 import 'package:flutter_application_2023/screens/navpages/socialmedia/shared/helper/binding.dart';
 import 'package:flutter_application_2023/screens/navpages/socialmedia/shared/network/local/cashhelper.dart';
 import 'package:get/get.dart';
+import 'package:provider/provider.dart';
 
+class RegisterScreen extends StatefulWidget {
+  const RegisterScreen({super.key});
 
-class RegisterScreen extends StatelessWidget {
-  var _formkey = GlobalKey<FormState>();
+  @override
+  State<RegisterScreen> createState() => _RegisterScreenState();
+}
+
+class _RegisterScreenState extends State<RegisterScreen> {
+  final _formkey = GlobalKey<FormState>();
 
   var nameController = TextEditingController();
+
+  var uniqueIDController = TextEditingController();
+
   var passwordController = TextEditingController();
+
   var emailController = TextEditingController();
+
   var phoneController = TextEditingController();
+
+  @override
+  void dispose() {
+    super.dispose();
+    nameController.dispose();
+    uniqueIDController.dispose();
+    passwordController.dispose();
+    emailController.dispose();
+    phoneController.dispose();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    final ap = Provider.of<AuthProvider>(context, listen: false);
+    nameController.text =
+        "${ap.userModel.firstname}" "\u{00A0}" "${ap.userModel.lastname}";
+    uniqueIDController.text = ap.userModel.unique;
+    emailController.text = ap.userModel.email;
+    phoneController.text = ap.userModel.phoneNumber;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -36,92 +72,117 @@ class RegisterScreen extends StatelessWidget {
                       "REGISTER",
                       style: Theme.of(context)
                           .textTheme
-                          .headline5!
+                          .headlineSmall!
                           .copyWith(fontWeight: FontWeight.bold),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 5,
                     ),
                     Text(
-                      "REGITER To Comunicate with friends",
-                      style: Theme.of(context).textTheme.bodyText2!.copyWith(
+                      "REGISTER To Comunicate with friends",
+                      style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                             color: Colors.grey,
                           ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 20,
                     ),
                     defaultTextFormField(
                       controller: nameController,
                       text: "User Name",
-                      prefixIcon: Icon(Icons.person),
+                      prefixIcon: const Icon(Icons.person),
                       inputtype: TextInputType.name,
                       onvalidate: (value) {
                         if (value!.isEmpty) {
                           return 'Please Enter your User Name';
                         }
+                        return null;
                       },
                     ),
-                    SizedBox(
-                      height: 15,
+                    const SizedBox(
+                      height: 20,
                     ),
                     defaultTextFormField(
-                      controller: emailController,
-                      text: "Email Address",
-                      prefixIcon: Icon(Icons.email_outlined),
-                      inputtype: TextInputType.emailAddress,
+                      controller: uniqueIDController,
+                      text: "User ID",
+                      prefixIcon: const Icon(Icons.password),
+                      inputtype: TextInputType.text,
                       onvalidate: (value) {
                         if (value!.isEmpty) {
-                          return 'Please Enter your email address';
+                          return 'Please Enter your User Name';
                         }
+                        return null;
                       },
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 15,
                     ),
-                    defaultTextFormField(
+                    Visibility(
+                      visible: false,
+                      child: defaultTextFormField(
+                        controller: emailController,
+                        text: "Email",
+                        prefixIcon: const Icon(Icons.email_outlined),
+                        inputtype: TextInputType.emailAddress,
+                        onvalidate: (value) {
+                          if (value!.isEmpty) {
+                            return 'Please Enter your email address';
+                          }
+                          return null;
+                        },
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 15,
+                    ),
+                    defaultTextFormFieldForPassword(
                       controller: passwordController,
                       text: "Password",
-                      prefixIcon: Icon(Icons.lock),
+                      prefixIcon: const Icon(Icons.lock),
                       inputtype: TextInputType.emailAddress,
                       onvalidate: (value) {
                         if (value!.isEmpty) {
                           return 'Please Enter password';
                         }
+                        return null;
                       },
                       obscure: socialRegisterController.showpassword,
                       suffixIcon: IconButton(
                         icon: socialRegisterController.showpassword
-                            ? Icon(Icons.visibility)
-                            : Icon(Icons.visibility_off),
+                            ? const Icon(Icons.visibility)
+                            : const Icon(Icons.visibility_off),
                         onPressed: () {
                           socialRegisterController.onObscurePassword();
                           print(socialRegisterController.showpassword);
                         },
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 15,
                     ),
-                    defaultTextFormField(
-                      controller: phoneController,
-                      text: "Phone Number",
-                      prefixIcon: Icon(Icons.phone),
-                      inputtype: TextInputType.phone,
-                      onvalidate: (value) {
-                        if (value!.isEmpty) {
-                          return 'Please Enter your Phone Number';
-                        }
-                      },
+                    Visibility(
+                      visible: false,
+                      child: defaultTextFormField(
+                        controller: phoneController,
+                        text: "Phone Number",
+                        prefixIcon: const Icon(Icons.phone),
+                        inputtype: TextInputType.phone,
+                        onvalidate: (value) {
+                          if (value!.isEmpty) {
+                            return 'Please Enter your Phone Number';
+                          }
+                          return null;
+                        },
+                      ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 15,
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 10,
                     ),
                     socialRegisterController.isloadingRegister!
-                        ? Center(child: CircularProgressIndicator())
+                        ? const Center(child: CircularProgressIndicator())
                         : defaultButton(
                             text: "REGITSER",
                             isUppercase: true,
@@ -132,7 +193,8 @@ class RegisterScreen extends StatelessWidget {
                                     name: nameController.text.trim(),
                                     email: emailController.text.trim(),
                                     password: passwordController.text.trim(),
-                                    phone: phoneController.text.trim());
+                                    phone: phoneController.text.trim(),
+                                    uniqueID: uniqueIDController.text.trim());
                               }
                               print(
                                   "status firestore ${socialRegisterController.isSuccessRegisterToFireStore}");
@@ -143,7 +205,8 @@ class RegisterScreen extends StatelessWidget {
                                       ToastStatus.Success) {
                                 //NOTE: uId saved in login method
                                 CashHelper.saveData(key: "uId", value: uId);
-                                Get.off(SocialLayout(), binding: Binding());
+                                Get.off(const SocialLayout(),
+                                    binding: Binding());
                               }
                               showToast(
                                   message:
@@ -151,7 +214,7 @@ class RegisterScreen extends StatelessWidget {
                                   status: socialRegisterController
                                       .statusLoginMessage!);
                             }),
-                    SizedBox(
+                    const SizedBox(
                       height: 10,
                     ),
                   ],

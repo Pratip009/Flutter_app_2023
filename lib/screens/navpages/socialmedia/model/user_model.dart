@@ -6,6 +6,7 @@ class UserModel {
   String? name;
   String? email;
   String? phone;
+  String? uniqueID;
   String? image;
   String? coverimage;
   String? bio;
@@ -22,6 +23,7 @@ class UserModel {
       {this.name,
       this.email,
       this.phone,
+      this.uniqueID,
       this.image,
       this.coverimage,
       this.bio,
@@ -32,6 +34,7 @@ class UserModel {
     name = json['name'];
     email = json['email'];
     phone = json['phone'];
+    uniqueID = json['uniqueID'];
     image = json['image'];
     coverimage = json['coverimage'];
     bio = json['bio'];
@@ -52,6 +55,7 @@ class UserModel {
       'name': name,
       'email': email,
       'phone': phone,
+      'uniqueID':uniqueID,
       'image': image,
       'coverimage': coverimage,
       'bio': bio,

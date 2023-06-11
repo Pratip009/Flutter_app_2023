@@ -46,7 +46,7 @@ ThemeData lightTheme() => ThemeData(
           backgroundColor: kblue,
           elevation: 0,
           actionsIconTheme: IconThemeData(color: knewwhite),
-          backwardsCompatibility: false,
+          // backwardsCompatibility: false,
           titleTextStyle: const TextStyle(
               color: Colors.black, fontWeight: FontWeight.bold, fontSize: 25),
           systemOverlayStyle: const SystemUiOverlayStyle(

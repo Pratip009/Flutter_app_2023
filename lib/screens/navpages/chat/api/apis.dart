@@ -119,7 +119,11 @@ class APIs {
 
   // for getting current user info
   static Future<void> getSelfInfo() async {
-    await firestore.collection('userschat').doc(user.uid).get().then((user) async {
+    await firestore
+        .collection('userschat')
+        .doc(user.uid)
+        .get()
+        .then((user) async {
       if (user.exists) {
         me = ChatUser.fromJson(user.data()!);
         await getFirebaseMessagingToken();
@@ -317,6 +321,46 @@ class APIs {
     await sendMessage(chatUser, imageUrl, Type.image);
   }
 
+  // for sending Group message
+  static Future<void> sendGroupMessage(
+      String userName, String msg, Type type) async {
+    //message sending time (also used as id)
+    final time = DateTime.now().millisecondsSinceEpoch.toString();
+
+    //message to send
+    final Message message = Message(
+        toId: userName,
+        msg: msg,
+        read: '',
+        type: type,
+        fromId: user.uid,
+        sent: time);
+
+    final ref =
+        firestore.collection('chats/${getConversationID(userName)}/messages/');
+  }
+
+//send chat image
+  static Future<void> sendGroupChatImage(String userName, File file) async {
+    //getting image file extension
+    final ext = file.path.split('.').last;
+
+    //storage file ref with path
+    final ref = storage.ref().child(
+        'images/${getConversationID(userName)}/${DateTime.now().millisecondsSinceEpoch}.$ext');
+
+    //uploading image
+    await ref
+        .putFile(file, SettableMetadata(contentType: 'image/$ext'))
+        .then((p0) {
+      log('Data Transferred: ${p0.bytesTransferred / 1000} kb');
+    });
+
+    //updating image in firestore database
+    final imageUrl = await ref.getDownloadURL();
+    await sendGroupMessage(userName, imageUrl, Type.image);
+  }
+
   //delete message
   static Future<void> deleteMessage(Message message) async {
     await firestore
@@ -337,10 +381,8 @@ class APIs {
         .update({'msg': updatedMsg});
   }
 
-
-
   //Group chat//
-   static String userLoggedInKey = "LOGGEDINKEY";
+  static String userLoggedInKey = "LOGGEDINKEY";
   static String userNameKey = "USERNAMEKEY";
   static String userEmailKey = "USEREMAILKEY";
 

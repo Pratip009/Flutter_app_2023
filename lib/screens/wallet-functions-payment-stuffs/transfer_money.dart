@@ -1,155 +1,177 @@
-// ignore_for_file: sort_child_properties_last
+// ignore_for_file: library_prefixes, use_build_context_synchronously
 
+import 'dart:convert';
+import 'dart:io';
+import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
-import 'package:flutter_application_2023/utils/dimensions.dart';
-import 'package:flutter_application_2023/widgets/constant.dart';
+import 'razor_credentials.dart' as razorCredentials;
 import 'package:razorpay_flutter/razorpay_flutter.dart';
-import 'package:toast/toast.dart';
 
 class TransferMoney extends StatefulWidget {
-  const TransferMoney({super.key});
+  const TransferMoney({Key? key}) : super(key: key);
 
   @override
   State<TransferMoney> createState() => _TransferMoneyState();
 }
 
 class _TransferMoneyState extends State<TransferMoney> {
-  late Razorpay razorpay;
-  TextEditingController textEditingController = TextEditingController();
+  final _razorpay = Razorpay();
+
   @override
   void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      _razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, _handlePaymentSuccess);
+      _razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, _handlePaymentError);
+      _razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET, _handleExternalWallet);
+    });
     super.initState();
-    razorpay = Razorpay();
-    razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, handlerPaymentSuccess);
-    razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, handlerErrorFailure);
-    razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET, handlerExternalWallet);
+  }
+
+  void _handlePaymentSuccess(PaymentSuccessResponse response) {
+    // Do something when payment succeeds
+    // ignore: avoid_print
+    print(response);
+    verifySignature(
+      signature: response.signature,
+      paymentId: response.paymentId,
+      orderId: response.orderId,
+    );
+  }
+
+  void _handlePaymentError(PaymentFailureResponse response) {
+    // Do something when payment fails
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(response.message ?? ''),
+      ),
+    );
+  }
+
+  void _handleExternalWallet(ExternalWalletResponse response) {
+    // Do something when an external wallet is selected
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(response.walletName ?? ''),
+      ),
+    );
+  }
+
+// create order
+  void createOrder() async {
+    String username = razorCredentials.keyId;
+    String password = razorCredentials.keySecret;
+    String basicAuth =
+        'Basic ${base64Encode(utf8.encode('$username:$password'))}';
+
+    Map<String, dynamic> body = {
+      "amount": 10000,
+      "currency": "INR",
+      "receipt": "rcptid_11"
+    };
+    var res = await http.post(
+      Uri.https(
+          "api.razorpay.com", "v1/orders"), //https://api.razorpay.com/v1/orders
+      headers: <String, String>{
+        "Content-Type": "application/json",
+        'authorization': basicAuth,
+      },
+      body: jsonEncode(body),
+    );
+
+    if (res.statusCode == 200) {
+      openGateway(jsonDecode(res.body)['id']);
+      print(res.body);
+    }
+  }
+
+  openGateway(String orderId) {
+    var options = {
+      'key': razorCredentials.keyId,
+      'amount': 100, //in the smallest currency sub-unit.
+      'name': 'GoSpeedy',
+      'order_id': orderId, // Generate order_id using Orders API
+      'description': 'Paid Post',
+      'timeout': 60 * 5, // in seconds // 5 minutes
+      'prefill': {
+        'contact': '9123456789',
+        'email': 'ary@example.com',
+      }
+    };
+    _razorpay.open(options);
+  }
+
+  verifySignature({
+    String? signature,
+    String? paymentId,
+    String? orderId,
+  }) async {
+    Map<String, dynamic> body = {
+      'razorpay_signature': signature,
+      'razorpay_payment_id': paymentId,
+      'razorpay_order_id': orderId,
+    };
+
+    var parts = [];
+    body.forEach((key, value) {
+      parts.add('${Uri.encodeQueryComponent(key)}='
+          '${Uri.encodeQueryComponent(value)}');
+    });
+    var formData = parts.join('&');
+    var res = await http.post(
+      Uri.https(
+        "10.0.2.2", // my ip address , localhost
+        "razorpay_signature_verify.php",
+      ),
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded", // urlencoded
+      },
+      body: formData,
+    );
+
+    if (res.statusCode == 200) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(res.body),
+        ),
+      );
+    }
   }
 
   @override
   void dispose() {
+    _razorpay.clear(); // Removes all listeners
+
     super.dispose();
-    razorpay.clear();
-  }
-
-  void openCheckOut() {
-    var options = {
-      "key": "rzp_test_1TYvpw9zV2KWjI",
-      "amount": num.parse(textEditingController.text) * 100,
-      "name": "GoSpeedy",
-      "description":
-          "sending money to friend or paying for some random product",
-      "prefill": {
-        "contact": "2323232323",
-        "email": "test@gmail.com",
-      },
-      "external": {
-        "wallets": ['paytm']
-      }
-    };
-    try {
-      razorpay.open(options);
-    } catch (e) {
-      print(e.toString());
-    }
-  }
-
-  void handlerPaymentSuccess() {
-    Toast.show(
-      'Payment Success!',
-      duration: Toast.lengthShort,
-      gravity: Toast.bottom,
-    );
-  }
-
-  void handlerErrorFailure() {
-    Toast.show(
-      'Payment Error!',
-      duration: Toast.lengthShort,
-      gravity: Toast.bottom,
-    );
-  }
-
-  void handlerExternalWallet() {
-    Toast.show(
-      'External Wallet!',
-      duration: Toast.lengthShort,
-      gravity: Toast.bottom,
-    );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: kblack,
       appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        leading: IconButton(
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          icon: const Icon(Icons.arrow_back),
-        ),
-        title: const Text('SEND MONEY'),
-        centerTitle: true,
+        title: const Text("Razorpay Payment"),
       ),
       body: Center(
         child: Column(
-          children: [
-            Padding(
-              padding: EdgeInsets.fromLTRB(
-                Dimensions.width10 * 5,
-                Dimensions.height100,
-                Dimensions.width10 * 5,
-                Dimensions.height100,
-              ),
-              child: TextField(
-                controller: textEditingController,
-                decoration: InputDecoration(
-                  hintText: "Amount to pay",
-                  hintStyle: TextStyle(
-                    color: kblack,
-                  ),
-                  fillColor: Colors.white,
-                  filled: true,
-                  contentPadding: EdgeInsets.only(
-                    left: 15,
-                    bottom: 11,
-                    top: 11,
-                    right: 15,
-                  ),
-                ),
-              ),
-            ),
-            SizedBox(
-              height: Dimensions.height20,
-            ),
-            InkWell(
-              onTap: () {
-                openCheckOut();
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            ElevatedButton(
+              onPressed: () {
+                createOrder();
               },
-              child: Align(
-                alignment: Alignment.bottomCenter,
-                child: Container(
-                  height: Dimensions.height20 * 2,
-                  width: Dimensions.width120,
-                  child: Center(
-                      child: Text(
-                    'Send Money',
-                    style: TextStyle(
-                      color: kwhite,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  )),
-                  decoration: BoxDecoration(
-                    color: kblue,
-                  ),
-                ),
-              ),
-            ),
+              child: const Text("Pay Rs.100"),
+            )
           ],
         ),
       ),
     );
+  }
+}
+
+class MyHttpOverrides extends HttpOverrides {
+  @override
+  HttpClient createHttpClient(SecurityContext? context) {
+    return super.createHttpClient(context)
+      ..badCertificateCallback =
+          (X509Certificate cert, String host, int port) => true;
   }
 }

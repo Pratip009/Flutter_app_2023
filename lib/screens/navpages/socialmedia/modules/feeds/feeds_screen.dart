@@ -73,7 +73,7 @@ class _FeedsScreenState extends State<FeedsScreen> {
                   //NOTE for Story
                   Container(
                       margin: const EdgeInsets.only(top: 10),
-                      color: klight,
+                      color: kblacklight2,
                       padding: const EdgeInsets.all(15),
                       height: 200,
                       child: ListView(
@@ -215,9 +215,9 @@ class _FeedsScreenState extends State<FeedsScreen> {
             ? Container(
                 clipBehavior: Clip.antiAliasWithSaveLayer,
                 decoration: BoxDecoration(
-                  color: Colors.white,
-                  border: Border.all(color: Colors.grey),
-                  borderRadius: BorderRadius.circular(10),
+                  // color: Colors.white,
+                  border: Border.all(color: kgrey),
+                  borderRadius: BorderRadius.circular(30),
                 ),
                 height: 220,
                 child: Column(
@@ -246,8 +246,7 @@ class _FeedsScreenState extends State<FeedsScreen> {
                                                         .socialUserModel!
                                                         .image ==
                                                     ""))
-                                        ? const AssetImage(
-                                                'assets/default_profile.png')
+                                        ? const AssetImage('assets/story.png')
                                             as ImageProvider
                                         : NetworkImage(
                                             controller_NeededInBuildPost
@@ -275,9 +274,9 @@ class _FeedsScreenState extends State<FeedsScreen> {
                                   //         .toString());
                                   Get.to(() => AddStoryScreen());
                                 },
-                                child: const Icon(
+                                child: Icon(
                                   Icons.add,
-                                  color: Colors.black,
+                                  color: kwhite,
                                 ),
                               ),
                             ),
@@ -288,7 +287,8 @@ class _FeedsScreenState extends State<FeedsScreen> {
                     const Spacer(),
                     Text(
                       'Create story',
-                      style: TextStyle(color: Colors.grey.shade900),
+                      style: TextStyle(
+                          color: klight, fontWeight: FontWeight.normal),
                     ),
                     const SizedBox(
                       height: 10,
@@ -488,15 +488,17 @@ class _FeedsScreenState extends State<FeedsScreen> {
                         onPressed: () async {
                           //!delete post
                         },
-                        icon: const Icon(
+                        icon: Icon(
                           Icons.more_vert,
+                          color: kblacklight,
                         )),
                     IconButton(
                         onPressed: () async {
                           // ! here is the code to download file from firebase
                         },
-                        icon: const Icon(
+                        icon: Icon(
                           Icons.download,
+                          color: kblacklight,
                         )),
                   ],
                 ),
@@ -524,7 +526,8 @@ class _FeedsScreenState extends State<FeedsScreen> {
               //NOTE : Image Of post
               if (model.postImage != null)
                 Padding(
-                  padding: const EdgeInsets.only(top: 13.0),
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 13, horizontal: 5),
                   child: SizedBox(
                     width: MediaQuery.of(context).size.width,
                     //NOTE height - heigt /1.5 ==> about 40% from real height
@@ -532,10 +535,10 @@ class _FeedsScreenState extends State<FeedsScreen> {
 
                     child: GestureDetector(
                       onDoubleTap: () {
-                        // const double scale = 2;
-                        // final zoomed = Matrix4.identity()..scale(scale);
-                        // final value = zoomed;
-                        // print("ok");
+                        const double scale = 2;
+                        final zoomed = Matrix4.identity()..scale(scale);
+                        final value = zoomed;
+                        print("ok");
                       },
                       child: InteractiveViewer(
                           // transformationController: transformationController,
@@ -640,7 +643,7 @@ class _FeedsScreenState extends State<FeedsScreen> {
                           CircleColor(start: kblacklight, end: kblacklight),
                       bubblesColor: BubblesColor(
                         dotPrimaryColor: kblacklight,
-                        dotSecondaryColor: kblacklight,
+                        dotSecondaryColor: kblue,
                         // dotThirdColor: Color.fromARGB(220, 12, 199, 43),
                       ),
                       isLiked: model.likes!.isNotEmpty &&
@@ -662,8 +665,7 @@ class _FeedsScreenState extends State<FeedsScreen> {
                                   .textTheme
                                   .bodySmall
                                   ?.copyWith(
-                                      color:
-                                          isLiked ? kblacklight : Colors.grey),
+                                      color: isLiked ? kblacklight : kgrey),
                             ),
                           ],
                         );
@@ -683,9 +685,9 @@ class _FeedsScreenState extends State<FeedsScreen> {
                         padding: const EdgeInsets.all(15.0),
                         child: Row(
                           children: [
-                            const FaIcon(
+                            FaIcon(
                               FontAwesomeIcons.message,
-                              color: Colors.grey,
+                              color: kgrey,
                               size: 18,
                             ),
                             const SizedBox(
@@ -696,7 +698,7 @@ class _FeedsScreenState extends State<FeedsScreen> {
                               style: Theme.of(context)
                                   .textTheme
                                   .bodySmall
-                                  ?.copyWith(color: Colors.grey),
+                                  ?.copyWith(color: kgrey),
                             ),
                           ],
                         ),
@@ -802,22 +804,22 @@ class _FeedsScreenState extends State<FeedsScreen> {
   _noStoriesWidget(BuildContext context) => Container(
         clipBehavior: Clip.antiAliasWithSaveLayer,
         decoration: BoxDecoration(
-          border: Border.all(color: Colors.grey),
-          borderRadius: BorderRadius.circular(10),
+          border: Border.all(color: kgrey),
+          borderRadius: BorderRadius.circular(30),
         ),
         width: MediaQuery.of(context).size.width * 0.40,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Text(
+            Text(
               "No stories yet",
-              style: TextStyle(color: Colors.grey, fontSize: 22),
+              style: TextStyle(color: klight, fontSize: 22),
             ),
             const SizedBox(height: 10),
             defaultButton(
                 text: "Try Again",
                 textSize: 12,
-                background: defaultColor,
+                background: kblue,
                 radius: 20,
                 width: 85),
           ],
@@ -856,8 +858,8 @@ class _FeedsScreenState extends State<FeedsScreen> {
                           },
                           child: Container(
                             decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(40),
-                              border: Border.all(color: Colors.grey),
+                              borderRadius: BorderRadius.circular(10),
+                              border: Border.all(color: kblack),
                             ),
                             child: const Padding(
                               padding: EdgeInsets.all(10.0),
@@ -872,14 +874,25 @@ class _FeedsScreenState extends State<FeedsScreen> {
                 const SizedBox(
                   width: 10,
                 ),
-                IconButton(
-                  icon: const Icon(Icons.filter, color: Colors.green),
-                  onPressed: () {
+                // IconButton(
+                //   icon: const Icon(Icons.filter, color: Colors.green),
+                //   onPressed: () {
+                //     Get.to(NewPostScreen(
+                //       isImageClicked: true,
+                //     ));
+                //   },
+                // ),
+                InkWell(
+                  onTap: () {
                     Get.to(NewPostScreen(
                       isImageClicked: true,
                     ));
                   },
-                ),
+                  child: Image.asset(
+                    'assets/picture.png',
+                    width: 30,
+                  ),
+                )
               ],
             ),
           ),
@@ -907,9 +920,9 @@ class _FeedsScreenState extends State<FeedsScreen> {
     return Container(
       color: Colors.grey.shade100,
       padding: const EdgeInsets.all(10.0),
-      child: Row(
+      child: const Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: const [],
+        children: [],
       ),
     );
   }

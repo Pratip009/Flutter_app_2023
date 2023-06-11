@@ -30,6 +30,7 @@ class _SplashScreenState extends State<CsplashScreen> {
         //navigate to home screen
         Navigator.pushReplacement(
             context, MaterialPageRoute(builder: (_) => const HomeScreen()));
+            
       } else {
         //navigate to login screen
         Navigator.pushReplacement(

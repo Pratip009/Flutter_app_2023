@@ -38,7 +38,7 @@ class SearchFriendScreen extends StatelessWidget {
               hinttext: "Search for a friend ... "),
         ),
         body: Container(
-            margin: EdgeInsets.only(top: 30),
+            margin: const EdgeInsets.only(top: 30),
             child: socialLayoutController.userfiltered == null
                 ? FirestoreListView<UserModel>(
                     query: usersQuery,
@@ -49,7 +49,7 @@ class SearchFriendScreen extends StatelessWidget {
                           context: context, userModel: userModel);
                     },
                   )
-                : socialLayoutController.userfiltered!.length > 0
+                : socialLayoutController.userfiltered!.isNotEmpty
                     ? ListView.separated(
                         itemBuilder: (context, index) {
                           return buildChatItem(
@@ -61,12 +61,12 @@ class SearchFriendScreen extends StatelessWidget {
                           return Divider();
                         },
                         itemCount: socialLayoutController.userfiltered!.length)
-                    : Container(
+                    : SizedBox(
                         width: double.infinity,
                         child: Text(
                           'No result for "${queryController.text}"',
                           textAlign: TextAlign.center,
-                          style: TextStyle(color: Colors.grey, fontSize: 20),
+                          style: const TextStyle(color: Colors.grey, fontSize: 20),
                         ),
                       )),
       ),

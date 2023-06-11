@@ -77,6 +77,7 @@ Widget defaultTextFormField(
         String? hinttext,
         int? maxligne}) =>
     TextFormField(
+        enabled: false,
         controller: controller,
         keyboardType: inputtype,
         onFieldSubmitted: onfieldsubmit,
@@ -96,6 +97,41 @@ Widget defaultTextFormField(
         ),
         validator: onvalidate);
 
+
+Widget defaultTextFormFieldForPassword(
+        {required TextEditingController controller,
+        required TextInputType inputtype,
+        Function(String?)? onfieldsubmit,
+        VoidCallback? ontap,
+        String? Function(String?)? onvalidate,
+        Function(String?)? onchange,
+        String? text,
+        Widget? prefixIcon,
+        Widget? suffixIcon,
+        bool obscure = false,
+        InputBorder? border,
+        String? hinttext,
+        int? maxligne}) =>
+    TextFormField(
+        
+        controller: controller,
+        keyboardType: inputtype,
+        onFieldSubmitted: onfieldsubmit,
+        onTap: ontap,
+        maxLines: maxligne ?? 1,
+        obscureText: obscure,
+        onChanged: onchange,
+        style: const TextStyle(
+          fontWeight: FontWeight.normal,
+        ),
+        decoration: InputDecoration(
+          labelText: text,
+          hintText: hinttext,
+          prefixIcon: prefixIcon,
+          suffixIcon: suffixIcon,
+          border: border ?? const OutlineInputBorder(),
+        ),
+        validator: onvalidate);
 //NOTE ----------My Divider -----------------------------
 Widget myDivider() => Container(
       color: Colors.grey,
@@ -247,5 +283,3 @@ buildFriendItem(BuildContext context, String text) {
         ],
       ));
 }
-
-

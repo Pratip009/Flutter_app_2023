@@ -1,4 +1,7 @@
+// ignore_for_file: avoid_print
+
 import 'package:flutter/material.dart';
+import 'package:flutter_application_2023/provider/auth_provider.dart';
 import 'package:flutter_application_2023/screens/navpages/socialmedia/layout/layout.dart';
 import 'package:flutter_application_2023/screens/navpages/socialmedia/modules/social_login/login_controller.dart';
 import 'package:flutter_application_2023/screens/navpages/socialmedia/modules/social_register/register.dart';
@@ -7,15 +10,42 @@ import 'package:flutter_application_2023/screens/navpages/socialmedia/shared/con
 import 'package:flutter_application_2023/screens/navpages/socialmedia/shared/helper/binding.dart';
 import 'package:flutter_application_2023/screens/navpages/socialmedia/shared/network/local/cashhelper.dart';
 import 'package:get/get.dart';
+import 'package:provider/provider.dart';
 
+class LoginScreen extends StatefulWidget {
+  const LoginScreen({super.key});
 
-class LoginScreen extends StatelessWidget {
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
   var emailController = TextEditingController();
+
+  var uniqueIDController = TextEditingController();
+
   var passwordController = TextEditingController();
-  var _formkey = GlobalKey<FormState>();
+
+  final _formkey = GlobalKey<FormState>();
+  @override
+  void dispose() {
+    super.dispose();
+    emailController.dispose();
+    uniqueIDController.dispose();
+    passwordController.dispose();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    final ap = Provider.of<AuthProvider>(context, listen: false);
+    uniqueIDController.text = ap.userModel.unique;
+    emailController.text = ap.userModel.email;
+  }
 
   @override
   Widget build(BuildContext context) {
+
     return GetBuilder<LoginController>(
       init: LoginController(),
       builder: (socialLoginController) => Scaffold(
@@ -34,61 +64,81 @@ class LoginScreen extends StatelessWidget {
                       "LOGIN",
                       style: Theme.of(context)
                           .textTheme
-                          .bodyText1!
+                          .bodyLarge!
                           .copyWith(fontWeight: FontWeight.bold),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 5,
                     ),
                     Text(
                       "Login To comunicate with friends",
-                      style: Theme.of(context).textTheme.bodyText2!.copyWith(
+                      style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                             color: Colors.grey,
                           ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 20,
                     ),
-                    defaultTextFormField(
-                      controller: emailController,
-                      text: "Email Address",
-                      prefixIcon: Icon(Icons.email_outlined),
-                      inputtype: TextInputType.emailAddress,
-                      onvalidate: (value) {
-                        if (value!.isEmpty) {
-                          return 'Please Enter your email address';
-                        }
-                      },
+                    Visibility(
+                      visible: false,
+                      child: defaultTextFormField(
+                        controller: emailController,
+                        text: "Email",
+                        prefixIcon: const Icon(Icons.email),
+                        inputtype: TextInputType.emailAddress,
+                        onvalidate: (value) {
+                          if (value!.isEmpty) {
+                            return 'Please Enter your email address';
+                          }
+                          return null;
+                        },
+                      ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 15,
                     ),
                     defaultTextFormField(
+                      controller: uniqueIDController,
+                      text: "User ID",
+                      prefixIcon: const Icon(Icons.password),
+                      inputtype: TextInputType.text,
+                      onvalidate: (value) {
+                        if (value!.isEmpty) {
+                          return 'Please Enter your User ID';
+                        }
+                        return null;
+                      },
+                    ),
+                    const SizedBox(
+                      height: 15,
+                    ),
+                    defaultTextFormFieldForPassword(
                       controller: passwordController,
                       text: "Password",
-                      prefixIcon: Icon(Icons.lock),
-                      inputtype: TextInputType.emailAddress,
+                      prefixIcon: const Icon(Icons.lock),
+                      inputtype: TextInputType.visiblePassword,
                       onvalidate: (value) {
                         if (value!.isEmpty) {
                           return 'Please Enter password';
                         }
+                        return null;
                       },
                       obscure: socialLoginController.showpassword,
                       suffixIcon: IconButton(
                         icon: socialLoginController.showpassword
-                            ? Icon(Icons.visibility)
-                            : Icon(Icons.visibility_off),
+                            ? const Icon(Icons.visibility)
+                            : const Icon(Icons.visibility_off),
                         onPressed: () {
                           socialLoginController.onObscurePassword();
                           print(socialLoginController.showpassword);
                         },
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 10,
                     ),
                     socialLoginController.isloadingLogin
-                        ? Center(child: CircularProgressIndicator())
+                        ? const Center(child: CircularProgressIndicator())
                         : defaultButton(
                             text: "Login",
                             isUppercase: true,
@@ -96,14 +146,16 @@ class LoginScreen extends StatelessWidget {
                               if (_formkey.currentState!.validate()) {
                                 await socialLoginController.userlogin(
                                     email: emailController.text.trim(),
-                                    password: passwordController.text.trim());
+                                    password: passwordController.text.trim(),
+                                    uniqueID: uniqueIDController.text.trim());
                               }
 
                               if (socialLoginController.statusLoginMessage ==
                                   ToastStatus.Success) {
                                 //NOTE: uId saved in login method
                                 CashHelper.saveData(key: "uId", value: uId);
-                                Get.off(SocialLayout(), binding: Binding());
+                                Get.off(const SocialLayout(),
+                                    binding: Binding());
                               }
 
                               showToast(
@@ -111,18 +163,18 @@ class LoginScreen extends StatelessWidget {
                                   status: socialLoginController
                                       .statusLoginMessage!);
                             }),
-                    SizedBox(
+                    const SizedBox(
                       height: 10,
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text(
+                        const Text(
                           'Don\'t have an account?',
                         ),
                         defaultTextButton(
                             onpress: () {
-                              Get.to(RegisterScreen());
+                              Get.to(const RegisterScreen());
                             },
                             text: "Register".toUpperCase()),
                       ],

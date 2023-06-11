@@ -4,19 +4,19 @@ import 'dart:developer';
 import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_2023/widgets/constant.dart';
-import 'package:google_sign_in/google_sign_in.dart';
+import 'package:get/get_connect/http/src/utils/utils.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:provider/provider.dart';
 
+import '../../../../provider/auth_provider.dart';
 import '../../../../utils/dimensions.dart';
 import '../api/apis.dart';
 import '../helper/dialogs.dart';
 
 import '../models/chat_user.dart';
-import 'auth/login_screen.dart';
 
 //profile screen -- to show signed in user info
 class ProfileScreen extends StatefulWidget {
@@ -34,6 +34,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final ap = Provider.of<AuthProvider>(context, listen: false);
     return GestureDetector(
       // for hiding keyboard
       onTap: () => FocusScope.of(context).unfocus(),
@@ -52,51 +53,52 @@ class _ProfileScreenState extends State<ProfileScreen> {
             centerTitle: true,
             elevation: 1,
             title: Text(
-              'Profile Screen',
+              'Profile',
               style: TextStyle(color: kblack),
             ),
             backgroundColor: klight,
           ),
 
           // floating button to log out
-          floatingActionButton: Padding(
-            padding: const EdgeInsets.only(bottom: 10),
-            child: FloatingActionButton.extended(
-                backgroundColor: Colors.redAccent,
-                onPressed: () async {
-                  //for showing progress dialog
-                  Dialogs.showProgressBar(context);
+          // floatingActionButton: Padding(
+          //   padding: const EdgeInsets.only(bottom: 10),
+          //   child:
+          //   FloatingActionButton.extended(
+          //       backgroundColor: Colors.redAccent,
+          //       onPressed: () async {
+          //         //for showing progress dialog
+          //         Dialogs.showProgressBar(context);
 
-                  await APIs.updateActiveStatus(false);
+          //         await APIs.updateActiveStatus(false);
 
-                  //sign out from app
-                  await APIs.auth.signOut().then((value) async {
-                    await GoogleSignIn().signOut().then((value) {
-                      //for hiding progress dialog
-                      Navigator.pop(context);
+          //         //sign out from app
+          //         await APIs.auth.signOut().then((value) async {
+          //           await GoogleSignIn().signOut().then((value) {
+          //             //for hiding progress dialog
+          //             Navigator.pop(context);
 
-                      //for moving to home screen
-                      Navigator.pop(context);
+          //             //for moving to home screen
+          //             Navigator.pop(context);
 
-                      APIs.auth = FirebaseAuth.instance;
+          //             APIs.auth = FirebaseAuth.instance;
 
-                      //replacing home screen with login screen
-                      Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                              builder: (_) => const LoginScreen()));
-                    });
-                  });
-                },
-                icon: Icon(
-                  Icons.logout,
-                  color: knewwhite,
-                ),
-                label: Text(
-                  'Logout',
-                  style: TextStyle(color: knewwhite),
-                )),
-          ),
+          //             //replacing home screen with login screen
+          //             Navigator.pushReplacement(
+          //                 context,
+          //                 MaterialPageRoute(
+          //                     builder: (_) => const LoginScreen()));
+          //           });
+          //         });
+          //       },
+          //       icon: Icon(
+          //         Icons.logout,
+          //         color: knewwhite,
+          //       ),
+          //       label: Text(
+          //         'Logout',
+          //         style: TextStyle(color: knewwhite),
+          //       )),
+          // ),
 
           //body
           body: Form(
@@ -137,7 +139,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   width: Dimensions.screenHeight * .2,
                                   height: Dimensions.screenHeight * .2,
                                   fit: BoxFit.cover,
-                                  imageUrl: widget.user.image,
+                                  imageUrl: ap.userModel.profilePic,
                                   errorWidget: (context, url, error) =>
                                       const CircleAvatar(
                                           child: Icon(CupertinoIcons.person)),
@@ -165,7 +167,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     SizedBox(height: Dimensions.screenHeight * .03),
 
                     // user email label
-                    Text(widget.user.email,
+                    Text(ap.userModel.unique,
                         style: TextStyle(color: knewwhite, fontSize: 16)),
 
                     // for adding some space
@@ -173,13 +175,19 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
                     // name input field
                     TextFormField(
+                      enabled: false,
                       style: TextStyle(color: knewwhite),
-                      initialValue: widget.user.name,
-                      onSaved: (val) => APIs.me.name = val ?? '',
-                      validator: (val) => val != null && val.isNotEmpty
-                          ? null
-                          : 'Required Field',
+                      initialValue: "${ap.userModel.firstname}"
+                          "\u{00A0}"
+                          "${ap.userModel.lastname}",
+                      // onSaved: (val) => APIs.me.name = val ?? '',
+                      // validator: (val) => val != null && val.isNotEmpty
+                      //     ? null
+                      //     : 'Required Field',
                       decoration: InputDecoration(
+                          disabledBorder: OutlineInputBorder(
+                              borderSide:
+                                  BorderSide(width: 1, color: kblacklight)),
                           enabledBorder: OutlineInputBorder(
                             borderSide: BorderSide(
                                 width: 1, color: knewwhite), //<-- SEE HERE

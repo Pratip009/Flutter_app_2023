@@ -25,16 +25,13 @@ class LoginController extends GetxController {
   }
 
   Future<void> userlogin(
-      {required String email, required String password}) async {
+      {required String email, required String password,required String uniqueID}) async {
     _isloadingLogin = true;
     update();
-    print("Samih");
     try {
       await FirebaseAuth.instance
-          .signInWithEmailAndPassword(email: email, password: password)
+          .signInWithEmailAndPassword(email: email, password: password, )
           .then((value) {
-        print("damaj");
-        print(value.user!.email);
         uId = value.user!.uid;
         _statusLoginMessage = ToastStatus.Success;
         _statusMessage = "Logged In Successfully";
@@ -45,11 +42,9 @@ class LoginController extends GetxController {
       if (e.code == 'user-not-found') {
         _statusMessage = "No user found for that email.";
         _statusLoginMessage = ToastStatus.Error;
-        print('No user found for that email.');
       } else if (e.code == 'wrong-password') {
         _statusMessage = "Wrong password provided for that user.";
         _statusLoginMessage = ToastStatus.Error;
-        print('Wrong password provided for that user.');
       }
       _isloadingLogin = false;
       update();

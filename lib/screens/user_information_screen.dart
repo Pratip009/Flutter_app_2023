@@ -1,18 +1,18 @@
-// ignore_for_file: prefer_const_constructors, sized_box_for_whitespace, prefer_const_literals_to_create_immutables
+// ignore_for_file: prefer_const_constructors, sized_box_for_whitespace, prefer_const_literals_to_create_immutables, avoid_types_as_parameter_names
 
 import 'dart:io';
+import 'dart:math';
 import 'package:flutter/material.dart';
-
+import 'package:flutter_application_2023/screens/navpages/chat/widgets/widgets.dart';
 import 'package:flutter_application_2023/screens/navpages/main_screen.dart';
+import 'package:flutter_application_2023/utils/utils.dart';
 import 'package:flutter_application_2023/widgets/constant.dart';
-
 import 'package:google_fonts/google_fonts.dart';
-
 import 'package:provider/provider.dart';
 import '../model/user_model.dart';
 import '../provider/auth_provider.dart';
 import '../utils/dimensions.dart';
-import '../utils/utils.dart';
+
 import '../widgets/custom_button.dart';
 import 'package:intl/intl.dart';
 
@@ -36,7 +36,7 @@ class _UserInfromationScreenState extends State<UserInfromationScreen> {
   final FirstnameController = TextEditingController();
   // ignore: non_constant_identifier_names
   final LastnameController = TextEditingController();
-  // final emailController = TextEditingController();
+  final emailController = TextEditingController();
   final ageController = TextEditingController();
   final adhaarController = TextEditingController();
   final panController = TextEditingController();
@@ -44,13 +44,14 @@ class _UserInfromationScreenState extends State<UserInfromationScreen> {
   final districtController = TextEditingController();
   final cityController = TextEditingController();
   final pinController = TextEditingController();
+  final uniqueController = TextEditingController();
 
   @override
   void dispose() {
     super.dispose();
     FirstnameController.dispose();
     LastnameController.dispose();
-    // emailController.dispose();
+    emailController.dispose();
     ageController.dispose();
     adhaarController.dispose();
     panController.dispose();
@@ -58,6 +59,7 @@ class _UserInfromationScreenState extends State<UserInfromationScreen> {
     districtController.dispose();
     cityController.dispose();
     pinController.dispose();
+    uniqueController.dispose();
   }
 
   // for selecting image
@@ -233,6 +235,9 @@ class _UserInfromationScreenState extends State<UserInfromationScreen> {
                               children: [
                                 // first name field
                                 textField(
+                                  iconButton: IconButton(
+                                      onPressed: () {},
+                                      icon: Icon(Icons.circle)),
                                   labelText: 'First Name',
                                   ontap: () {},
                                   hintlText: "Enter your First Name",
@@ -249,6 +254,9 @@ class _UserInfromationScreenState extends State<UserInfromationScreen> {
                                 ),
                                 // last name field
                                 textField(
+                                  iconButton: IconButton(
+                                      onPressed: () {},
+                                      icon: Icon(Icons.circle)),
                                   labelText: 'Last Name',
                                   ontap: () {},
                                   hintlText: "Enter your Last Name",
@@ -265,23 +273,29 @@ class _UserInfromationScreenState extends State<UserInfromationScreen> {
                                 ),
 
                                 // email
-                                // textField(
-                                //   labelText: 'Email',
-                                //   ontap: () {},
-                                //   hintlText: "Enter your Email",
-                                //   icon: Icons.email,
-                                //   inputType: TextInputType.emailAddress,
-                                //   maxLines: 1,
-                                //   controller: emailController,
-                                //   validator: (value) {
-                                //     if (value == null || value.isEmpty) {
-                                //       return 'Email id Required';
-                                //     }
-                                //     return null;
-                                //   },
-                                // ),
+                                textField(
+                                  iconButton: IconButton(
+                                      onPressed: () {},
+                                      icon: Icon(Icons.circle)),
+                                  labelText: 'Email',
+                                  ontap: () {},
+                                  hintlText: "Enter your Email",
+                                  icon: Icons.email,
+                                  inputType: TextInputType.emailAddress,
+                                  maxLines: 1,
+                                  controller: emailController,
+                                  validator: (value) {
+                                    if (value == null || value.isEmpty) {
+                                      return 'Email id Required';
+                                    }
+                                    return null;
+                                  },
+                                ),
                                 //age
                                 textField(
+                                  iconButton: IconButton(
+                                      onPressed: () {},
+                                      icon: Icon(Icons.circle)),
                                   labelText: 'Date Of Birth',
                                   hintlText:
                                       "Select Date Of Birth from calender",
@@ -311,6 +325,9 @@ class _UserInfromationScreenState extends State<UserInfromationScreen> {
 
                                 // adhhar
                                 textField(
+                                  iconButton: IconButton(
+                                      onPressed: () {},
+                                      icon: Icon(Icons.circle)),
                                   labelText: 'Adhaar Number',
                                   ontap: () {},
                                   hintlText: "Enter your Adhaar Number",
@@ -514,6 +531,9 @@ class _UserInfromationScreenState extends State<UserInfromationScreen> {
                                 ),
                                 //pan
                                 textField(
+                                  iconButton: IconButton(
+                                      onPressed: () {},
+                                      icon: Icon(Icons.circle)),
                                   labelText: 'PAN Number',
                                   ontap: () {},
                                   hintlText: "Enter your PAN number",
@@ -718,6 +738,9 @@ class _UserInfromationScreenState extends State<UserInfromationScreen> {
                                 ),
                                 //bio
                                 textField(
+                                  iconButton: IconButton(
+                                      onPressed: () {},
+                                      icon: Icon(Icons.circle)),
                                   labelText: 'Address',
                                   ontap: () {},
                                   hintlText: "Enter your full Address",
@@ -733,6 +756,9 @@ class _UserInfromationScreenState extends State<UserInfromationScreen> {
                                   },
                                 ),
                                 textField(
+                                  iconButton: IconButton(
+                                      onPressed: () {},
+                                      icon: Icon(Icons.circle)),
                                   labelText: 'District',
                                   ontap: () {},
                                   hintlText: "Enter your District name",
@@ -748,6 +774,9 @@ class _UserInfromationScreenState extends State<UserInfromationScreen> {
                                   },
                                 ),
                                 textField(
+                                  iconButton: IconButton(
+                                      onPressed: () {},
+                                      icon: Icon(Icons.circle)),
                                   labelText: 'City',
                                   ontap: () {},
                                   hintlText: "Enter your City name",
@@ -763,6 +792,9 @@ class _UserInfromationScreenState extends State<UserInfromationScreen> {
                                   },
                                 ),
                                 textField(
+                                  iconButton: IconButton(
+                                      onPressed: () {},
+                                      icon: Icon(Icons.circle)),
                                   labelText: 'PIN Number',
                                   ontap: () {},
                                   hintlText: "Enter your PIN number",
@@ -777,6 +809,30 @@ class _UserInfromationScreenState extends State<UserInfromationScreen> {
                                     return null;
                                   },
                                 ),
+                                Visibility(
+                                  visible: false,
+                                  child: textField(
+                                    iconButton: IconButton(
+                                        onPressed: () {},
+                                        icon: Icon(
+                                          Icons.psychology_alt_sharp,
+                                          color: Colors.amber,
+                                        )),
+                                    controller: uniqueController,
+                                    hintlText: 'Please Generate your ID',
+                                    icon: Icons.password,
+                                    inputType: TextInputType.text,
+                                    labelText: 'User ID',
+                                    maxLines: 1,
+                                    ontap: () {},
+                                    validator: (value) {
+                                      if (value == null || value.isEmpty) {
+                                        return 'User Name Required';
+                                      }
+                                      return null;
+                                    },
+                                  ),
+                                ),
                               ],
                             ),
                           ),
@@ -786,9 +842,13 @@ class _UserInfromationScreenState extends State<UserInfromationScreen> {
                             height: 50,
                             width: MediaQuery.of(context).size.width * 0.90,
                             child: CustomButton(
-                              text: "SUBMIT",
-                              onPressed: () => storeData(),
-                            ),
+                                text: "SUBMIT",
+                                onPressed: () {
+                                  String passgen = generatePassword();
+                                  uniqueController.text = passgen;
+                                  setState(() {});
+                                  storeData();
+                                }),
                           )
                         ],
                       ),
@@ -802,6 +862,7 @@ class _UserInfromationScreenState extends State<UserInfromationScreen> {
 
   Widget textField({
     required String hintlText,
+    required iconButton,
     required String labelText,
     required IconData icon,
     required TextInputType inputType,
@@ -838,6 +899,7 @@ class _UserInfromationScreenState extends State<UserInfromationScreen> {
               color: kblacklight,
             ),
           ),
+          suffixIcon: iconButton,
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(8),
             borderSide: BorderSide(
@@ -872,13 +934,32 @@ class _UserInfromationScreenState extends State<UserInfromationScreen> {
     );
   }
 
+  String generatePassword() {
+    String upper = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+
+    String numbers = '1234567890';
+
+    String password = '';
+    int passlength = 8;
+    String seed = upper + numbers;
+
+    List<String> list = seed.split('').toList();
+    Random rand = Random();
+
+    for (var i = 0; i < passlength; i++) {
+      int index = rand.nextInt(list.length);
+      password += list[index];
+    }
+    return password;
+  }
+
   // store user data to database
   void storeData() async {
     final ap = Provider.of<AuthProvider>(context, listen: false);
     UserModel userModel = UserModel(
       firstname: FirstnameController.text.trim(),
       lastname: LastnameController.text.trim(),
-      // email: emailController.text.trim(),
+      email: emailController.text.trim(),
       age: ageController.text.trim(),
       adhaar: adhaarController.text.trim(),
       pan: panController.text.trim(),
@@ -892,6 +973,7 @@ class _UserInfromationScreenState extends State<UserInfromationScreen> {
       uid: "",
       adhaarImage: "",
       panImage: "",
+      unique: uniqueController.text.trim(),
     );
     _formKey.currentState!.save();
     if (_formKey.currentState!.validate()) {
@@ -918,7 +1000,8 @@ class _UserInfromationScreenState extends State<UserInfromationScreen> {
         },
       );
     } else {
-      showSnackBar(context, "Please upload your profile photo");
+      // showSnackBar(context, "Please upload your profile photo");
+      showSnackbar(context, kred, "Please upload your profile photo");
     }
     //adhaar
     if (adhaarImage != null) {
@@ -940,7 +1023,8 @@ class _UserInfromationScreenState extends State<UserInfromationScreen> {
         },
       );
     } else {
-      showSnackBar(context, "Please upload your adhaar photo");
+      // showSnackBar(context, "Please upload your adhaar photo");
+      showSnackbar(context, kred, "Please upload your adhaar photo");
     }
     //pan
     if (panImage != null) {
@@ -959,7 +1043,8 @@ class _UserInfromationScreenState extends State<UserInfromationScreen> {
         },
       );
     } else {
-      showSnackBar(context, "Please upload your pan photo");
+      // showSnackBar(context, "Please upload your pan photo");
+      showSnackbar(context, kred, "Please upload your pan photo");
     }
   }
 }

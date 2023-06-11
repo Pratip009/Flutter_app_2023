@@ -1,4 +1,7 @@
+
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+
 
 class DatabaseService {
   final String? uid;
@@ -43,6 +46,7 @@ class DatabaseService {
       "groupId": "",
       "recentMessage": "",
       "recentMessageSender": "",
+      "sentImage": "",
     });
     // update the members
     await groupDocumentReference.update({
@@ -133,4 +137,5 @@ class DatabaseService {
       "recentMessageTime": chatMessageData['time'].toString(),
     });
   }
+  //sent image
 }
