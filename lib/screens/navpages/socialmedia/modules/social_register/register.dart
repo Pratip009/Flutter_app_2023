@@ -1,6 +1,6 @@
 // ignore_for_file: avoid_print
 
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide ModalBottomSheetRoute;
 import 'package:flutter_application_2023/provider/auth_provider.dart';
 import 'package:flutter_application_2023/screens/navpages/socialmedia/layout/layout.dart';
 import 'package:flutter_application_2023/screens/navpages/socialmedia/modules/social_register/register_controller.dart';

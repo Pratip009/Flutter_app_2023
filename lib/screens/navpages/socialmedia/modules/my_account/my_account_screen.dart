@@ -1,9 +1,12 @@
 // ignore_for_file: must_be_immutable, avoid_unnecessary_containers, avoid_print
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart' hide ModalBottomSheetRoute;
 import 'package:flutter_application_2023/provider/auth_provider.dart';
+import 'package:flutter_application_2023/screens/navpages/socialmedia/layout/layout.dart';
 import 'package:flutter_application_2023/screens/navpages/socialmedia/layout/layout_controller.dart';
+import 'package:flutter_application_2023/screens/navpages/socialmedia/model/friend_request.dart';
 import 'package:flutter_application_2023/screens/navpages/socialmedia/model/post_model.dart';
 import 'package:flutter_application_2023/screens/navpages/socialmedia/model/user_model.dart';
 import 'package:flutter_application_2023/screens/navpages/socialmedia/modules/addstory/add_story.dart';
@@ -22,19 +25,33 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:like_button/like_button.dart';
 import 'package:provider/provider.dart';
-
 import '../../../../wallet-functions-payment-stuffs/transfer_money.dart';
 
-class MyAccountScreen extends StatelessWidget {
+class MyAccountScreen extends StatefulWidget {
+  const MyAccountScreen({super.key});
+
+  @override
+  State<MyAccountScreen> createState() => _MyAccountScreenState();
+}
+
+class _MyAccountScreenState extends State<MyAccountScreen> {
+//   @override
+//   void initState() {
+//     getUserFriendsList();
+//     super.initState();
+//   }
+
+// getUserFriendsList()async{
+//   FirebaseFirestore.instance.collection('users').where('')
+// }
+
   final double coverAndProfileheight = 220;
+
   final double coverimageheight = 180;
+
   double profileheight = 60;
 
-  List<String> firendsName = [
-    "person 1",
-    "person 2",
-    "person 3",
-  ];
+  List<String> firendsName = ['A', 'B'];
 
   final mypostsQuery = FirebaseFirestore.instance
       .collection('posts')
@@ -45,10 +62,7 @@ class MyAccountScreen extends StatelessWidget {
         toFirestore: (post, _) => post.toJson(),
       );
 
-  MyAccountScreen({super.key});
-
   //static get uid => null;
-
   @override
   Widget build(BuildContext context) {
     final ap = Provider.of<AuthProvider>(context, listen: false);
@@ -204,10 +218,10 @@ class MyAccountScreen extends StatelessWidget {
                                     onPressed: () {
                                       Get.to(EditProfile());
                                     },
-                                    child: Row(
+                                    child: const Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.center,
-                                      children: const [
+                                      children: [
                                         Icon(
                                           Icons.edit,
                                           size: 16,
@@ -238,54 +252,6 @@ class MyAccountScreen extends StatelessWidget {
                                 //     onPressed: () {}, child: Icon(Icons.edit)),
                               ],
                             ),
-                          ),
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Expanded(
-                                flex: 2,
-                                child: MaterialButton(
-                                  height: 40,
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(8)),
-                                  color: kblacklight2,
-                                  onPressed: () {
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                const TransferMoney()));
-                                  },
-                                  child: Container(
-                                    // color: defaultColor,
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        CircleAvatar(
-                                            radius: 9,
-                                            backgroundColor: Colors.white,
-                                            child: Icon(
-                                              Icons.monetization_on,
-                                              size: 16,
-                                              color: kblacklight2,
-                                            )),
-                                        const SizedBox(
-                                          width: 5,
-                                        ),
-                                        Text(
-                                          "Get Our Premium Membership",
-                                          style: TextStyle(color: knewwhite),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              const SizedBox(
-                                width: 10,
-                              ),
-                            ],
                           ),
 
                           // Note About
@@ -332,16 +298,42 @@ class MyAccountScreen extends StatelessWidget {
                             color: Colors.grey.shade600,
                           ),
                           const SizedBox(height: 10),
-                          buildFirendsHedear(),
-                          const SizedBox(height: 12),
-
-                          Wrap(
-                            spacing: 10,
+                          // buildFirendsHedear(),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              ...firendsName
-                                  .map((e) => buildFriendItem(context, e)),
+                              Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    const Text(
+                                      "Friends",
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 20),
+                                    ),
+                                    const SizedBox(
+                                      height: 5,
+                                    ),
+                                    Text(
+                                      "${socialUserModel.nbOffriends.toString()} friends",
+                                      style: const TextStyle(
+                                          color: Colors.grey, fontSize: 15),
+                                    ),
+                                  ]),
+                              // const Text(
+                              //   "Find Friends",
+                              //   style: TextStyle(color: defaultColor),
+                              // )
                             ],
                           ),
+                          const SizedBox(height: 12),
+
+                          // Wrap(
+                          //   spacing: 10,
+                          //   children: [
+                          //     ...firendsName.map((e) => buildFirendsHedear()),
+                          //   ],
+                          // ),
                           MaterialButton(
                               onPressed: () {},
                               minWidth: double.infinity,
@@ -406,16 +398,50 @@ class MyAccountScreen extends StatelessWidget {
         });
   }
 
+  // buildFriendItem(
+  //   BuildContext context,
+  //   String text,
+  // ) {
+  //   return SizedBox(
+  //       width: MediaQuery.of(context).size.width * .28,
+  //       height: 140,
+  //       child: Column(
+  //         children: [
+  //           ClipRRect(
+  //             borderRadius: BorderRadius.circular(8),
+  //             child: SizedBox(
+  //                 height: 100,
+  //                 width: MediaQuery.of(context).size.width * .28,
+  //                 child: Image.network(
+  //                   '',
+  //                   fit: BoxFit.fitWidth,
+  //                 )),
+  //           ),
+  //           const SizedBox(
+  //             height: 5,
+  //           ),
+  //           Text(
+  //             text,
+  //             style: const TextStyle(fontWeight: FontWeight.bold),
+  //             maxLines: 2,
+  //             overflow: TextOverflow.ellipsis,
+  //           )
+  //         ],
+  //       ));
+  // }
+
   final List<String> _streamItems = [
     'Live',
     'Photo',
     'Life event',
   ];
+
   final List<IconData> _streamIcons = [
     Icons.live_tv_sharp,
     Icons.filter,
     Icons.flag
   ];
+
   final List<Color> _streamIconColors = [
     Colors.pink.shade400,
     Colors.purple.shade400,
@@ -598,7 +624,50 @@ class MyAccountScreen extends StatelessWidget {
                                 Icons.check_circle,
                                 color: defaultColor,
                                 size: 16,
-                              )
+                              ),
+                            const SizedBox(
+                              width: 5,
+                            ),
+                            Expanded(
+                              flex: 2,
+                              child: MaterialButton(
+                                height: 40,
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(8)),
+                                color: kblacklight,
+                                onPressed: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              const TransferMoney()));
+                                },
+                                child: Container(
+                                  // color: defaultColor,
+
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      CircleAvatar(
+                                          radius: 9,
+                                          backgroundColor: Colors.white,
+                                          child: Icon(
+                                            Icons.monetization_on,
+                                            size: 16,
+                                            color: kblacklight,
+                                          )),
+                                      const SizedBox(
+                                        width: 5,
+                                      ),
+                                      Text(
+                                        "Pay For Paid Ad.",
+                                        style: TextStyle(color: knewwhite),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
                           ],
                         ),
                         Text(
@@ -610,11 +679,12 @@ class MyAccountScreen extends StatelessWidget {
                         ),
                       ],
                     )),
-                    IconButton(
-                        onPressed: () async {},
-                        icon: const Icon(
-                          Icons.more_horiz,
-                        )),
+                    // IconButton(
+                    //     onPressed: () async {},
+                    //     icon: const Icon(
+                    //       Icons.more_horiz,
+                    //     )),
+                    //!paid ad
                   ],
                 ),
               ),
@@ -886,27 +956,27 @@ class MyAccountScreen extends StatelessWidget {
   }
 }
 
-buildFirendsHedear() {
-  return Row(
-    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-    children: [
-      Column(crossAxisAlignment: CrossAxisAlignment.start, children: const [
-        Text(
-          "Friends",
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-        ),
-        SizedBox(
-          height: 5,
-        ),
-        Text(
-          "2 friends",
-          style: TextStyle(color: Colors.grey, fontSize: 15),
-        ),
-      ]),
-      const Text(
-        "Find Friends",
-        style: TextStyle(color: defaultColor),
-      )
-    ],
-  );
-}
+// buildFirendsHedear() {
+//   return const Row(
+//     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//     children: [
+//       Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+//         Text(
+//           "Friends",
+//           style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+//         ),
+//         SizedBox(
+//           height: 5,
+//         ),
+//         Text(
+//           "2 friends",
+//           style: TextStyle(color: Colors.grey, fontSize: 15),
+//         ),
+//       ]),
+//       Text(
+//         "Find Friends",
+//         style: TextStyle(color: defaultColor),
+//       )
+//     ],
+//   );
+// }

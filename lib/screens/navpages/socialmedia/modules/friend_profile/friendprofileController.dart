@@ -60,7 +60,7 @@ class FriendProfileController extends GetxController {
   }
 
 //NOTE get list of sent requests
-  List<FriendRequest> _listofsentfriendrequests = [];
+  final List<FriendRequest> _listofsentfriendrequests = [];
   List<FriendRequest> get listofsentfriendrequests => _listofsentfriendrequests;
   Future<void> getListOfsentRequests() async {
     await FirebaseFirestore.instance
@@ -69,10 +69,10 @@ class FriendProfileController extends GetxController {
         .collection('sentfriendrequests')
         .get()
         .then((value) {
-      if (value.docs.length > 0) {
-        value.docs.forEach((element) {
+      if (value.docs.isNotEmpty) {
+        for (var element in value.docs) {
           _listofsentfriendrequests.add(FriendRequest.fromJson(element.data()));
-        });
+        }
         update();
       }
     });

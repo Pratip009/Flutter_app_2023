@@ -1,12 +1,11 @@
 // ignore_for_file: avoid_print, prefer_interpolation_to_compose_strings, sized_box_for_whitespace, unrelated_type_equality_checks
 
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide ModalBottomSheetRoute;
 import 'package:flutter_application_2023/screens/navpages/socialmedia/layout/layout_controller.dart';
 import 'package:flutter_application_2023/screens/navpages/socialmedia/shared/components/componets.dart';
 import 'package:flutter_application_2023/screens/navpages/socialmedia/shared/styles/colors.dart';
+import 'package:flutter_application_2023/widgets/constant.dart';
 import 'package:get/get.dart';
-
-
 
 // ignore: must_be_immutable
 class EditProfile extends StatelessWidget {
@@ -45,8 +44,8 @@ class EditProfile extends StatelessWidget {
                                   socialLayoutController.isloadingUrlProfile!
                               ? null
                               : () async {
-                                  print("befor : ${socialLayoutController
-                                          .isloadingupdateUser!}");
+                                  print(
+                                      "befor : ${socialLayoutController.isloadingupdateUser!}");
                                   socialLayoutController
                                       .updateUser(
                                           name: namecontroller.text,
@@ -68,8 +67,8 @@ class EditProfile extends StatelessWidget {
                       //NOTE : check if an image still uploading  to firebase change color of button to grey
                       color: socialLayoutController.isloadingUrlcover! ||
                               socialLayoutController.isloadingUrlProfile!
-                          ? Colors.grey
-                          : defaultColor),
+                          ? knewwhite
+                          : knewwhite),
                   const SizedBox(
                     width: 15,
                   )
@@ -105,7 +104,8 @@ class EditProfile extends StatelessWidget {
                                           height: 180,
                                           width: double.infinity,
                                           decoration: BoxDecoration(
-                                            borderRadius: const BorderRadius.only(
+                                            borderRadius:
+                                                const BorderRadius.only(
                                               topLeft: Radius.circular(5),
                                               topRight: Radius.circular(5),
                                             ),
@@ -189,7 +189,7 @@ class EditProfile extends StatelessWidget {
                     const SizedBox(
                       height: 10,
                     ),
-                    defaultTextFormField(
+                    defaultTextFormFieldForSocial(
                         controller: namecontroller,
                         inputtype: TextInputType.name,
                         prefixIcon: const Icon(Icons.person),
@@ -203,7 +203,7 @@ class EditProfile extends StatelessWidget {
                     const SizedBox(
                       height: 10,
                     ),
-                    defaultTextFormField(
+                    defaultTextFormFieldForSocial(
                         controller: biocontroller,
                         inputtype: TextInputType.text,
                         prefixIcon: const Icon(Icons.info_outline),
@@ -217,7 +217,7 @@ class EditProfile extends StatelessWidget {
                     const SizedBox(
                       height: 10,
                     ),
-                    defaultTextFormField(
+                    defaultTextFormFieldForSocial(
                         controller: phonecontroller,
                         inputtype: TextInputType.phone,
                         prefixIcon: const Icon(Icons.phone),

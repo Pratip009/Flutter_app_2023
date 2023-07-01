@@ -1,14 +1,11 @@
 import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:http/http.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-
 import '../models/chat_user.dart';
 import '../models/message.dart';
 
@@ -23,7 +20,17 @@ class APIs {
   static FirebaseStorage storage = FirebaseStorage.instance;
 
   // for storing self information
-  static late ChatUser me;
+  static ChatUser me = ChatUser(
+      id: user.uid,
+      uniqueID: '',
+      name: user.displayName.toString(),
+      email: user.email.toString(),
+      about: "Hey, I'm using We Chat!",
+      image: user.photoURL.toString(),
+      createdAt: '',
+      isOnline: false,
+      lastActive: '',
+      pushToken: '');
 
   // to return current user
   static User get user => auth.currentUser!;
@@ -35,12 +42,14 @@ class APIs {
   static Future<void> getFirebaseMessagingToken() async {
     await fMessaging.requestPermission();
 
-    await fMessaging.getToken().then((t) {
-      if (t != null) {
-        me.pushToken = t;
-        log('Push Token: $t');
-      }
-    });
+    await fMessaging.getToken().then(
+      (t) {
+        if (t != null) {
+          me.pushToken = t;
+          log('Push Token: $t');
+        }
+      },
+    );
 
     // for handling foreground messages
     // FirebaseMessaging.onMessage.listen((RemoteMessage message) {
@@ -85,14 +94,15 @@ class APIs {
 
   // for checking if user exists or not?
   static Future<bool> userExists() async {
-    return (await firestore.collection('userschat').doc(user.uid).get()).exists;
+    return (await firestore.collection('newchatusers').doc(user.uid).get())
+        .exists;
   }
 
   // for adding an chat user for our conversation
-  static Future<bool> addChatUser(String email) async {
+  static Future<bool> addChatUser(String uniqueID) async {
     final data = await firestore
-        .collection('userschat')
-        .where('email', isEqualTo: email)
+        .collection('newchatusers')
+        .where('uniqueID', isEqualTo: uniqueID)
         .get();
 
     log('data: ${data.docs}');
@@ -103,7 +113,7 @@ class APIs {
       log('user exists: ${data.docs.first.data()}');
 
       firestore
-          .collection('userschat')
+          .collection('newchatusers')
           .doc(user.uid)
           .collection('my_users')
           .doc(data.docs.first.id)
@@ -120,7 +130,7 @@ class APIs {
   // for getting current user info
   static Future<void> getSelfInfo() async {
     await firestore
-        .collection('userschat')
+        .collection('newchatusers')
         .doc(user.uid)
         .get()
         .then((user) async {
@@ -143,6 +153,7 @@ class APIs {
 
     final chatUser = ChatUser(
         id: user.uid,
+        uniqueID: '',
         name: user.displayName.toString(),
         email: user.email.toString(),
         about: "Hey, I'm using We Chat!",
@@ -153,27 +164,27 @@ class APIs {
         pushToken: '');
 
     return await firestore
-        .collection('userschat')
+        .collection('newchatusers')
         .doc(user.uid)
         .set(chatUser.toJson());
   }
 
-  // for getting id's of known userschat from firestore database
+  // for getting id's of known newchatusers from firestore database
   static Stream<QuerySnapshot<Map<String, dynamic>>> getMyUsersId() {
     return firestore
-        .collection('userschat')
+        .collection('newchatusers')
         .doc(user.uid)
         .collection('my_users')
         .snapshots();
   }
 
-  // for getting all userschat from firestore database
+  // for getting all newchatusers from firestore database
   static Stream<QuerySnapshot<Map<String, dynamic>>> getAllUsers(
       List<String> userIds) {
     log('\nUserIds: $userIds');
 
     return firestore
-        .collection('userschat')
+        .collection('newchatusers')
         .where('id',
             whereIn: userIds.isEmpty
                 ? ['']
@@ -186,7 +197,7 @@ class APIs {
   static Future<void> sendFirstMessage(
       ChatUser chatUser, String msg, Type type) async {
     await firestore
-        .collection('userschat')
+        .collection('newchatusers')
         .doc(chatUser.id)
         .collection('my_users')
         .doc(user.uid)
@@ -195,8 +206,9 @@ class APIs {
 
   // for updating user information
   static Future<void> updateUserInfo() async {
-    await firestore.collection('userschat').doc(user.uid).update({
+    await firestore.collection('newchatusers').doc(user.uid).update({
       'name': me.name,
+      'uniqueID': me.uniqueID,
       'about': me.about,
     });
   }
@@ -220,7 +232,7 @@ class APIs {
     //updating image in firestore database
     me.image = await ref.getDownloadURL();
     await firestore
-        .collection('userschat')
+        .collection('newchatusers')
         .doc(user.uid)
         .update({'image': me.image});
   }
@@ -229,14 +241,14 @@ class APIs {
   static Stream<QuerySnapshot<Map<String, dynamic>>> getUserInfo(
       ChatUser chatUser) {
     return firestore
-        .collection('userschat')
+        .collection('newchatusers')
         .where('id', isEqualTo: chatUser.id)
         .snapshots();
   }
 
   // update online or last active status of user
   static Future<void> updateActiveStatus(bool isOnline) async {
-    firestore.collection('userschat').doc(user.uid).update({
+    firestore.collection('newchatusers').doc(user.uid).update({
       'is_online': isOnline,
       'last_active': DateTime.now().millisecondsSinceEpoch.toString(),
       'push_token': me.pushToken,
@@ -321,46 +333,6 @@ class APIs {
     await sendMessage(chatUser, imageUrl, Type.image);
   }
 
-  // for sending Group message
-  static Future<void> sendGroupMessage(
-      String userName, String msg, Type type) async {
-    //message sending time (also used as id)
-    final time = DateTime.now().millisecondsSinceEpoch.toString();
-
-    //message to send
-    final Message message = Message(
-        toId: userName,
-        msg: msg,
-        read: '',
-        type: type,
-        fromId: user.uid,
-        sent: time);
-
-    final ref =
-        firestore.collection('chats/${getConversationID(userName)}/messages/');
-  }
-
-//send chat image
-  static Future<void> sendGroupChatImage(String userName, File file) async {
-    //getting image file extension
-    final ext = file.path.split('.').last;
-
-    //storage file ref with path
-    final ref = storage.ref().child(
-        'images/${getConversationID(userName)}/${DateTime.now().millisecondsSinceEpoch}.$ext');
-
-    //uploading image
-    await ref
-        .putFile(file, SettableMetadata(contentType: 'image/$ext'))
-        .then((p0) {
-      log('Data Transferred: ${p0.bytesTransferred / 1000} kb');
-    });
-
-    //updating image in firestore database
-    final imageUrl = await ref.getDownloadURL();
-    await sendGroupMessage(userName, imageUrl, Type.image);
-  }
-
   //delete message
   static Future<void> deleteMessage(Message message) async {
     await firestore
@@ -379,44 +351,5 @@ class APIs {
         .collection('chats/${getConversationID(message.toId)}/messages/')
         .doc(message.sent)
         .update({'msg': updatedMsg});
-  }
-
-  //Group chat//
-  static String userLoggedInKey = "LOGGEDINKEY";
-  static String userNameKey = "USERNAMEKEY";
-  static String userEmailKey = "USEREMAILKEY";
-
-  // saving the data to SF
-
-  static Future<bool> saveUserLoggedInStatus(bool isUserLoggedIn) async {
-    SharedPreferences sf = await SharedPreferences.getInstance();
-    return await sf.setBool(userLoggedInKey, isUserLoggedIn);
-  }
-
-  static Future<bool> saveUserNameSF(String userName) async {
-    SharedPreferences sf = await SharedPreferences.getInstance();
-    return await sf.setString(userNameKey, userName);
-  }
-
-  static Future<bool> saveUserEmailSF(String userEmail) async {
-    SharedPreferences sf = await SharedPreferences.getInstance();
-    return await sf.setString(userEmailKey, userEmail);
-  }
-
-  // getting the data from SF
-
-  static Future<bool?> getUserLoggedInStatus() async {
-    SharedPreferences sf = await SharedPreferences.getInstance();
-    return sf.getBool(userLoggedInKey);
-  }
-
-  static Future<String?> getUserEmailFromSF() async {
-    SharedPreferences sf = await SharedPreferences.getInstance();
-    return sf.getString(userEmailKey);
-  }
-
-  static Future<String?> getUserNameFromSF() async {
-    SharedPreferences sf = await SharedPreferences.getInstance();
-    return sf.getString(userNameKey);
   }
 }

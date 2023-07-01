@@ -1,6 +1,6 @@
 // ignore_for_file: avoid_print
 
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide ModalBottomSheetRoute;
 import 'package:flutter_application_2023/screens/navpages/socialmedia/layout/layout.dart';
 import 'package:flutter_application_2023/screens/navpages/socialmedia/modules/social_login/login.dart';
 import 'package:flutter_application_2023/screens/navpages/socialmedia/shared/constants.dart';
@@ -19,7 +19,7 @@ class MainHomePage extends StatelessWidget {
     if (uId != null) {
       widget = const SocialLayout();
     } else {
-      widget = LoginScreen();
+      widget = const LoginScreen();
     }
     return Scaffold(
       body: widget,

@@ -1,6 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide ModalBottomSheetRoute;
 
 import 'package:flutter_application_2023/screens/navpages/main_screen.dart';
 import 'package:flutter_application_2023/screens/register_screen.dart';
@@ -191,8 +191,7 @@ class _OtpScreenState extends State<OtpScreen> {
                                 (value) => Navigator.pushAndRemoveUntil(
                                     context,
                                     MaterialPageRoute(
-                                      builder: (context) =>
-                                          const MainScreen(),
+                                      builder: (context) => const MainScreen(),
                                     ),
                                     (route) => false),
                               ),

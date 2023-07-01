@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter_application_2023/screens/navpages/socialmedia/layout/layout_controller.dart';
 import 'package:flutter_application_2023/screens/navpages/socialmedia/model/message_model.dart';

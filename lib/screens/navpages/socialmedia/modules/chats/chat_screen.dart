@@ -1,6 +1,6 @@
 // ignore_for_file: use_key_in_widget_constructors
 
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide ModalBottomSheetRoute;
 import 'package:flutter_application_2023/screens/navpages/socialmedia/layout/layout_controller.dart';
 import 'package:flutter_application_2023/screens/navpages/socialmedia/modules/search_friend/search_friend.dart';
 import 'package:flutter_application_2023/screens/navpages/socialmedia/shared/components/componets.dart';
@@ -31,7 +31,8 @@ class ChatScreen extends StatelessWidget {
                     child: RichText(
                       textAlign: TextAlign.center,
                       text: TextSpan(
-                        style: const TextStyle(color: Colors.grey, fontSize: 20),
+                        style:
+                            const TextStyle(color: Colors.grey, fontSize: 20),
                         children: [
                           TextSpan(
                               text:
@@ -39,8 +40,8 @@ class ChatScreen extends StatelessWidget {
                               style: TextStyle(color: kblack)),
                           const WidgetSpan(
                             child: Padding(
-                              padding: EdgeInsets.only(
-                                  top: 1.0, left: 2, right: 2),
+                              padding:
+                                  EdgeInsets.only(top: 1.0, left: 2, right: 2),
                               child: CircleAvatar(
                                 radius: 15,
                                 backgroundColor: defaultColor,

@@ -1,6 +1,6 @@
 // ignore_for_file: library_private_types_in_public_api, sized_box_for_whitespace, use_build_context_synchronously, prefer_const_constructors
 
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide ModalBottomSheetRoute;
 import 'package:flutter_application_2023/screens/welcome_screen.dart';
 import 'package:flutter_application_2023/utils/dimensions.dart';
 import 'package:google_fonts/google_fonts.dart';

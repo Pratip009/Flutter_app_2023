@@ -1,13 +1,12 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
-import 'package:flutter/material.dart';
-import 'package:flutter_application_2023/screens/navpages/chat/screens/group_screen.dart';
+import 'package:flutter/material.dart' hide ModalBottomSheetRoute;
+import 'package:flutter_application_2023/screens/navpages/chat/chats_screen.dart';
+import 'package:flutter_application_2023/screens/navpages/group/group_chat.dart';
 import 'package:flutter_application_2023/screens/navpages/main_home_page.dart';
-
 import 'package:flutter_application_2023/screens/navpages/my_screen.dart';
-import 'package:flutter_application_2023/screens/navpages/search_screen.dart';
+import 'package:flutter_application_2023/screens/navpages/ecommerce/search_screen.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
-
 import '../../widgets/constant.dart';
 
 class MainScreen extends StatefulWidget {
@@ -20,7 +19,8 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen> {
   List pages = [
     MainHomePage(),
-    GroupScreen(),
+    ChatsScreen(),
+    GroupChat(),
     SearchScreen(),
     MyScreen(),
   ];
@@ -55,6 +55,10 @@ class _MainScreenState extends State<MainScreen> {
               GButton(
                 icon: Icons.chat_outlined,
                 text: 'Chat',
+              ),
+              GButton(
+                icon: Icons.group,
+                text: 'Group',
               ),
               GButton(
                 icon: Icons.settings,

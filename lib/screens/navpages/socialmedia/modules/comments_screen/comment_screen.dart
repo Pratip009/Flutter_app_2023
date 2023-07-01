@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide ModalBottomSheetRoute;
 import 'package:flutter_application_2023/screens/navpages/socialmedia/model/comment_model.dart';
 import 'package:flutter_application_2023/screens/navpages/socialmedia/modules/comments_screen/comment_controller.dart';
 import 'package:flutter_application_2023/screens/navpages/socialmedia/shared/components/componets.dart';
@@ -9,7 +9,6 @@ import 'package:flutterfire_ui/firestore.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
-
 
 class CommentsScreen extends StatelessWidget {
   String? postId;

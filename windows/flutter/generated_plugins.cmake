@@ -6,6 +6,8 @@ list(APPEND FLUTTER_PLUGIN_LIST
   desktop_webview_auth
   emoji_picker_flutter
   firebase_core
+  geolocator_windows
+  permission_handler_windows
   smart_auth
 )
 

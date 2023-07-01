@@ -3,13 +3,12 @@ import 'dart:developer';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_application_2023/screens/navpages/chat/helper/my_date_util.dart';
-import 'package:flutter_application_2023/widgets/constant.dart';
+import 'package:flutter_application_2023/screens/navpages/chat/chats_screen.dart';
 import 'package:gallery_saver/gallery_saver.dart';
 
-import '../../../../utils/dimensions.dart';
 import '../api/apis.dart';
 import '../helper/dialogs.dart';
+import '../helper/my_date_util.dart';
 
 import '../models/message.dart';
 
@@ -48,11 +47,10 @@ class _MessageCardState extends State<MessageCard> {
         Flexible(
           child: Container(
             padding: EdgeInsets.all(widget.message.type == Type.image
-                ? Dimensions.screenWidth * .03
-                : Dimensions.screenWidth * .04),
+                ? mq.width * .03
+                : mq.width * .04),
             margin: EdgeInsets.symmetric(
-                horizontal: Dimensions.screenWidth * .04,
-                vertical: Dimensions.screenHeight * .01),
+                horizontal: mq.width * .04, vertical: mq.height * .01),
             decoration: BoxDecoration(
                 color: const Color.fromARGB(255, 221, 245, 255),
                 border: Border.all(color: Colors.lightBlue),
@@ -87,11 +85,11 @@ class _MessageCardState extends State<MessageCard> {
 
         //message time
         Padding(
-          padding: EdgeInsets.only(right: Dimensions.screenWidth * .04),
+          padding: EdgeInsets.only(right: mq.width * .04),
           child: Text(
             MyDateUtil.getFormattedTime(
                 context: context, time: widget.message.sent),
-            style: TextStyle(fontSize: 13, color: knewwhite),
+            style: const TextStyle(fontSize: 13, color: Colors.black54),
           ),
         ),
       ],
@@ -107,7 +105,7 @@ class _MessageCardState extends State<MessageCard> {
         Row(
           children: [
             //for adding some space
-            SizedBox(width: Dimensions.screenWidth * .04),
+            SizedBox(width: mq.width * .04),
 
             //double tick blue icon for message read
             if (widget.message.read.isNotEmpty)
@@ -120,7 +118,7 @@ class _MessageCardState extends State<MessageCard> {
             Text(
               MyDateUtil.getFormattedTime(
                   context: context, time: widget.message.sent),
-              style: TextStyle(fontSize: 13, color: knewwhite),
+              style: const TextStyle(fontSize: 13, color: Colors.black54),
             ),
           ],
         ),
@@ -129,14 +127,13 @@ class _MessageCardState extends State<MessageCard> {
         Flexible(
           child: Container(
             padding: EdgeInsets.all(widget.message.type == Type.image
-                ? Dimensions.screenWidth * .03
-                : Dimensions.screenWidth * .04),
+                ? mq.width * .03
+                : mq.width * .04),
             margin: EdgeInsets.symmetric(
-                horizontal: Dimensions.screenWidth * .04,
-                vertical: Dimensions.screenHeight * .01),
+                horizontal: mq.width * .04, vertical: mq.height * .01),
             decoration: BoxDecoration(
-                color: kyellow,
-                border: Border.all(color: kwhite),
+                color: const Color.fromARGB(255, 218, 255, 176),
+                border: Border.all(color: Colors.lightGreen),
                 //making borders curved
                 borderRadius: const BorderRadius.only(
                     topLeft: Radius.circular(30),
@@ -184,8 +181,7 @@ class _MessageCardState extends State<MessageCard> {
               Container(
                 height: 4,
                 margin: EdgeInsets.symmetric(
-                    vertical: Dimensions.screenHeight * .015,
-                    horizontal: Dimensions.screenWidth * .4),
+                    vertical: mq.height * .015, horizontal: mq.width * .4),
                 decoration: BoxDecoration(
                     color: Colors.grey, borderRadius: BorderRadius.circular(8)),
               ),
@@ -234,9 +230,9 @@ class _MessageCardState extends State<MessageCard> {
               //separator or divider
               if (isMe)
                 Divider(
-                  color: knewwhite,
-                  endIndent: Dimensions.screenWidth * .04,
-                  indent: Dimensions.screenWidth * .04,
+                  color: Colors.black54,
+                  endIndent: mq.width * .04,
+                  indent: mq.width * .04,
                 ),
 
               //edit option
@@ -266,9 +262,9 @@ class _MessageCardState extends State<MessageCard> {
 
               //separator or divider
               Divider(
-                color: knewwhite,
-                endIndent: Dimensions.screenWidth * .04,
-                indent: Dimensions.screenWidth * .04,
+                color: Colors.black54,
+                endIndent: mq.width * .04,
+                indent: mq.width * .04,
               ),
 
               //sent time
@@ -369,15 +365,17 @@ class _OptionItem extends StatelessWidget {
         onTap: () => onTap(),
         child: Padding(
           padding: EdgeInsets.only(
-              left: Dimensions.screenWidth * .05,
-              top: Dimensions.screenHeight * .015,
-              bottom: Dimensions.screenHeight * .015),
+              left: mq.width * .05,
+              top: mq.height * .015,
+              bottom: mq.height * .015),
           child: Row(children: [
             icon,
             Flexible(
                 child: Text('    $name',
-                    style: TextStyle(
-                        fontSize: 15, color: knewwhite, letterSpacing: 0.5)))
+                    style: const TextStyle(
+                        fontSize: 15,
+                        color: Colors.black54,
+                        letterSpacing: 0.5)))
           ]),
         ));
   }

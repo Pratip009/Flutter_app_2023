@@ -3,12 +3,11 @@
 import 'dart:io';
 
 import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide ModalBottomSheetRoute;
 import 'package:flutter_application_2023/screens/navpages/socialmedia/layout/layout_controller.dart';
 import 'package:flutter_application_2023/screens/navpages/socialmedia/shared/components/componets.dart';
 import 'package:flutter_application_2023/screens/navpages/socialmedia/shared/styles/colors.dart';
 import 'package:flutter_application_2023/utils/dimensions.dart';
-import 'package:flutter_application_2023/widgets/constant.dart';
 import 'package:get/get.dart';
 
 class NewPostScreen extends StatelessWidget {
@@ -134,7 +133,7 @@ class NewPostScreen extends StatelessWidget {
                               },
                               icon: const Icon(Icons.emoji_emotions_outlined)),
                           Expanded(
-                            child: defaultTextFormField(
+                            child: defaultTextFormFieldForSocial(
                                 ontap: () {
                                   if (_showEmoji) {
                                     _showEmoji = !_showEmoji;
@@ -218,9 +217,9 @@ class NewPostScreen extends StatelessWidget {
                                         .pickPostImage()
                                         .then((value) {});
                                   },
-                                  child: Row(
+                                  child: const Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
-                                    children: const [
+                                    children: [
                                       Icon(Icons.image),
                                       SizedBox(
                                         width: 5,

@@ -42,10 +42,11 @@ class PostModel {
     nbOfLikes = json['nbOfLikes'] as int;
     nbOfComments =
         json['nbOfComments'] != null ? json['nbOfComments'] as int : 0;
-    if (json['likes'] != null)
+    if (json['likes'] != null) {
       json['likes'].forEach((element) {
         likes!.add(element);
       });
+    }
   }
 
   Map<String, dynamic> toJson() {

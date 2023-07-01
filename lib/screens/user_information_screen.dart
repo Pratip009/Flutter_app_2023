@@ -2,8 +2,8 @@
 
 import 'dart:io';
 import 'dart:math';
-import 'package:flutter/material.dart';
-import 'package:flutter_application_2023/screens/navpages/chat/widgets/widgets.dart';
+import 'package:flutter/material.dart' hide ModalBottomSheetRoute;
+
 import 'package:flutter_application_2023/screens/navpages/main_screen.dart';
 import 'package:flutter_application_2023/utils/utils.dart';
 import 'package:flutter_application_2023/widgets/constant.dart';
@@ -15,6 +15,8 @@ import '../utils/dimensions.dart';
 
 import '../widgets/custom_button.dart';
 import 'package:intl/intl.dart';
+
+import '../widgets/snackbar.dart';
 
 class UserInfromationScreen extends StatefulWidget {
   const UserInfromationScreen({super.key});

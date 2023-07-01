@@ -1,14 +1,16 @@
 import 'dart:developer';
 import 'dart:io';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_application_2023/screens/navpages/chat/chats_screen.dart';
 import 'package:image_picker/image_picker.dart';
-import '../../../../utils/dimensions.dart';
-import '../../../../widgets/constant.dart';
+
 import '../api/apis.dart';
 import '../helper/my_date_util.dart';
+
 import '../models/chat_user.dart';
 import '../models/message.dart';
 import '../widgets/message_card.dart';
@@ -53,13 +55,11 @@ class _ChatScreenState extends State<ChatScreen> {
           child: Scaffold(
             //app bar
             appBar: AppBar(
-              backgroundColor: klight,
-              elevation: 1,
               automaticallyImplyLeading: false,
               flexibleSpace: _appBar(),
             ),
 
-            backgroundColor: kblacklight2,
+            backgroundColor: const Color.fromARGB(255, 234, 248, 255),
 
             //body
             body: Column(
@@ -87,8 +87,7 @@ class _ChatScreenState extends State<ChatScreen> {
                             return ListView.builder(
                                 reverse: true,
                                 itemCount: _list.length,
-                                padding: EdgeInsets.only(
-                                    top: Dimensions.screenHeight * .01),
+                                padding: EdgeInsets.only(top: mq.height * .01),
                                 physics: const BouncingScrollPhysics(),
                                 itemBuilder: (context, index) {
                                   return MessageCard(message: _list[index]);
@@ -119,7 +118,7 @@ class _ChatScreenState extends State<ChatScreen> {
                 //show emojis on keyboard emoji button click & vice versa
                 if (_showEmoji)
                   SizedBox(
-                    height: Dimensions.screenHeight * .35,
+                    height: mq.height * .35,
                     child: EmojiPicker(
                       textEditingController: _textController,
                       config: Config(
@@ -163,11 +162,10 @@ class _ChatScreenState extends State<ChatScreen> {
 
                   //user profile picture
                   ClipRRect(
-                    borderRadius:
-                        BorderRadius.circular(Dimensions.screenHeight * .03),
+                    borderRadius: BorderRadius.circular(mq.height * .03),
                     child: CachedNetworkImage(
-                      width: Dimensions.screenHeight * .05,
-                      height: Dimensions.screenHeight * .05,
+                      width: mq.height * .05,
+                      height: mq.height * .05,
                       imageUrl:
                           list.isNotEmpty ? list[0].image : widget.user.image,
                       errorWidget: (context, url, error) => const CircleAvatar(
@@ -217,8 +215,7 @@ class _ChatScreenState extends State<ChatScreen> {
   Widget _chatInput() {
     return Padding(
       padding: EdgeInsets.symmetric(
-          vertical: Dimensions.screenHeight * .01,
-          horizontal: Dimensions.screenWidth * .025),
+          vertical: mq.height * .01, horizontal: mq.width * .025),
       child: Row(
         children: [
           //input field & buttons
@@ -234,8 +231,8 @@ class _ChatScreenState extends State<ChatScreen> {
                         FocusScope.of(context).unfocus();
                         setState(() => _showEmoji = !_showEmoji);
                       },
-                      icon: Icon(Icons.emoji_emotions,
-                          color: kblacklight, size: 25)),
+                      icon: const Icon(Icons.emoji_emotions,
+                          color: Colors.blueAccent, size: 25)),
 
                   Expanded(
                       child: TextField(
@@ -245,11 +242,10 @@ class _ChatScreenState extends State<ChatScreen> {
                     onTap: () {
                       if (_showEmoji) setState(() => _showEmoji = !_showEmoji);
                     },
-                    decoration: InputDecoration(
-                      hintText: 'Type Something...',
-                      hintStyle: TextStyle(color: kblack),
-                      border: InputBorder.none,
-                    ),
+                    decoration: const InputDecoration(
+                        hintText: 'Type Something...',
+                        hintStyle: TextStyle(color: Colors.blueAccent),
+                        border: InputBorder.none),
                   )),
 
                   //pick image from gallery button
@@ -269,7 +265,8 @@ class _ChatScreenState extends State<ChatScreen> {
                           setState(() => _isUploading = false);
                         }
                       },
-                      icon: Icon(Icons.image, color: kblacklight, size: 26)),
+                      icon: const Icon(Icons.image,
+                          color: Colors.blueAccent, size: 26)),
 
                   //take image from camera button
                   IconButton(
@@ -288,11 +285,11 @@ class _ChatScreenState extends State<ChatScreen> {
                           setState(() => _isUploading = false);
                         }
                       },
-                      icon: Icon(Icons.camera_alt_rounded,
-                          color: kblacklight, size: 26)),
+                      icon: const Icon(Icons.camera_alt_rounded,
+                          color: Colors.blueAccent, size: 26)),
 
                   //adding some space
-                  SizedBox(width: Dimensions.screenWidth * .02),
+                  SizedBox(width: mq.width * .02),
                 ],
               ),
             ),
@@ -318,7 +315,7 @@ class _ChatScreenState extends State<ChatScreen> {
             padding:
                 const EdgeInsets.only(top: 10, bottom: 10, right: 5, left: 10),
             shape: const CircleBorder(),
-            color: kblacklight,
+            color: Colors.green,
             child: const Icon(Icons.send, color: Colors.white, size: 28),
           )
         ],

@@ -1,8 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide ModalBottomSheetRoute;
 import 'package:flutter_application_2023/screens/navpages/socialmedia/model/comment_model.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
-
 
 class CommentsController extends GetxController {
   //NOTE Add Comment On Post

@@ -1,9 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_application_2023/screens/navpages/chat/chats_screen.dart';
 
-
-import '../../../../../utils/dimensions.dart';
 import '../../models/chat_user.dart';
 import '../../screens/view_profile_screen.dart';
 
@@ -19,18 +18,18 @@ class ProfileDialog extends StatelessWidget {
       backgroundColor: Colors.white.withOpacity(.9),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
       content: SizedBox(
-          width: Dimensions.screenWidth * .6,
-          height: Dimensions.screenHeight * .35,
+          width: mq.width * .6,
+          height: mq.height * .35,
           child: Stack(
             children: [
               //user profile picture
               Positioned(
-                top: Dimensions.screenHeight * .075,
-                left: Dimensions.screenWidth * .1,
+                top: mq.height * .075,
+                left: mq.width * .1,
                 child: ClipRRect(
-                  borderRadius: BorderRadius.circular(Dimensions.screenHeight * .25),
+                  borderRadius: BorderRadius.circular(mq.height * .25),
                   child: CachedNetworkImage(
-                    width: Dimensions.screenWidth * .5,
+                    width: mq.width * .5,
                     fit: BoxFit.cover,
                     imageUrl: user.image,
                     errorWidget: (context, url, error) =>
@@ -41,9 +40,9 @@ class ProfileDialog extends StatelessWidget {
 
               //user name
               Positioned(
-                left: Dimensions.screenWidth * .04,
-                top: Dimensions.screenHeight * .02,
-                width: Dimensions.screenWidth * .55,
+                left: mq.width * .04,
+                top: mq.height * .02,
+                width: mq.width * .55,
                 child: Text(user.name,
                     style: const TextStyle(
                         fontSize: 18, fontWeight: FontWeight.w500)),

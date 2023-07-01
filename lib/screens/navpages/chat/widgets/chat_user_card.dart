@@ -1,10 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_application_2023/widgets/constant.dart';
-import '../../../../utils/dimensions.dart';
+import 'package:flutter_application_2023/screens/navpages/chat/chats_screen.dart';
+
 import '../api/apis.dart';
 import '../helper/my_date_util.dart';
+
 import '../models/chat_user.dart';
 import '../models/message.dart';
 import '../screens/chat_screen.dart';
@@ -27,9 +28,8 @@ class _ChatUserCardState extends State<ChatUserCard> {
   @override
   Widget build(BuildContext context) {
     return Card(
-      margin: EdgeInsets.symmetric(
-          horizontal: Dimensions.screenWidth * .04, vertical: 4),
-      color: kblacklight,
+      margin: EdgeInsets.symmetric(horizontal: mq.width * .04, vertical: 4),
+      // color: Colors.blue.shade100,
       elevation: 0.5,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
       child: InkWell(
@@ -57,11 +57,10 @@ class _ChatUserCardState extends State<ChatUserCard> {
                         builder: (_) => ProfileDialog(user: widget.user));
                   },
                   child: ClipRRect(
-                    borderRadius:
-                        BorderRadius.circular(Dimensions.screenHeight * .03),
+                    borderRadius: BorderRadius.circular(mq.height * .03),
                     child: CachedNetworkImage(
-                      width: Dimensions.screenHeight * .055,
-                      height: Dimensions.screenHeight * .055,
+                      width: mq.height * .055,
+                      height: mq.height * .055,
                       imageUrl: widget.user.image,
                       errorWidget: (context, url, error) => const CircleAvatar(
                           child: Icon(CupertinoIcons.person)),
@@ -70,11 +69,7 @@ class _ChatUserCardState extends State<ChatUserCard> {
                 ),
 
                 //user name
-                title: Text(
-                  widget.user.name,
-                  style: TextStyle(
-                      color: kblacklight2, fontWeight: FontWeight.w500),
-                ),
+                title: Text(widget.user.name),
 
                 //last message
                 subtitle: Text(
@@ -83,7 +78,6 @@ class _ChatUserCardState extends State<ChatUserCard> {
                             ? 'image'
                             : _message!.msg
                         : widget.user.about,
-                    style: TextStyle(color: kblacklight2),
                     maxLines: 1),
 
                 //last message time
@@ -105,7 +99,7 @@ class _ChatUserCardState extends State<ChatUserCard> {
                         Text(
                             MyDateUtil.getLastMessageTime(
                                 context: context, time: _message!.sent),
-                            style: TextStyle(color: kblacklight2),
+                            style: const TextStyle(color: Colors.black54),
                           ),
               );
             },

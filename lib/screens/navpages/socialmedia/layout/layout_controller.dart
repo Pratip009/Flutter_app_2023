@@ -1,12 +1,14 @@
 // ignore_for_file: avoid_print, non_constant_identifier_names
 
+import 'dart:developer';
 import 'dart:io';
 import "package:collection/collection.dart";
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide ModalBottomSheetRoute;
 import 'package:flutter_application_2023/screens/navpages/socialmedia/model/message_model.dart';
 import 'package:flutter_application_2023/screens/navpages/socialmedia/model/post_model.dart';
 import 'package:flutter_application_2023/screens/navpages/socialmedia/model/user_model.dart';
@@ -264,6 +266,16 @@ class SocialLayoutController extends GetxController {
     });
   }
 
+
+static Stream<QuerySnapshot<Map<String, dynamic>>> getMyUsersId() {
+    return FirebaseFirestore.instance
+        .collection('users')
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .collection('my_users')
+        .snapshots();
+  }
+
+   
   //NOTE :---------------------- Manage New Post  --------------------------
 
   File? _postimage;
@@ -529,6 +541,19 @@ class SocialLayoutController extends GetxController {
     update();
   }
 
+ static Stream<QuerySnapshot<Map<String, dynamic>>> getAllUser(
+      List<String> userIds) {
+    log('\nUserIds: $userIds');
+
+    return FirebaseFirestore.instance
+        .collection('newchatusers')
+        .where('id',
+            whereIn: userIds.isEmpty
+                ? ['']
+                : userIds) //because empty list throws an error
+        // .where('id', isNotEqualTo: user.uid)
+        .snapshots();
+  }
 // NOTE get My Chat Ids and Get My Users and get latest message of each one
   List<UserModel> myFriends = [];
 

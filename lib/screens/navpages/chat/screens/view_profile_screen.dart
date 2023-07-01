@@ -1,8 +1,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import '../../../../utils/dimensions.dart';
+import 'package:flutter_application_2023/screens/navpages/chat/chats_screen.dart';
+
 import '../helper/my_date_util.dart';
+
 import '../models/chat_user.dart';
 
 //view profile screen -- to view profile of user
@@ -46,23 +48,19 @@ class _ViewProfileScreenState extends State<ViewProfileScreen> {
 
           //body
           body: Padding(
-            padding:
-                EdgeInsets.symmetric(horizontal: Dimensions.screenWidth * .05),
+            padding: EdgeInsets.symmetric(horizontal: mq.width * .05),
             child: SingleChildScrollView(
               child: Column(
                 children: [
                   // for adding some space
-                  SizedBox(
-                      width: Dimensions.screenWidth,
-                      height: Dimensions.screenHeight * .03),
+                  SizedBox(width: mq.width, height: mq.height * .03),
 
                   //user profile picture
                   ClipRRect(
-                    borderRadius:
-                        BorderRadius.circular(Dimensions.screenHeight * .1),
+                    borderRadius: BorderRadius.circular(mq.height * .1),
                     child: CachedNetworkImage(
-                      width: Dimensions.screenHeight * .2,
-                      height: Dimensions.screenHeight * .2,
+                      width: mq.height * .2,
+                      height: mq.height * .2,
                       fit: BoxFit.cover,
                       imageUrl: widget.user.image,
                       errorWidget: (context, url, error) => const CircleAvatar(
@@ -71,7 +69,7 @@ class _ViewProfileScreenState extends State<ViewProfileScreen> {
                   ),
 
                   // for adding some space
-                  SizedBox(height: Dimensions.screenHeight * .03),
+                  SizedBox(height: mq.height * .03),
 
                   // user email label
                   Text(widget.user.email,
@@ -79,7 +77,7 @@ class _ViewProfileScreenState extends State<ViewProfileScreen> {
                           const TextStyle(color: Colors.black87, fontSize: 16)),
 
                   // for adding some space
-                  SizedBox(height: Dimensions.screenHeight * .02),
+                  SizedBox(height: mq.height * .02),
 
                   //user about
                   Row(

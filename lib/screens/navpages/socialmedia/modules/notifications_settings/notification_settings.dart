@@ -1,5 +1,5 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide ModalBottomSheetRoute;
 import 'package:flutter_application_2023/screens/navpages/socialmedia/modules/notifications_settings/notification_settings_controller.dart';
 import 'package:flutter_application_2023/screens/navpages/socialmedia/shared/constants.dart';
 import 'package:get/get.dart';

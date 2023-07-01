@@ -4,19 +4,20 @@ import 'dart:developer';
 import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_application_2023/widgets/constant.dart';
-import 'package:get/get_connect/http/src/utils/utils.dart';
+import 'package:flutter_application_2023/provider/auth_provider.dart';
+import 'package:flutter_application_2023/screens/navpages/chat/chats_screen.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
-import '../../../../provider/auth_provider.dart';
-import '../../../../utils/dimensions.dart';
 import '../api/apis.dart';
 import '../helper/dialogs.dart';
 
 import '../models/chat_user.dart';
+import 'auth/login_screen.dart';
 
 //profile screen -- to show signed in user info
 class ProfileScreen extends StatefulWidget {
@@ -34,85 +35,60 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
+    var photoURL = widget.user.image;
     final ap = Provider.of<AuthProvider>(context, listen: false);
+
     return GestureDetector(
       // for hiding keyboard
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
-          backgroundColor: kblacklight2,
           //app bar
-          appBar: AppBar(
-            leading: IconButton(
-                onPressed: () {
-                  Navigator.pop(context);
+          appBar: AppBar(title: const Text('Profile Screen')),
+
+          //floating button to log out
+          floatingActionButton: Padding(
+            padding: const EdgeInsets.only(bottom: 10),
+            child: FloatingActionButton.extended(
+                backgroundColor: Colors.redAccent,
+                onPressed: () async {
+                  //for showing progress dialog
+                  Dialogs.showProgressBar(context);
+
+                  await APIs.updateActiveStatus(false);
+
+                  //sign out from app
+                  await APIs.auth.signOut().then((value) async {
+                    await GoogleSignIn().signOut().then((value) {
+                      //for hiding progress dialog
+                      Navigator.pop(context);
+
+                      //for moving to home screen
+                      Navigator.pop(context);
+
+                      APIs.auth = FirebaseAuth.instance;
+
+                      //replacing home screen with login screen
+                      Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                              builder: (_) => const LoginScreen()));
+                    });
+                  });
                 },
-                icon: Icon(
-                  Icons.arrow_back_ios_new_rounded,
-                  color: kblack,
-                )),
-            centerTitle: true,
-            elevation: 1,
-            title: Text(
-              'Profile',
-              style: TextStyle(color: kblack),
-            ),
-            backgroundColor: klight,
+                icon: const Icon(Icons.logout),
+                label: const Text('Logout')),
           ),
-
-          // floating button to log out
-          // floatingActionButton: Padding(
-          //   padding: const EdgeInsets.only(bottom: 10),
-          //   child:
-          //   FloatingActionButton.extended(
-          //       backgroundColor: Colors.redAccent,
-          //       onPressed: () async {
-          //         //for showing progress dialog
-          //         Dialogs.showProgressBar(context);
-
-          //         await APIs.updateActiveStatus(false);
-
-          //         //sign out from app
-          //         await APIs.auth.signOut().then((value) async {
-          //           await GoogleSignIn().signOut().then((value) {
-          //             //for hiding progress dialog
-          //             Navigator.pop(context);
-
-          //             //for moving to home screen
-          //             Navigator.pop(context);
-
-          //             APIs.auth = FirebaseAuth.instance;
-
-          //             //replacing home screen with login screen
-          //             Navigator.pushReplacement(
-          //                 context,
-          //                 MaterialPageRoute(
-          //                     builder: (_) => const LoginScreen()));
-          //           });
-          //         });
-          //       },
-          //       icon: Icon(
-          //         Icons.logout,
-          //         color: knewwhite,
-          //       ),
-          //       label: Text(
-          //         'Logout',
-          //         style: TextStyle(color: knewwhite),
-          //       )),
-          // ),
 
           //body
           body: Form(
             key: _formKey,
             child: Padding(
-              padding: EdgeInsets.symmetric(
-                  horizontal: Dimensions.screenWidth * .05),
+              padding: EdgeInsets.symmetric(horizontal: mq.width * .05),
               child: SingleChildScrollView(
                 child: Column(
                   children: [
                     // for adding some space
-                    SizedBox(
-                        width: Dimensions.screenWidth,
-                        height: Dimensions.screenHeight * .03),
+                    SizedBox(width: mq.width, height: mq.height * .03),
 
                     //user profile picture
                     Stack(
@@ -123,23 +99,23 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
                             //local image
                             ClipRRect(
-                                borderRadius: BorderRadius.circular(
-                                    Dimensions.screenHeight * .1),
+                                borderRadius:
+                                    BorderRadius.circular(mq.height * .1),
                                 child: Image.file(File(_image!),
-                                    width: Dimensions.screenHeight * .2,
-                                    height: Dimensions.screenHeight * .2,
+                                    width: mq.height * .2,
+                                    height: mq.height * .2,
                                     fit: BoxFit.cover))
                             :
 
                             //image from server
                             ClipRRect(
-                                borderRadius: BorderRadius.circular(
-                                    Dimensions.screenHeight * .1),
+                                borderRadius:
+                                    BorderRadius.circular(mq.height * .1),
                                 child: CachedNetworkImage(
-                                  width: Dimensions.screenHeight * .2,
-                                  height: Dimensions.screenHeight * .2,
+                                  width: mq.height * .2,
+                                  height: mq.height * .2,
                                   fit: BoxFit.cover,
-                                  imageUrl: ap.userModel.profilePic,
+                                  imageUrl: photoURL,
                                   errorWidget: (context, url, error) =>
                                       const CircleAvatar(
                                           child: Icon(CupertinoIcons.person)),
@@ -156,89 +132,81 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               _showBottomSheet();
                             },
                             shape: const CircleBorder(),
-                            color: kblacklight,
-                            child: Icon(Icons.edit, color: knewwhite),
+                            color: Colors.blue,
+                            child: const Icon(Icons.edit, color: Colors.white),
                           ),
                         )
                       ],
                     ),
 
                     // for adding some space
-                    SizedBox(height: Dimensions.screenHeight * .03),
+                    SizedBox(height: mq.height * .03),
 
                     // user email label
-                    Text(ap.userModel.unique,
-                        style: TextStyle(color: knewwhite, fontSize: 16)),
+                    Text(widget.user.email,
+                        style: const TextStyle(
+                            color: Colors.black54, fontSize: 16)),
 
                     // for adding some space
-                    SizedBox(height: Dimensions.screenHeight * .05),
+                    SizedBox(height: mq.height * .03),
 
                     // name input field
                     TextFormField(
-                      enabled: false,
-                      style: TextStyle(color: knewwhite),
-                      initialValue: "${ap.userModel.firstname}"
-                          "\u{00A0}"
-                          "${ap.userModel.lastname}",
-                      // onSaved: (val) => APIs.me.name = val ?? '',
-                      // validator: (val) => val != null && val.isNotEmpty
-                      //     ? null
-                      //     : 'Required Field',
+                      initialValue: widget.user.name,
+                      onSaved: (val) => APIs.me.name = val ?? '',
+                      validator: (val) => val != null && val.isNotEmpty
+                          ? null
+                          : 'Required Field',
                       decoration: InputDecoration(
-                          disabledBorder: OutlineInputBorder(
-                              borderSide:
-                                  BorderSide(width: 1, color: kblacklight)),
-                          enabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                                width: 1, color: knewwhite), //<-- SEE HERE
-                          ),
-                          prefixIcon: Icon(Icons.person, color: kblacklight),
+                          prefixIcon:
+                              const Icon(Icons.person, color: Colors.blue),
                           border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(12)),
                           hintText: 'eg. Happy Singh',
-                          label: Text(
-                            'Name',
-                            style: TextStyle(color: knewwhite),
-                          )),
+                          label: const Text('Name')),
                     ),
 
                     // for adding some space
-                    SizedBox(height: Dimensions.screenHeight * .02),
-
+                    SizedBox(height: mq.height * .02),
+                    TextFormField(
+                      initialValue: ap.userModel.unique,
+                      onSaved: (val) => APIs.me.uniqueID = val ?? '',
+                      validator: (val) => val != null && val.isNotEmpty
+                          ? null
+                          : 'required field',
+                      enabled: false,
+                      decoration: InputDecoration(
+                          prefixIcon:
+                              const Icon(Icons.person, color: Colors.blue),
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(12)),
+                          label: const Text('User ID')),
+                    ),
+                    SizedBox(height: mq.height * .02),
                     // about input field
                     TextFormField(
-                      style: TextStyle(color: knewwhite),
                       initialValue: widget.user.about,
                       onSaved: (val) => APIs.me.about = val ?? '',
                       validator: (val) => val != null && val.isNotEmpty
                           ? null
                           : 'Required Field',
                       decoration: InputDecoration(
-                          enabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                                width: 1, color: knewwhite), //<-- SEE HERE
-                          ),
-                          prefixIcon:
-                              Icon(Icons.info_outline, color: kblacklight),
+                          prefixIcon: const Icon(Icons.info_outline,
+                              color: Colors.blue),
                           border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(12)),
                           hintText: 'eg. Feeling Happy',
-                          label: Text(
-                            'About',
-                            style: TextStyle(color: knewwhite),
-                          )),
+                          label: const Text('About')),
                     ),
 
                     // for adding some space
-                    SizedBox(height: Dimensions.screenHeight * .05),
+                    SizedBox(height: mq.height * .05),
 
                     // update profile button
                     ElevatedButton.icon(
                       style: ElevatedButton.styleFrom(
-                          backgroundColor: kblacklight,
                           shape: const StadiumBorder(),
-                          minimumSize: Size(Dimensions.screenWidth * .5,
-                              Dimensions.screenHeight * .06)),
+                          minimumSize: Size(mq.width * .5, mq.height * .06)),
                       onPressed: () {
                         if (_formKey.currentState!.validate()) {
                           _formKey.currentState!.save();
@@ -270,9 +238,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
         builder: (_) {
           return ListView(
             shrinkWrap: true,
-            padding: EdgeInsets.only(
-                top: Dimensions.screenHeight * .03,
-                bottom: Dimensions.screenHeight * .05),
+            padding:
+                EdgeInsets.only(top: mq.height * .03, bottom: mq.height * .05),
             children: [
               //pick profile picture label
               const Text('Pick Profile Picture',
@@ -280,7 +247,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500)),
 
               //for adding some space
-              SizedBox(height: Dimensions.screenHeight * .02),
+              SizedBox(height: mq.height * .02),
 
               //buttons
               Row(
@@ -291,14 +258,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.white,
                           shape: const CircleBorder(),
-                          fixedSize: Size(Dimensions.screenWidth * .3,
-                              Dimensions.screenHeight * .15)),
+                          fixedSize: Size(mq.width * .3, mq.height * .15)),
                       onPressed: () async {
                         final ImagePicker picker = ImagePicker();
 
                         // Pick an image
                         final XFile? image = await picker.pickImage(
-                            source: ImageSource.gallery, imageQuality: 80);
+                            source: ImageSource.gallery, imageQuality: 50);
                         if (image != null) {
                           log('Image Path: ${image.path}');
                           setState(() {
@@ -310,21 +276,20 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           Navigator.pop(context);
                         }
                       },
-                      child: Image.asset('assets/images/add_image.png')),
+                      child: Image.asset('images/add_image.png')),
 
                   //take picture from camera button
                   ElevatedButton(
                       style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.white,
                           shape: const CircleBorder(),
-                          fixedSize: Size(Dimensions.screenWidth * .3,
-                              Dimensions.screenHeight * .15)),
+                          fixedSize: Size(mq.width * .3, mq.height * .15)),
                       onPressed: () async {
                         final ImagePicker picker = ImagePicker();
 
                         // Pick an image
                         final XFile? image = await picker.pickImage(
-                            source: ImageSource.camera, imageQuality: 80);
+                            source: ImageSource.camera, imageQuality: 50);
                         if (image != null) {
                           log('Image Path: ${image.path}');
                           setState(() {
@@ -336,7 +301,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           Navigator.pop(context);
                         }
                       },
-                      child: Image.asset('assets/images/camera.png')),
+                      child: Image.asset('images/camera.png')),
                 ],
               )
             ],

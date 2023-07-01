@@ -1,6 +1,6 @@
 // ignore_for_file: avoid_print
 
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide ModalBottomSheetRoute;
 import 'package:flutter_application_2023/provider/auth_provider.dart';
 import 'package:flutter_application_2023/screens/navpages/socialmedia/layout/layout.dart';
 import 'package:flutter_application_2023/screens/navpages/socialmedia/modules/social_login/login_controller.dart';
@@ -11,6 +11,8 @@ import 'package:flutter_application_2023/screens/navpages/socialmedia/shared/hel
 import 'package:flutter_application_2023/screens/navpages/socialmedia/shared/network/local/cashhelper.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
+
+final ValueNotifier<int> counter = ValueNotifier(0);
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -25,6 +27,7 @@ class _LoginScreenState extends State<LoginScreen> {
   var uniqueIDController = TextEditingController();
 
   var passwordController = TextEditingController();
+  int _counter = 0;
 
   final _formkey = GlobalKey<FormState>();
   @override
@@ -43,9 +46,28 @@ class _LoginScreenState extends State<LoginScreen> {
     emailController.text = ap.userModel.email;
   }
 
+  void _incrementCounter() {
+    counter.value++;
+  }
+
+  // Future<void> _loadCounter() async {
+  //   final prefs = await SharedPreferences.getInstance();
+  //   setState(() {
+  //     _counter = (prefs.getInt('counter') ?? 0);
+  //   });
+  // }
+
+  //Incrementing counter after click
+  // Future<void> _incrementCounter() async {
+  //   final prefs = await SharedPreferences.getInstance();
+  //   setState(() {
+  //     _counter = (prefs.getInt('counter') ?? 0) + 1;
+  //     prefs.setInt('counter', _counter);
+  //   });
+  // }
+
   @override
   Widget build(BuildContext context) {
-
     return GetBuilder<LoginController>(
       init: LoginController(),
       builder: (socialLoginController) => Scaffold(
@@ -162,6 +184,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                   message: socialLoginController.statusMessage,
                                   status: socialLoginController
                                       .statusLoginMessage!);
+                              _incrementCounter();
+                              print('$counter');
                             }),
                     const SizedBox(
                       height: 10,

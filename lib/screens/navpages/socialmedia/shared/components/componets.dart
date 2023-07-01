@@ -1,7 +1,8 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide ModalBottomSheetRoute;
 import 'package:flutter_application_2023/screens/navpages/socialmedia/model/user_model.dart';
 import 'package:flutter_application_2023/screens/navpages/socialmedia/modules/chat_details/chat_details_screen.dart';
+import 'package:flutter_application_2023/screens/navpages/socialmedia/modules/friend_profile/friend_profile_screen.dart';
+import 'package:flutter_application_2023/screens/navpages/socialmedia/modules/friend_profile/friendprofileController.dart';
 import 'package:flutter_application_2023/screens/navpages/socialmedia/shared/styles/colors.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
@@ -97,7 +98,39 @@ Widget defaultTextFormField(
         ),
         validator: onvalidate);
 
-
+Widget defaultTextFormFieldForSocial(
+        {required TextEditingController controller,
+        required TextInputType inputtype,
+        Function(String?)? onfieldsubmit,
+        VoidCallback? ontap,
+        String? Function(String?)? onvalidate,
+        Function(String?)? onchange,
+        String? text,
+        Widget? prefixIcon,
+        Widget? suffixIcon,
+        bool obscure = false,
+        InputBorder? border,
+        String? hinttext,
+        int? maxligne}) =>
+    TextFormField(
+        controller: controller,
+        keyboardType: inputtype,
+        onFieldSubmitted: onfieldsubmit,
+        onTap: ontap,
+        maxLines: maxligne ?? 1,
+        obscureText: obscure,
+        onChanged: onchange,
+        style: const TextStyle(
+          fontWeight: FontWeight.normal,
+        ),
+        decoration: InputDecoration(
+          labelText: text,
+          hintText: hinttext,
+          prefixIcon: prefixIcon,
+          suffixIcon: suffixIcon,
+          border: border ?? const OutlineInputBorder(),
+        ),
+        validator: onvalidate);
 Widget defaultTextFormFieldForPassword(
         {required TextEditingController controller,
         required TextInputType inputtype,
@@ -113,7 +146,6 @@ Widget defaultTextFormFieldForPassword(
         String? hinttext,
         int? maxligne}) =>
     TextFormField(
-        
         controller: controller,
         keyboardType: inputtype,
         onFieldSubmitted: onfieldsubmit,
@@ -185,6 +217,89 @@ Widget buildChatItem(
         Get.to(ChatDetailsScreen(
           socialUserModel: userModel,
         ));
+      },
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 9),
+        child: Row(
+          children: [
+            CircleAvatar(
+              radius: 20,
+              backgroundImage: userModel.image == null || userModel.image == ""
+                  ? const AssetImage('assets/default_profile.png')
+                      as ImageProvider
+                  : NetworkImage(userModel.image!),
+            ),
+            const SizedBox(
+              width: 10,
+            ),
+            Expanded(
+                child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Row(
+                  children: [
+                    Expanded(
+                      child: Text(
+                        userModel.name.toString(),
+                        style: const TextStyle(
+                            height: 1.4,
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                    const SizedBox(
+                      width: 5,
+                    ),
+                    isForChatScreen && userModel.messageModel != null
+                        ? Text(
+                            DateFormat("h:mm a").format(DateTime.parse(userModel
+                                .messageModel!.messageDate
+                                .toString())),
+                            style: const TextStyle(color: Colors.grey),
+                          )
+                        : const SizedBox(
+                            width: 0,
+                          ),
+                  ],
+                ),
+                const SizedBox(
+                  height: 6,
+                ),
+                isForChatScreen && userModel.messageModel != null
+                    ? SizedBox(
+                        width: MediaQuery.of(context).size.width * 0.7,
+                        child: Text(
+                          userModel.messageModel!.text.toString(),
+                          style:
+                              const TextStyle(color: Colors.grey, fontSize: 16),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      )
+                    : const SizedBox(
+                        height: 0,
+                      ),
+              ],
+            )),
+          ],
+        ),
+      ),
+    );
+
+// NOTE buildChatItem
+Widget buildSearchItem(
+        {required BuildContext context,
+        required UserModel userModel,
+        bool isForChatScreen = false}) =>
+    InkWell(
+      onTap: () {
+        // socialLayoutController.getMessages(
+        //     receiverId: userModel.uId.toString());
+        // Get.to(ChatDetailsScreen(
+        //   socialUserModel: userModel,
+        // ));
+        Get.to(FriendProfileController());
       },
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 9),

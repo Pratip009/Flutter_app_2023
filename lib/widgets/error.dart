@@ -1,5 +1,4 @@
-import 'package:flutter/material.dart';
-
+import 'package:flutter/material.dart' hide ModalBottomSheetRoute;
 
 class ErrorScreen extends StatelessWidget {
   final String error;

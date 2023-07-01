@@ -1,7 +1,7 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, non_constant_identifier_names, avoid_print
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide ModalBottomSheetRoute;
 import 'package:flutter_application_2023/screens/navpages/socialmedia/layout/layout_controller.dart';
 import 'package:flutter_application_2023/screens/navpages/socialmedia/model/post_model.dart';
 import 'package:flutter_application_2023/screens/navpages/socialmedia/model/user_model.dart';
@@ -83,13 +83,11 @@ class _FriendProfileScreenState extends State<FriendProfileScreen> {
 
   @override
   void dispose() {
-  
     super.dispose();
   }
 
   @override
   void initState() {
-
     super.initState();
     _getcurrentprofile().then((value) {
       setState(() {
@@ -820,8 +818,8 @@ class _FriendProfileScreenState extends State<FriendProfileScreen> {
     );
   }
 }
+
 buildFirendsHedear() {
-  
   return Row(
     mainAxisAlignment: MainAxisAlignment.spaceBetween,
     children: [

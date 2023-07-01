@@ -1,14 +1,8 @@
-// ignore_for_file: unused_element, avoid_print, unused_field, nullable_type_in_catch_clause, deprecated_member_use
-
-import 'dart:developer';
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:dio/dio.dart';
 
-import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/services.dart';
+import 'package:flutter/material.dart' hide ModalBottomSheetRoute;
 
 import 'package:flutter_application_2023/screens/navpages/socialmedia/layout/layout_controller.dart';
 import 'package:flutter_application_2023/screens/navpages/socialmedia/model/post_model.dart';
@@ -18,6 +12,7 @@ import 'package:flutter_application_2023/screens/navpages/socialmedia/modules/ad
 import 'package:flutter_application_2023/screens/navpages/socialmedia/modules/comments_screen/comment_screen.dart';
 import 'package:flutter_application_2023/screens/navpages/socialmedia/modules/friend_profile/friend_profile_screen.dart';
 import 'package:flutter_application_2023/screens/navpages/socialmedia/modules/new_post/new_post_screen.dart';
+import 'package:flutter_application_2023/screens/navpages/socialmedia/modules/social_login/login.dart';
 import 'package:flutter_application_2023/screens/navpages/socialmedia/modules/stories_view/stories_view.dart';
 import 'package:flutter_application_2023/screens/navpages/socialmedia/shared/components/componets.dart';
 import 'package:flutter_application_2023/screens/navpages/socialmedia/shared/constants.dart';
@@ -25,12 +20,16 @@ import 'package:flutter_application_2023/screens/navpages/socialmedia/shared/sty
 import 'package:flutter_application_2023/widgets/constant.dart';
 import 'package:flutterfire_ui/firestore.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:full_screen_image/full_screen_image.dart';
 import 'package:get/get.dart';
 
 import 'package:like_button/like_button.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:screenshot/screenshot.dart';
 
 // ignore: must_be_immutable
+
 class FeedsScreen extends StatefulWidget {
   const FeedsScreen({super.key});
 
@@ -39,6 +38,8 @@ class FeedsScreen extends StatefulWidget {
 }
 
 class _FeedsScreenState extends State<FeedsScreen> {
+  // ! screenshot
+  final controller = ScreenshotController();
   final postsQuery = FirebaseFirestore.instance
       .collection('posts')
       .orderBy('postdate', descending: true)
@@ -47,7 +48,7 @@ class _FeedsScreenState extends State<FeedsScreen> {
         toFirestore: (post, _) => post.toJson(),
       );
 
-  // final storiesQuery = FirebaseFirestore.instance
+  //! final storiesQuery = FirebaseFirestore.instance
   late SocialLayoutController controller_NeededInBuildPost;
 
   bool test = false;
@@ -417,6 +418,7 @@ class _FeedsScreenState extends State<FeedsScreen> {
     model.imageHeight = model.imageHeight != 0
         ? double.parse(model.imageHeight.toString()) - model.imageHeight! / 1.5
         : 0;
+
     return Container(
       margin: const EdgeInsets.only(bottom: 10),
       child: Card(
@@ -484,17 +486,20 @@ class _FeedsScreenState extends State<FeedsScreen> {
                         ),
                       ],
                     )),
-                    IconButton(
-                        onPressed: () async {
-                          //!delete post
-                        },
-                        icon: Icon(
-                          Icons.more_vert,
-                          color: kblacklight,
-                        )),
+                    // IconButton(
+                    //     onPressed: () async {
+                    //       //!delete post
+                    //     },
+                    //     icon: Icon(
+                    //       Icons.more_vert,
+                    //       color: kblacklight,
+                    //     )),
                     IconButton(
                         onPressed: () async {
                           // ! here is the code to download file from firebase
+                          // final image = await controller.capture();
+                          // if (image == null) return;
+                          // await saveImage(image);
                         },
                         icon: Icon(
                           Icons.download,
@@ -523,7 +528,7 @@ class _FeedsScreenState extends State<FeedsScreen> {
                   ),
                 ),
 
-              //NOTE : Image Of post
+              //!NOTE : Image Of post
               if (model.postImage != null)
                 Padding(
                   padding:
@@ -533,29 +538,19 @@ class _FeedsScreenState extends State<FeedsScreen> {
                     //NOTE height - heigt /1.5 ==> about 40% from real height
                     height: model.imageHeight,
 
-                    child: GestureDetector(
-                      onDoubleTap: () {
-                        const double scale = 2;
-                        final zoomed = Matrix4.identity()..scale(scale);
-                        final value = zoomed;
-                        print("ok");
-                      },
-                      child: InteractiveViewer(
-                          // transformationController: transformationController,
-                          constrained: true,
-                          panEnabled: false,
-                          minScale: 1,
-                          maxScale: 2.5,
-                          child: InkWell(
-                            onLongPress: () async {},
-                            child: Image.network(
-                              model.postImage!,
-                              fit: BoxFit.fitWidth,
-                            ),
-                          )),
+                    child: InkWell(
+                      onTap: () async {},
+                      child: FullScreenWidget(
+                        disposeLevel: DisposeLevel.Medium,
+                        child: Image.network(
+                          model.postImage!,
+                          fit: BoxFit.fitWidth,
+                        ),
+                      ),
                     ),
                   ),
                 ),
+
               //NOTE : Likes And Comments
               Padding(
                 padding: const EdgeInsets.all(8),
@@ -589,6 +584,39 @@ class _FeedsScreenState extends State<FeedsScreen> {
                           onTap: () {},
                         ),
                       ),
+                    Expanded(
+                      child: InkWell(
+                        child: Row(
+                          children: [
+                            CircleAvatar(
+                                radius: 10,
+                                backgroundColor: kblacklight,
+                                child: const FaIcon(
+                                  FontAwesomeIcons.eye,
+                                  color: Colors.white,
+                                  size: 12,
+                                )),
+                            const SizedBox(
+                              width: 5,
+                            ),
+                            // ! counter
+                            ValueListenableBuilder(
+                              valueListenable: counter,
+                              builder: (context, value, child) {
+                                return Text(
+                                  counter.value.toString(),
+                                  style: TextStyle(
+                                    color: kblacklight,
+                                    fontSize: 12,
+                                  ),
+                                );
+                              },
+                            ),
+                          ],
+                        ),
+                        onTap: () {},
+                      ),
+                    ),
                     Expanded(
                       child: Align(
                         alignment: Alignment.bottomRight,
@@ -774,6 +802,17 @@ class _FeedsScreenState extends State<FeedsScreen> {
           )),
     );
   }
+// ! screenshot
+  // Future<String> saveImage(Uint8List bytes) async {
+  //   await [Permission.storage].request();
+  //   final time = DateTime.now()
+  //       .toIso8601String()
+  //       .replaceAll('.', '_')
+  //       .replaceAll('.', '_');
+  //   final name = 'screenshot_$time';
+  //   final result = await ImageGallerySaver.saveImage(bytes, name: name);
+  //   return result['filePath'];
+  // }
 
   profileStory(StoryModel story) {
     return [
@@ -852,7 +891,18 @@ class _FeedsScreenState extends State<FeedsScreen> {
                         width: 10,
                       ),
                       Expanded(
-                        child: GestureDetector(
+                        child:
+                            // GestureDetector(
+                            //     onTap: () {
+                            //       Get.to(const SocialSearchScreen());
+                            //     },
+                            //     child: const Text(
+                            //       'Search your friend here...',
+                            //       style: TextStyle(
+                            //           fontSize: 18, fontWeight: FontWeight.bold),
+                            //     )),
+
+                            GestureDetector(
                           onTap: () {
                             Get.to(NewPostScreen());
                           },
@@ -863,7 +913,7 @@ class _FeedsScreenState extends State<FeedsScreen> {
                             ),
                             child: const Padding(
                               padding: EdgeInsets.all(10.0),
-                              child: Text("What's on your mind?"),
+                              child: Text("What's on your mind..."),
                             ),
                           ),
                         ),

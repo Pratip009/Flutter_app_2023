@@ -4,7 +4,7 @@ import 'dart:convert';
 import 'package:camera/camera.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide ModalBottomSheetRoute;
 import 'package:flutter/services.dart';
 import 'package:flutter_application_2023/provider/auth_provider.dart';
 import 'package:flutter_application_2023/provider/face_provider.dart';
@@ -81,7 +81,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
+        // ChangeNotifierProvider(create: (_) => AuthProvider()),
         ChangeNotifierProvider(create: (_) => AuthProvider()),
+
         ChangeNotifierProvider(create: (_) => FaceProvider()),
       ],
       child: GetMaterialApp(

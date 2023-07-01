@@ -1,16 +1,15 @@
 // ignore_for_file: non_constant_identifier_names, avoid_print
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide ModalBottomSheetRoute;
 import 'package:flutter_application_2023/screens/navpages/socialmedia/layout/layout_controller.dart';
 import 'package:flutter_application_2023/screens/navpages/socialmedia/model/friend_request.dart';
 import 'package:flutter_application_2023/screens/navpages/socialmedia/modules/notifications_screen/notification_controller.dart';
 import 'package:flutter_application_2023/screens/navpages/socialmedia/shared/constants.dart';
 import 'package:flutter_application_2023/screens/navpages/socialmedia/shared/styles/colors.dart';
+import 'package:flutter_application_2023/widgets/constant.dart';
 import 'package:flutterfire_ui/firestore.dart';
 import 'package:get/get.dart';
-
-
 
 class NotificationsScreen extends StatefulWidget {
   const NotificationsScreen({super.key});
@@ -36,6 +35,12 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          'Notifications',
+          style: TextStyle(color: knewwhite),
+        ),
+      ),
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -119,7 +124,8 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
             child: CircleAvatar(
               radius: 40,
               backgroundImage: model.image == null || model.image == ""
-                  ? const AssetImage('assets/default_profile.png') as ImageProvider
+                  ? const AssetImage('assets/default_profile.png')
+                      as ImageProvider
                   : NetworkImage(model.image!),
             ),
           ),
@@ -160,7 +166,8 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                                   user_requestId: model.requestId.toString())
                               .then((value) {
                             //after confirmed wait then get logged in user to show my new friends
-                            Future.delayed(const Duration(seconds: 2)).then((value) {
+                            Future.delayed(const Duration(seconds: 2))
+                                .then((value) {
                               socialLayoutController_needed
                                   .getLoggedInUserData();
                             });

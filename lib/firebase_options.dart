@@ -25,10 +25,7 @@ class DefaultFirebaseOptions {
       case TargetPlatform.iOS:
         return ios;
       case TargetPlatform.macOS:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for macos - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return macos;
       case TargetPlatform.windows:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for windows - '
@@ -48,11 +45,12 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions web = FirebaseOptions(
     apiKey: 'AIzaSyABci8JgVHaVRkt_FMmhhkGMbPk1okSio4',
-    appId: '1:168217810649:web:e410960b37b11c473950c8',
+    appId: '1:168217810649:web:0eb898ae6a6a2c593950c8',
     messagingSenderId: '168217810649',
     projectId: 'myapp--backend',
     authDomain: 'myapp--backend.firebaseapp.com',
     storageBucket: 'myapp--backend.appspot.com',
+    measurementId: 'G-RQD3CBWY1D',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
@@ -69,7 +67,18 @@ class DefaultFirebaseOptions {
     messagingSenderId: '168217810649',
     projectId: 'myapp--backend',
     storageBucket: 'myapp--backend.appspot.com',
-    androidClientId: '168217810649-nrv4kndhe8g5e72kq90n1ofkvu8t3jg8.apps.googleusercontent.com',
+    androidClientId: '168217810649-3hb90trlon3bnqsrirn98q91b938qgpv.apps.googleusercontent.com',
+    iosClientId: '168217810649-rlitn46cj4kdn57fctlcc48ldkhqqcmv.apps.googleusercontent.com',
+    iosBundleId: 'com.example.flutterApplication2023',
+  );
+
+  static const FirebaseOptions macos = FirebaseOptions(
+    apiKey: 'AIzaSyDiiALaiqTqJBOuzdC6Z5l40p9uhlN7BcU',
+    appId: '1:168217810649:ios:39ee763c1de8dc423950c8',
+    messagingSenderId: '168217810649',
+    projectId: 'myapp--backend',
+    storageBucket: 'myapp--backend.appspot.com',
+    androidClientId: '168217810649-3hb90trlon3bnqsrirn98q91b938qgpv.apps.googleusercontent.com',
     iosClientId: '168217810649-rlitn46cj4kdn57fctlcc48ldkhqqcmv.apps.googleusercontent.com',
     iosBundleId: 'com.example.flutterApplication2023',
   );

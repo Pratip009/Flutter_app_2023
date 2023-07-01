@@ -1,8 +1,7 @@
 // ignore_for_file: prefer_const_constructors, avoid_unnecessary_containers
 
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide ModalBottomSheetRoute;
 import 'package:flutter_application_2023/screens/onboard_screen.dart';
-
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
