@@ -14,7 +14,6 @@ import 'package:flutter_application_2023/screens/navpages/socialmedia/modules/co
 import 'package:flutter_application_2023/screens/navpages/socialmedia/modules/edit_profile/edit_profile.dart';
 import 'package:flutter_application_2023/screens/navpages/socialmedia/modules/new_post/new_post_screen.dart';
 import 'package:flutter_application_2023/screens/navpages/socialmedia/modules/notifications_settings/notification_settings.dart';
-import 'package:flutter_application_2023/screens/navpages/socialmedia/shared/components/componets.dart';
 import 'package:flutter_application_2023/screens/navpages/socialmedia/shared/constants.dart';
 import 'package:flutter_application_2023/screens/navpages/socialmedia/shared/styles/colors.dart';
 import 'package:flutter_application_2023/widgets/constant.dart';

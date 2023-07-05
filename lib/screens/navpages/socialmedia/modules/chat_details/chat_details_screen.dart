@@ -279,7 +279,7 @@ class _ChatDetailsScreenState extends State<ChatDetailsScreen> {
                               )),
 
                         // NOTE if textformField has data display send button
-                        chatDetailsController.messageText.value != ""
+                        chatDetailsController.messageText.value == ""
                             ? Container(
                                 color: defaultColor,
                                 width: 50,

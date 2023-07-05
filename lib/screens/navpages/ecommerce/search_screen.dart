@@ -1,55 +1,53 @@
-// import 'package:firebase_core/firebase_core.dart';
-// import 'package:flutter/material.dart';
-// import 'package:flutter/cupertino.dart';
-// import 'package:flutter/services.dart';
-
-// import 'Routes/generated_routes.dart';
-
-// Future<void> main() async{
-//   WidgetsFlutterBinding.ensureInitialized();
-//   await Firebase.initializeApp();
-
-//   final AppRouter _appRouter = AppRouter();
-
-//   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-//       statusBarColor: const Color.fromRGBO(4, 123, 213, 1),
-//   ));
-
-//   runApp(
-//     MaterialApp(
-//       title: 'Easy Market',
-//       debugShowCheckedModeBanner: false,
-//       theme: ThemeData(
-//         primaryColor: const Color.fromRGBO(4, 123, 213, 1),
-//         fontFamily: 'Lora', colorScheme: ColorScheme.light(
-//           primary: const Color.fromRGBO(4, 123, 213, 1),
-//         ).copyWith(secondary: const Color.fromRGBO(4, 123, 213, 1)),
-//       ),
-//       onGenerateRoute: _appRouter.onGenerateRoute,
-//     ),
-//   );
-// }
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_application_2023/screens/navpages/ecommerce/Routes/generated_routes.dart';
+import 'package:flutter_application_2023/screens/navpages/ecommerce/Screens/sign_in_screen.dart';
+import 'package:flutter_application_2023/screens/navpages/ecommerce/layout/screen_layout.dart';
+import 'package:flutter_application_2023/screens/navpages/ecommerce/providers/user_details_provider.dart';
+import 'package:flutter_application_2023/screens/navpages/ecommerce/utils/color_themes.dart';
+import 'package:provider/provider.dart';
 
-void main() => runApp(SearchScreen());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  if (kIsWeb) {
+    await Firebase.initializeApp();
+  } else {
+    await Firebase.initializeApp();
+  }
+  runApp(const SearchScreen());
+}
 
 class SearchScreen extends StatelessWidget {
-  final AppRouter _appRouter = AppRouter();
+  const SearchScreen({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primaryColor: const Color.fromRGBO(4, 123, 213, 1),
-        fontFamily: 'Lora',
-        colorScheme: ColorScheme.light(
-          primary: const Color.fromRGBO(4, 123, 213, 1),
-        ).copyWith(secondary: const Color.fromRGBO(4, 123, 213, 1)),
+    return MultiProvider(
+      providers: [ChangeNotifierProvider(create: (_) => UserDetailsProvider())],
+      child: MaterialApp(
+        title: "Amazon Clone",
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData.light().copyWith(
+          scaffoldBackgroundColor: backgroundColor,
+        ),
+        home: StreamBuilder(
+            stream: FirebaseAuth.instance.authStateChanges(),
+            builder: (context, AsyncSnapshot<User?> user) {
+              if (user.connectionState == ConnectionState.waiting) {
+                return const Center(
+                  child: CircularProgressIndicator(
+                    color: Colors.orange,
+                  ),
+                );
+              } else if (user.hasData) {
+                return const ScreenLayout();
+                //return const SellScreen();
+              } else {
+                return const SignInScreen();
+              }
+            }),
       ),
-      onGenerateRoute: _appRouter.onGenerateRoute,
-      
     );
   }
 }

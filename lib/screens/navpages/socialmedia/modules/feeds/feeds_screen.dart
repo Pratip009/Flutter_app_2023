@@ -494,17 +494,6 @@ class _FeedsScreenState extends State<FeedsScreen> {
                     //       Icons.more_vert,
                     //       color: kblacklight,
                     //     )),
-                    IconButton(
-                        onPressed: () async {
-                          // ! here is the code to download file from firebase
-                          // final image = await controller.capture();
-                          // if (image == null) return;
-                          // await saveImage(image);
-                        },
-                        icon: Icon(
-                          Icons.download,
-                          color: kblacklight,
-                        )),
                   ],
                 ),
               ),

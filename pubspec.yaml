@@ -20,7 +20,6 @@ version: 1.0.0+1
 
 environment:
   sdk: '>=2.19.0 <3.0.0'
-
 # Dependencies specify other packages that your package needs in order to work.
 # To automatically upgrade your package dependencies to the latest versions
 # consider running `flutter pub upgrade --major-versions`. Alternatively,
@@ -63,7 +62,7 @@ dependencies:
   emoji_picker_flutter: ^1.5.1
   flutter_svg: ^1.0.0
   uuid: ^3.0.7
-  dio: ^4.0.4
+  dio: ^5.2.1+1
   flutter_badged: ^2.0.2
   fluttertoast: ^8.0.8
   hexcolor: ^2.0.5
@@ -95,15 +94,17 @@ dependencies:
   image_gallery_saver: ^2.0.2
   permission_handler: ^10.3.0
   full_screen_image: ^2.0.0
+  rating_dialog: ^2.0.3
 
 
+  
   flutter_icons:
     git:
       url: https://github.com/adarsh-technocrat/flutter-icons
   flutter_facebook_auth:
   animations: ^2.0.7
   loading_overlay: ^0.3.0
-  flutter_geocoder:
+  # flutter_geocoder:
   currency_picker: ^2.0.3
   geolocator: ^9.0.2
   connectivity: ^3.0.6
