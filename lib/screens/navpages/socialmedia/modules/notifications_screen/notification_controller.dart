@@ -5,7 +5,6 @@ import 'package:flutter_application_2023/screens/navpages/socialmedia/model/frie
 import 'package:flutter_application_2023/screens/navpages/socialmedia/shared/constants.dart';
 import 'package:get/get.dart';
 
-
 class NotificationController extends GetxController {
   @override
   void onInit() async {
@@ -82,7 +81,6 @@ class NotificationController extends GetxController {
   // NOTE confirm Request
   Future<void> confirmRequest(
       {required String myId, required String user_requestId}) async {
- 
     // add him as my friend in my collection user
     FirebaseFirestore.instance
         .collection('users')

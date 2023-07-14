@@ -3,10 +3,11 @@
 #
 
 list(APPEND FLUTTER_PLUGIN_LIST
+  agora_rtc_engine
   desktop_webview_auth
   emoji_picker_flutter
   firebase_core
-  geolocator_windows
+  iris_method_channel
   permission_handler_windows
   smart_auth
 )

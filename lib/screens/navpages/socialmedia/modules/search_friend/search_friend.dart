@@ -4,7 +4,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart' hide ModalBottomSheetRoute;
 import 'package:flutter_application_2023/screens/navpages/socialmedia/layout/layout_controller.dart';
 import 'package:flutter_application_2023/screens/navpages/socialmedia/model/user_model.dart';
-import 'package:flutter_application_2023/screens/navpages/socialmedia/modules/friend_profile/friend_profile_screen.dart';
 import 'package:flutter_application_2023/screens/navpages/socialmedia/shared/components/componets.dart';
 import 'package:flutterfire_ui/firestore.dart';
 import 'package:get/get.dart';

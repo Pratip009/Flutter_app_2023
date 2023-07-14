@@ -12,6 +12,7 @@ import 'package:flutter_application_2023/screens/navpages/socialmedia/model/user
 import 'package:flutter_application_2023/screens/navpages/socialmedia/modules/addstory/add_story.dart';
 import 'package:flutter_application_2023/screens/navpages/socialmedia/modules/comments_screen/comment_screen.dart';
 import 'package:flutter_application_2023/screens/navpages/socialmedia/modules/edit_profile/edit_profile.dart';
+import 'package:flutter_application_2023/screens/navpages/socialmedia/modules/my_account/friends_page.dart';
 import 'package:flutter_application_2023/screens/navpages/socialmedia/modules/new_post/new_post_screen.dart';
 import 'package:flutter_application_2023/screens/navpages/socialmedia/modules/notifications_settings/notification_settings.dart';
 import 'package:flutter_application_2023/screens/navpages/socialmedia/shared/constants.dart';
@@ -334,7 +335,12 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                           //   ],
                           // ),
                           MaterialButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => FriendsPage()));
+                              },
                               minWidth: double.infinity,
                               color: Colors.grey.shade300,
                               shape: RoundedRectangleBorder(
