@@ -5,11 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_2023/screens/navpages/group/helper/helper_function.dart';
 import 'package:flutter_application_2023/screens/navpages/group/pages/chat_page.dart';
 import 'package:flutter_application_2023/screens/navpages/group/service/database_service.dart';
-
-import '../widgets/widgets.dart';
+import 'package:flutter_application_2023/screens/navpages/group/widgets/widgets.dart';
 
 class SearchPage extends StatefulWidget {
-  const SearchPage({super.key});
+  const SearchPage({Key? key}) : super(key: key);
 
   @override
   State<SearchPage> createState() => _SearchPageState();
@@ -17,98 +16,107 @@ class SearchPage extends StatefulWidget {
 
 class _SearchPageState extends State<SearchPage> {
   TextEditingController searchController = TextEditingController();
-  bool _isLoading = false;
+  bool isLoading = false;
   QuerySnapshot? searchSnapshot;
   bool hasUserSearched = false;
-  String username = "";
+  String userName = "";
+  bool isJoined = false;
   User? user;
-  bool _isJoined = false;
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-    getCurrentUserIdAndName();
+    getCurrentUserIdandName();
   }
 
-  getName(String res) {
-    return res.substring(res.indexOf("_") + 1);
-  }
-
-  getCurrentUserIdAndName() async {
+  getCurrentUserIdandName() async {
     await HelperFunctions.getUserNameFromSF().then((value) {
       setState(() {
-        username = value!;
+        userName = value!;
       });
     });
     user = FirebaseAuth.instance.currentUser;
   }
 
+  String getName(String r) {
+    return r.substring(r.indexOf("_") + 1);
+  }
+
+  String getId(String res) {
+    return res.substring(0, res.indexOf("_"));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Color(0xffb272336),
-        appBar: AppBar(
-          elevation: 0,
-          centerTitle: true,
-          title: Text(
-            "Search",
-          ),
+      appBar: AppBar(
+        elevation: 0,
+        backgroundColor: Theme.of(context).primaryColor,
+        title: const Text(
+          "Search",
+          style: TextStyle(
+              fontSize: 27, fontWeight: FontWeight.bold, color: Colors.white),
         ),
-        body: Column(children: [
+      ),
+      body: Column(
+        children: [
           Container(
-            color: Theme.of(context).backgroundColor,
-            padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+            color: Theme.of(context).primaryColor,
+            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
             child: Row(
               children: [
                 Expanded(
-                    child: TextField(
-                  controller: searchController,
-                  style: TextStyle(color: Colors.white),
-                  decoration: InputDecoration(
-                      border: InputBorder.none,
-                      hintText: "Search Groups...",
-                      hintStyle: TextStyle(color: Colors.white)),
-                )),
+                  child: TextField(
+                    controller: searchController,
+                    style: const TextStyle(color: Colors.white),
+                    decoration: const InputDecoration(
+                        border: InputBorder.none,
+                        hintText: "Search groups....",
+                        hintStyle:
+                            TextStyle(color: Colors.white, fontSize: 16)),
+                  ),
+                ),
                 GestureDetector(
                   onTap: () {
                     initiateSearchMethod();
                   },
                   child: Container(
-                      width: 40,
-                      height: 40,
-                      decoration: BoxDecoration(
+                    width: 40,
+                    height: 40,
+                    decoration: BoxDecoration(
                         color: Colors.white.withOpacity(0.1),
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      child: Icon(
-                        Icons.search,
-                        color: Colors.white,
-                      )),
+                        borderRadius: BorderRadius.circular(40)),
+                    child: const Icon(
+                      Icons.search,
+                      color: Colors.white,
+                    ),
+                  ),
                 )
               ],
             ),
           ),
-          _isLoading
+          isLoading
               ? Center(
                   child: CircularProgressIndicator(
-                      color: Theme.of(context).primaryColor))
-              : groupList()
-        ]));
+                      color: Theme.of(context).primaryColor),
+                )
+              : groupList(),
+        ],
+      ),
+    );
   }
 
   initiateSearchMethod() async {
     if (searchController.text.isNotEmpty) {
       setState(() {
-        _isLoading = true;
+        isLoading = true;
       });
-
-      await DatabaseService(uid: FirebaseAuth.instance.currentUser!.uid)
+      await DatabaseService()
           .searchByName(searchController.text)
-          .then((value) {
+          .then((snapshot) {
         setState(() {
-          searchSnapshot = value;
-          _isLoading = false;
+          searchSnapshot = snapshot;
+          isLoading = false;
           hasUserSearched = true;
         });
       });
@@ -122,13 +130,13 @@ class _SearchPageState extends State<SearchPage> {
             itemCount: searchSnapshot!.docs.length,
             itemBuilder: (context, index) {
               return groupTile(
-                username,
-                searchSnapshot!.docs[index]["groupId"],
-                searchSnapshot!.docs[index]["groupName"],
+                userName,
+                searchSnapshot!.docs[index]['groupId'],
+                searchSnapshot!.docs[index]['groupName'],
                 searchSnapshot!.docs[index]['admin'],
-                searchSnapshot!.docs[index]['groupIcon'],
               );
-            })
+            },
+          )
         : Container();
   }
 
@@ -138,59 +146,53 @@ class _SearchPageState extends State<SearchPage> {
         .isUserJoined(groupname, groupId, userName)
         .then((value) {
       setState(() {
-        _isJoined = value;
+        isJoined = value;
       });
     });
   }
 
   Widget groupTile(
-      String username, String groupId, String groupName, String admin,String groupIcon) {
-    joinedOrNot(username, groupId, groupName, admin);
+      String userName, String groupId, String groupName, String admin) {
+    // function to check whether user already exists in group
+    joinedOrNot(userName, groupId, groupName, admin);
     return ListTile(
-      contentPadding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+      contentPadding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
       leading: CircleAvatar(
         radius: 30,
-        backgroundColor: Theme.of(context).colorScheme.secondary,
+        backgroundColor: Theme.of(context).primaryColor,
         child: Text(
           groupName.substring(0, 1).toUpperCase(),
-          style: TextStyle(color: Colors.white),
+          style: const TextStyle(color: Colors.white),
         ),
       ),
-      title: Text(
-        groupName,
-        style: TextStyle(fontWeight: FontWeight.bold),
-      ),
+      title:
+          Text(groupName, style: const TextStyle(fontWeight: FontWeight.w600)),
       subtitle: Text("Admin: ${getName(admin)}"),
       trailing: InkWell(
         onTap: () async {
           await DatabaseService(uid: user!.uid)
-              .toggleJoin(groupId, groupName, username);
-
-          if (_isJoined) {
+              .toggleGroupJoin(groupId, userName, groupName);
+          if (isJoined) {
             setState(() {
-              _isJoined = !_isJoined;
+              isJoined = !isJoined;
             });
-            showSnackbar(context, Colors.green,
-                "Successfully joined group ${groupName}");
-
+            showSnackbar(context, Colors.green, "Successfully joined he group");
             Future.delayed(const Duration(seconds: 2), () {
               nextScreen(
                   context,
                   ChatPage(
                       groupId: groupId,
                       groupName: groupName,
-                      userName: username,
-                      groupIcon: groupIcon,
-                      ));
+                      userName: userName));
             });
           } else {
             setState(() {
-              _isJoined = !_isJoined;
+              isJoined = !isJoined;
               showSnackbar(context, Colors.red, "Left the group $groupName");
             });
           }
         },
-        child: _isJoined
+        child: isJoined
             ? Container(
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
@@ -207,7 +209,7 @@ class _SearchPageState extends State<SearchPage> {
             : Container(
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
-                  color: Theme.of(context).colorScheme.secondary,
+                  color: Theme.of(context).primaryColor,
                 ),
                 padding:
                     const EdgeInsets.symmetric(horizontal: 20, vertical: 10),

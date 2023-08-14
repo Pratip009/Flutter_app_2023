@@ -1,6 +1,5 @@
 
 import 'package:flutter/material.dart';
-import 'package:flutter_application_2023/screens/navpages/group/helper/timestamp_converter.dart';
 import 'package:flutter_application_2023/screens/navpages/group/pages/chat_page.dart';
 import 'package:flutter_application_2023/screens/navpages/group/widgets/widgets.dart';
 
@@ -8,22 +7,11 @@ class GroupTile extends StatefulWidget {
   final String userName;
   final String groupId;
   final String groupName;
-  final String groupIcon;
-  final String? recentMessage;
-  final String? recentMessageSender;
-  final String? recentMessageTime;
-  final bool? isRecentMessageSeen;
-
   const GroupTile(
       {Key? key,
       required this.groupId,
       required this.groupName,
-      required this.userName,
-      required this.groupIcon,
-      this.recentMessage,
-      this.recentMessageSender,
-      this.recentMessageTime,
-      this.isRecentMessageSeen})
+      required this.userName})
       : super(key: key);
 
   @override
@@ -38,70 +26,33 @@ class _GroupTileState extends State<GroupTile> {
         nextScreen(
             context,
             ChatPage(
-                groupId: widget.groupId,
-                groupName: widget.groupName,
-                userName: widget.userName,
-                groupIcon: widget.groupIcon));
+              groupId: widget.groupId,
+              groupName: widget.groupName,
+              userName: widget.userName,
+            ));
       },
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 5),
         child: ListTile(
-            leading: (widget.groupIcon == "")
-                ? CircleAvatar(
-                    radius: 30,
-                    backgroundColor: Theme.of(context).colorScheme.secondary,
-                    child: Text(
-                      widget.groupName.substring(0, 1).toUpperCase(),
-                      textAlign: TextAlign.center,
-                      style: const TextStyle(
-                          color: Colors.white, fontWeight: FontWeight.w500),
-                    ))
-                : CircleAvatar(
-                    radius: 30,
-                    backgroundImage: NetworkImage(widget.groupIcon),
-                  ),
-            title: Text(
-              widget.groupName,
-              style: const TextStyle(fontWeight: FontWeight.bold),
+          leading: CircleAvatar(
+            radius: 30,
+            backgroundColor: Theme.of(context).primaryColor,
+            child: Text(
+              widget.groupName.substring(0, 1).toUpperCase(),
+              textAlign: TextAlign.center,
+              style: const TextStyle(
+                  color: Colors.white, fontWeight: FontWeight.w500),
             ),
-            subtitle: (widget.recentMessage!.isEmpty ||
-                    widget.recentMessageSender!.isEmpty)
-                ? Text(
-                    "Join the conversation as ${widget.userName}",
-                    style: const TextStyle(fontSize: 13),
-                  )
-                : Text(
-                    "${widget.recentMessageSender}: ${widget.recentMessage}",
-                    style: (widget.isRecentMessageSeen!)
-                        ? TextStyle(fontWeight: FontWeight.normal)
-                        : TextStyle(fontWeight: FontWeight.bold),
-                  ),
-            // trailing: Icon(
-            //   Icons.circle,
-            //   color: (widget.isRecentMessageSeen!)
-            //       ? Colors.white
-            //       : Theme.of(context).primaryColor,
-            // ),
-            trailing: (widget.isRecentMessageSeen!)
-                ? Text(DateTimeConverter.convertTimeStamp(
-                    int.parse(widget.recentMessageTime!)))
-                : Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(
-                        Icons.circle,
-                        size: 15,
-                        color: Theme.of(context).colorScheme.secondary,
-                      ),
-                      SizedBox(
-                        height: 5,
-                      ),
-                      (widget.recentMessageTime != "")
-                          ? Text(DateTimeConverter.convertTimeStamp(
-                              int.parse(widget.recentMessageTime!)))
-                          : SizedBox()
-                    ],
-                  )),
+          ),
+          title: Text(
+            widget.groupName,
+            style: const TextStyle(fontWeight: FontWeight.bold),
+          ),
+          subtitle: Text(
+            "Join the conversation as ${widget.userName}",
+            style: const TextStyle(fontSize: 13),
+          ),
+        ),
       ),
     );
   }

@@ -1,24 +1,20 @@
-import 'dart:io';
 
-import 'package:file_picker/file_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_application_2023/screens/navpages/group/helper/helper_function.dart';
+import 'package:flutter_application_2023/screens/navpages/group/pages/home_page.dart';
 import 'package:flutter_application_2023/screens/navpages/group/service/database_service.dart';
 import 'package:flutter_application_2023/screens/navpages/group/widgets/widgets.dart';
 
-
 class GroupInfo extends StatefulWidget {
-  const GroupInfo(
-      {super.key,
-      required this.groupId,
-      required this.groupName,
-      required this.adminName,
-      required this.groupIcon});
   final String groupId;
   final String groupName;
   final String adminName;
-  final String groupIcon;
+  const GroupInfo(
+      {Key? key,
+      required this.adminName,
+      required this.groupName,
+      required this.groupId})
+      : super(key: key);
 
   @override
   State<GroupInfo> createState() => _GroupInfoState();
@@ -26,29 +22,20 @@ class GroupInfo extends StatefulWidget {
 
 class _GroupInfoState extends State<GroupInfo> {
   Stream? members;
-  FilePickerResult? result;
-
-  String imagePath = "";
-  String groupDp = "";
-  String username = "";
-
-  selectImages() async {
-    result = await FilePicker.platform.pickFiles();
-
-    if (result != null) {
-      imagePath = result!.files.single.path!;
-
-      setState(() {});
-    } else {
-      // User canceled the picker
-    }
-  }
-
   @override
   void initState() {
-    // TODO: implement initState
-    super.initState();
     getMembers();
+    super.initState();
+  }
+
+  getMembers() async {
+    DatabaseService(uid: FirebaseAuth.instance.currentUser!.uid)
+        .getGroupMembers(widget.groupId)
+        .then((val) {
+      setState(() {
+        members = val;
+      });
+    });
   }
 
   String getName(String r) {
@@ -59,128 +46,105 @@ class _GroupInfoState extends State<GroupInfo> {
     return res.substring(0, res.indexOf("_"));
   }
 
-  getMembers() async {
-    await HelperFunctions.getUserNameFromSF().then(
-      (value) {
-        username = value!;
-      },
-    );
-
-    await DatabaseService(uid: FirebaseAuth.instance.currentUser!.uid)
-        .getGroupMembers(widget.groupId)
-        .then((value) {
-      setState(() {
-        members = value;
-      });
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        centerTitle: true,
+        elevation: 0,
         backgroundColor: Theme.of(context).primaryColor,
-        appBar: AppBar(
-          centerTitle: true,
-          elevation: 0,
-          title: Text("Group Info"),
-          actions: [
-            IconButton(onPressed: () {}, icon: Icon(Icons.exit_to_app))
+        title: const Text("Group Info"),
+        actions: [
+          IconButton(
+              onPressed: () {
+                showDialog(
+                    barrierDismissible: false,
+                    context: context,
+                    builder: (context) {
+                      return AlertDialog(
+                        title: const Text("Exit"),
+                        content:
+                            const Text("Are you sure you exit the group? "),
+                        actions: [
+                          IconButton(
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                            icon: const Icon(
+                              Icons.cancel,
+                              color: Colors.red,
+                            ),
+                          ),
+                          IconButton(
+                            onPressed: () async {
+                              DatabaseService(
+                                      uid: FirebaseAuth
+                                          .instance.currentUser!.uid)
+                                  .toggleGroupJoin(
+                                      widget.groupId,
+                                      getName(widget.adminName),
+                                      widget.groupName)
+                                  .whenComplete(() {
+                                nextScreenReplace(context, const HomePage());
+                              });
+                            },
+                            icon: const Icon(
+                              Icons.done,
+                              color: Colors.green,
+                            ),
+                          ),
+                        ],
+                      );
+                    });
+              },
+              icon: const Icon(Icons.exit_to_app))
+        ],
+      ),
+      body: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+        child: Column(
+          children: [
+            Container(
+              padding: const EdgeInsets.all(20),
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(30),
+                  color: Theme.of(context).primaryColor.withOpacity(0.2)),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  CircleAvatar(
+                    radius: 30,
+                    backgroundColor: Theme.of(context).primaryColor,
+                    child: Text(
+                      widget.groupName.substring(0, 1).toUpperCase(),
+                      style: const TextStyle(
+                          fontWeight: FontWeight.w500, color: Colors.white),
+                    ),
+                  ),
+                  const SizedBox(
+                    width: 20,
+                  ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "Group: ${widget.groupName}",
+                        style: const TextStyle(fontWeight: FontWeight.w500),
+                      ),
+                      const SizedBox(
+                        height: 5,
+                      ),
+                      Text("Admin: ${getName(widget.adminName)}")
+                    ],
+                  )
+                ],
+              ),
+            ),
+            memberList(),
           ],
         ),
-        body: Container(
-            padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-            child: Column(
-              children: [
-                Stack(
-                  children: [
-                    (imagePath == "")
-                        ? (widget.groupIcon == "")
-                            ? GestureDetector(
-                                onTap: selectImages,
-                                child: Icon(
-                                  Icons.account_circle,
-                                  size: 200,
-                                  color: Colors.grey[700],
-                                ),
-                              )
-                            : GestureDetector(
-                                onTap: selectImages,
-                                child: CircleAvatar(
-                                    radius: 100,
-                                    backgroundImage:
-                                        NetworkImage(widget.groupIcon)),
-                              )
-                        : GestureDetector(
-                            onTap: selectImages,
-                            child: CircleAvatar(
-                                radius: 100,
-                                backgroundImage: FileImage(File(imagePath))),
-                          ),
-                    Positioned(
-                        bottom: 10,
-                        right: 20,
-                        child: CircleAvatar(
-                          radius: 20,
-                          backgroundColor: Theme.of(context).colorScheme.secondary,
-                          child: Icon(
-                            Icons.edit,
-                            color: Colors.white,
-                          ),
-                        ))
-                  ],
-                ),
-                SizedBox(
-                  height: 5,
-                ),
-                (imagePath == "")
-                    ? Container()
-                    : ElevatedButton(
-                        onPressed: () {
-                          uploadGroupDp();
-                        },
-                        style: ElevatedButton.styleFrom(
-                            backgroundColor: Theme.of(context).colorScheme.secondary),
-                        child: Text("Save")),
-                SizedBox(
-                  height: 20,
-                ),
-                Container(
-                  padding: EdgeInsets.all(20),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(30),
-                    color: Theme.of(context).colorScheme.secondary.withOpacity(0.5),
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      CircleAvatar(
-                        radius: 30,
-                        backgroundColor: Theme.of(context).colorScheme.secondary,
-                        child: Text(
-                          widget.groupName.substring(0, 1).toUpperCase(),
-                          style: TextStyle(color: Colors.white),
-                        ),
-                      ),
-                      SizedBox(
-                        width: 15,
-                      ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text("Group:  ${widget.groupName}"),
-                          SizedBox(
-                            height: 3,
-                          ),
-                          Text("Admin:  ${getName(widget.adminName)}")
-                        ],
-                      )
-                    ],
-                  ),
-                ),
-                memberList()
-              ],
-            )));
+      ),
+    );
   }
 
   memberList() {
@@ -200,7 +164,7 @@ class _GroupInfoState extends State<GroupInfo> {
                     child: ListTile(
                       leading: CircleAvatar(
                         radius: 30,
-                        backgroundColor: Theme.of(context).colorScheme.secondary,
+                        backgroundColor: Theme.of(context).primaryColor,
                         child: Text(
                           getName(snapshot.data['members'][index])
                               .substring(0, 1)
@@ -230,26 +194,10 @@ class _GroupInfoState extends State<GroupInfo> {
         } else {
           return Center(
               child: CircularProgressIndicator(
-            color: Theme.of(context).colorScheme.secondary,
+            color: Theme.of(context).primaryColor,
           ));
         }
       },
     );
-  }
-
-  uploadGroupDp() async {
-    if (username == widget.adminName) {
-      await DatabaseService(uid: FirebaseAuth.instance.currentUser!.uid)
-          .updateGroupDp(imagePath, widget.groupId)
-          .then((value) {
-        showSnackbar(context, Colors.green, "Successfully updated");
-      },
-              onError: (e) =>
-                  showSnackbar(context, Colors.red, "Error while updating"));
-    } else {
-      showSnackbar(context, Colors.red, "You are not allowed to do that");
-    }
-
-    setState(() {});
   }
 }

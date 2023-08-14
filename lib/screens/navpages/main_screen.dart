@@ -1,13 +1,16 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:flutter/material.dart' hide ModalBottomSheetRoute;
-import 'package:flutter_application_2023/screens/navpages/audiovideocall/video_call_screen.dart';
+import 'package:flutter_application_2023/screens/navpages/audiovideo/providers/auth_provider.dart';
+import 'package:flutter_application_2023/screens/navpages/audiovideo/providers/locale_provider.dart';
+import 'package:flutter_application_2023/screens/navpages/audiovideo/video_call.dart';
 import 'package:flutter_application_2023/screens/navpages/chat/chats_screen.dart';
 import 'package:flutter_application_2023/screens/navpages/group/group_chat.dart';
 import 'package:flutter_application_2023/screens/navpages/main_home_page.dart';
 import 'package:flutter_application_2023/screens/navpages/my_screen.dart';
-import 'package:flutter_application_2023/screens/navpages/ecommerce/search_screen.dart';
+import 'package:flutter_application_2023/screens/navpages/ecommerce/ecom_screen.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
+import 'package:provider/provider.dart';
 import '../../widgets/constant.dart';
 
 class MainScreen extends StatefulWidget {
@@ -22,9 +25,13 @@ class _MainScreenState extends State<MainScreen> {
     MainHomePage(),
     ChatsScreen(),
     GroupChat(),
-    SearchScreen(),
-    // VideoCallScreen(),
+    EcomScreen(),
+    MultiProvider(providers: [
+      ChangeNotifierProvider(create: (_) => LocaleProvider()),
+      ChangeNotifierProvider(create: (_) => AuthProvider()),
+    ], child: const VideoCall()),
     MyScreen(),
+   
   ];
   int currentIndex = 0;
   void onTap(int index) {
@@ -63,8 +70,8 @@ class _MainScreenState extends State<MainScreen> {
                 text: 'Group',
               ),
               GButton(
-                icon: Icons.settings,
-                text: 'Settings',
+                icon: Icons.shop_2_outlined,
+                text: 'Market',
               ),
               GButton(
                 icon: Icons.phone_android_outlined,
@@ -74,6 +81,7 @@ class _MainScreenState extends State<MainScreen> {
                 icon: Icons.account_circle_rounded,
                 text: 'Profile',
               ),
+              
             ],
           ),
         ),

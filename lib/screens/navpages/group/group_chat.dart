@@ -1,20 +1,18 @@
-import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_application_2023/screens/navpages/group/pages/home_page.dart';
-import 'package:flutter_application_2023/screens/navpages/group/pages/login_page.dart';
-import 'package:flutter_application_2023/screens/navpages/group/theme/theme.dart';
 
-import 'helper/helper_function.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter_application_2023/screens/navpages/group/helper/helper_function.dart';
+import 'package:flutter_application_2023/screens/navpages/group/pages/auth/login_page.dart';
+import 'package:flutter_application_2023/screens/navpages/group/pages/home_page.dart';
+import 'package:flutter_application_2023/screens/navpages/group/shared/constants.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   if (kIsWeb) {
-    // run initialization for web
     await Firebase.initializeApp();
   } else {
-    // run initialization for android and ios
     await Firebase.initializeApp();
   }
 
@@ -22,7 +20,7 @@ void main() async {
 }
 
 class GroupChat extends StatefulWidget {
-  const GroupChat({super.key});
+  const GroupChat({Key? key}) : super(key: key);
 
   @override
   State<GroupChat> createState() => _GroupChatState();
@@ -50,9 +48,11 @@ class _GroupChatState extends State<GroupChat> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        debugShowCheckedModeBanner: false,
-        theme: MyTheme.appTheme(context),
-        darkTheme: MyTheme.appTheme(context),
-        home: (_isSignedIn) ? HomePage() : LoginPage());
+      theme: ThemeData(
+          primaryColor: Constants().primaryColor,
+          scaffoldBackgroundColor: Colors.white),
+      debugShowCheckedModeBanner: false,
+      home: _isSignedIn ? const HomePage() : const LoginPage(),
+    );
   }
 }

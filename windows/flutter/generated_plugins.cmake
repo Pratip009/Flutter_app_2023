@@ -4,12 +4,16 @@
 
 list(APPEND FLUTTER_PLUGIN_LIST
   agora_rtc_engine
+  audioplayers_windows
+  connectivity_plus
   desktop_webview_auth
   emoji_picker_flutter
   firebase_core
-  iris_method_channel
+  geolocator_windows
+  iris_event
   permission_handler_windows
   smart_auth
+  url_launcher_windows
 )
 
 list(APPEND FLUTTER_FFI_PLUGIN_LIST

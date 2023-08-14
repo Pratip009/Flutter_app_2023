@@ -192,6 +192,20 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           },
                         ),
                       ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      TextButton(
+                        onPressed: () {},
+                        child: Text(
+                          'Admin?',
+                          style: TextStyle(
+                            color: kblack,
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
                     ],
                   ),
           ),
